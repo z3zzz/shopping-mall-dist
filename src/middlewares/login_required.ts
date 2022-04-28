@@ -23,8 +23,8 @@ function login_required(req: UserRequest, res: Response, next: NextFunction) {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
-    const user_id = jwtDecoded.user_id;
-    req.currentUserId = user_id;
+    const userId = jwtDecoded.userId;
+    req.currentUserId = userId;
 
     next();
   } catch (error) {
