@@ -1,5 +1,6 @@
 import express from 'express';
 import { viewsRouter, userRouter } from './routers';
+import { errorLoggerMiddleware, errorMiddleware } from './middlewares';
 // 임시
 import './db';
 
@@ -13,5 +14,9 @@ app.use(viewsRouter);
 
 // api 라우팅
 app.use(userRouter);
+
+// 미들웨어 (에러 기록용)
+app.use(errorLoggerMiddleware);
+app.use(errorMiddleware);
 
 export { app };
