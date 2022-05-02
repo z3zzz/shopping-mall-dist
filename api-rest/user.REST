@@ -17,7 +17,7 @@ content-type: application/json
 
 {
     "email": "ktkim1@elicer.com",
-    "password": "1"
+    "password": "1234"
 }
 
 ###
@@ -32,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZmO
 ###
 PATCH http://localhost:5000/api/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZmOGExMjkzMGY5OTM3NjNhMWU3ZjciLCJpYXQiOjE2NTE0OTczMTd9.vX3Wxp22bcIgVrVn4Mc-KXOkfqf0KugAyT4DkRyr7yY 
-content-type: application/json
+src/middlewares/login_required.ts
 
 {
     "name": "KwangTae",
