@@ -14,6 +14,14 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    telephone: {
+      type: Number,
+      required: false,
+    },
+    roadFullAddr: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
