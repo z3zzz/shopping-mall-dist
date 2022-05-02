@@ -1,10 +1,16 @@
-import { Service } from 'typedi';
 import { model } from 'mongoose';
 import { UserSchema } from '../schemas/userSchema';
 
 const User = model('User', UserSchema);
 
-interface UserInfo {
+export interface UserInfo {
+  email: string;
+  name: string;
+  password: string;
+}
+
+export interface UserData {
+  _id: string;
   email: string;
   name: string;
   password: string;
@@ -17,35 +23,38 @@ interface ToUpdate {
   };
 }
 
-@Service()
-class UserModel {
-  async findByEmail(email: string) {
+export class UserModel {
+  async findByEmail(email: string): Promise<UserData> {
     const user = await User.findOne({ email });
     return user;
   }
 
-  async findById(userId: string) {
+  async findById(userId: string): Promise<UserData> {
     const user = await User.findOne({ _id: userId });
     return user;
   }
 
-  async create(userInfo: UserInfo) {
+  async create(userInfo: UserInfo): Promise<UserData> {
     const createdNewUser = await User.create(userInfo);
     return createdNewUser;
   }
 
-  async findAll() {
+  async findAll(): Promise<UserData[]> {
     const users = await User.find({});
     return users;
   }
 
-  async update({ userId, update }: ToUpdate) {
+  async update({ userId, update }: ToUpdate): Promise<UserData> {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
+
+    console.log({ filter, update, option });
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
     return updatedUser;
   }
 }
 
-export { UserModel };
+const userModel = new UserModel();
+
+export { userModel };

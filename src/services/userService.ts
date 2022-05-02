@@ -1,30 +1,16 @@
 import bcrypt from 'bcrypt';
-import { Service } from 'typedi';
 import jwt from 'jsonwebtoken';
-import { UserModel } from '../db';
-
-interface UserInfo {
-  email: string;
-  name: string;
-  password: string;
-}
+import { userModel, UserModel, UserInfo, UserData } from '../db';
 
 interface LoginInfo {
   email: string;
   password: string;
 }
 
-interface UserInfoUpdate {
-  email?: string;
-  name?: string;
-  password?: string;
-}
-
-@Service()
 class UserService {
   constructor(private userModel: UserModel) {}
 
-  async addUser(userInfo: UserInfo) {
+  async addUser(userInfo: UserInfo): Promise<UserData> {
     // 객체 destructuring
     const { email, name, password } = userInfo;
 
@@ -47,7 +33,7 @@ class UserService {
     return createdNewUser;
   }
 
-  async getUserLogin(loginInfo: LoginInfo) {
+  async getUserLogin(loginInfo: LoginInfo): Promise<{ token: string }> {
     // 객체 destructuring
     const { email, password } = loginInfo;
 
@@ -76,20 +62,18 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const token = jwt.sign({ userId: user._id }, secretKey);
 
-    const loginUser = {
-      token,
-      ...user,
-    };
-
-    return loginUser;
+    return { token };
   }
 
-  async getUsers() {
+  async getUsers(): Promise<UserData[]> {
     const users = await this.userModel.findAll();
     return users;
   }
 
-  async setUser(userId: string, toUpdate: UserInfoUpdate) {
+  async setUser(
+    userId: string,
+    toUpdate: Partial<UserInfo>
+  ): Promise<UserData> {
     // 우선 해당 id의 유저가 db에 있는지 확인
     let user = await this.userModel.findById(userId);
 
@@ -125,7 +109,7 @@ class UserService {
     return user;
   }
 
-  async getUserInfo(userId: string) {
+  async getUserInfo(userId: string): Promise<UserData> {
     const user = await this.userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
@@ -139,4 +123,6 @@ class UserService {
   }
 }
 
-export { UserService };
+const userService = new UserService(userModel);
+
+export { userService };

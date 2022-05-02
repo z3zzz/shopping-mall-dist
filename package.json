@@ -17,6 +17,7 @@
     "url": "https://kdt-gitlab.elice.io/KwangTaeKim/shopping-mall/-/issues"
   },
   "dependencies": {
+    "@sindresorhus/is": "^4.6.0",
     "bcrypt": "^5.0.1",
     "chalk": "^5.0.1",
     "cors": "^2.8.5",

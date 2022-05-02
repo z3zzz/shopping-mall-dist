@@ -1,0 +1,43 @@
+###
+GET http://localhost:5000/
+
+###
+POST http://localhost:5000/user/register
+content-type: application/json
+
+{
+    "name": "kwangtae",
+    "email": "ktkim@elicer.com",
+    "password": "1234"
+}
+
+###
+GET http://localhost:5000/users
+
+###
+POST http://localhost:5000/user/login
+content-type: application/json
+
+{
+    "email": "ktkim@elicer.com",
+    "password": "1234"
+}
+
+###
+GET http://localhost:5000/afterlogin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTZjZGQzNmQtMGIzMy00OTY5LWE2OWEtOGViNGU4MDRkZmYyIiwiaWF0IjoxNjQ0NTg1NDIxfQ.GmViFFz5UqhBFNvI9mquWdw1ynvtqD-Oz3oB7CfCPbI 
+
+###
+GET http://localhost:5000/user/current
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiOTZjZGQzNmQtMGIzMy00OTY5LWE2OWEtOGViNGU4MDRkZmYyIiwiaWF0IjoxNjQ0NTg1NDIxfQ.GmViFFz5UqhBFNvI9mquWdw1ynvtqD-Oz3oB7CfCPbI 
+
+###
+PUT http://localhost:5000/users/96cdd36d-0b33-4969-a69a-8eb4e804dff2
+content-type: application/json
+
+{
+    "email": "ktkim@elicer.com",
+    "description": "asda33dd"
+}
+
+
