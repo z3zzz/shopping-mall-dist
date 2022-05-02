@@ -7,6 +7,11 @@ interface LoginInfo {
   password: string;
 }
 
+interface UserInfoRequired {
+  userId: string;
+  currentPassword: string;
+}
+
 class UserService {
   constructor(private userModel: UserModel) {}
 
@@ -33,7 +38,7 @@ class UserService {
     return createdNewUser;
   }
 
-  async getUserLogin(loginInfo: LoginInfo): Promise<{ token: string }> {
+  async getUserToken(loginInfo: LoginInfo): Promise<{ token: string }> {
     // 객체 destructuring
     const { email, password } = loginInfo;
 
@@ -71,9 +76,12 @@ class UserService {
   }
 
   async setUser(
-    userId: string,
+    userInfoRequired: UserInfoRequired,
     toUpdate: Partial<UserInfo>
   ): Promise<UserData> {
+    // 객체 destructuring
+    const { userId, currentPassword } = userInfoRequired;
+    const { name, email, password } = toUpdate;
     // 우선 해당 id의 유저가 db에 있는지 확인
     let user = await this.userModel.findById(userId);
 
@@ -84,25 +92,40 @@ class UserService {
       );
     }
 
-    // toUpdate 객체에 name 프로퍼티가 있다면, db에 업데이트함.
-    if (toUpdate.name) {
+    // 비밀번호 일치 여부 확인
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      correctPasswordHash
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error(
+        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    // toUpdate 객체에 name 프로퍼티가 있었다면, db에 업데이트함.
+    if (name) {
       user = await this.userModel.update({
         userId,
-        update: { name: toUpdate.name },
+        update: { name },
       });
     }
 
-    if (toUpdate.email) {
+    if (email) {
       user = await this.userModel.update({
         userId,
-        update: { email: toUpdate.email },
+        update: { email },
       });
     }
 
-    if (toUpdate.password) {
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       user = await this.userModel.update({
         userId,
-        update: { password: toUpdate.password },
+        update: { password: hashedPassword },
       });
     }
 
