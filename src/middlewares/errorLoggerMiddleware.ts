@@ -24,20 +24,16 @@ function errorLoggerMiddleware(
 
   const method = req.method;
   const url = req.url;
-  const status = res.statusCode;
   const errorContent = error.stack;
 
-  const log = `[${dateFormatted}] ${method}:${url} ${status}`;
+  const errorLog = `[${dateFormatted}] ${method}:${url}\n${errorContent}\n\n`;
 
-  console.log(log);
-  console.log(errorContent);
-
-  fs.appendFile('request.log', log + '\n' + errorContent + '\n', (err) => {
+  fs.appendFile('error.log', errorLog, (err) => {
     if (err) {
       console.log(err);
     }
   });
-  next();
+  next(error);
 }
 
 export { errorLoggerMiddleware };

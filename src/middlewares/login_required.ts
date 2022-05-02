@@ -1,9 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-
-export interface RequestWithUserId extends Request {
-  currentUserId: string;
-}
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 function login_required(req: Request, res: Response, next: NextFunction) {
   // request 헤더로부터 authorization bearer 토큰을 받음.
@@ -21,7 +17,7 @@ function login_required(req: Request, res: Response, next: NextFunction) {
   // 해당 token 이 정상적인 token인지 확인
   try {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
-    const jwtDecoded = jwt.verify(userToken, secretKey);
+    const jwtDecoded = jwt.verify(userToken, secretKey) as JwtPayload;
 
     const userId = jwtDecoded.userId;
     req.currentUserId = userId;
