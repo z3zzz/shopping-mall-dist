@@ -11,12 +11,17 @@ const OrderSchema = new Schema(
       type: Number,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     address: {
       type: new Schema({
         road: String,
         building: String,
         detail: String,
         postalCode: String,
+        receiver: String,
       }),
       required: false,
     },

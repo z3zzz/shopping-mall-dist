@@ -10,6 +10,11 @@ const ProductCategorySchema = new Schema(
       type: String,
       required: true,
     },
+    numberOfProducts: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   {
     collection: 'product-categorys',
