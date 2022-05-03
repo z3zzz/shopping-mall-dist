@@ -1,4 +1,4 @@
-import num from './test.js';
+import num from './module.js';
 
 const elem = document.querySelector('#test');
 
