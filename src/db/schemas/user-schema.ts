@@ -27,6 +27,11 @@ const UserSchema = new Schema(
       }),
       required: false,
     },
+    role: {
+      type: String,
+      required: true,
+      default: 'basic-user',
+    },
   },
   {
     collection: 'user',
