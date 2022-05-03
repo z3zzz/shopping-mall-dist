@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
-import { login_required } from '../middlewares';
-import { userService } from '../services/userService';
+import { loginRequired } from '../middlewares';
+import { userService } from '../services';
 
 const userRouter = Router();
 
@@ -55,22 +55,18 @@ userRouter.post('/api/login', async function (req, res, next) {
   }
 });
 
-userRouter.get(
-  '/api/userlist',
-  login_required,
-  async function (req, res, next) {
-    try {
-      // 전체 사용자 목록을 얻음
-      const users = await userService.getUsers();
+userRouter.get('/api/userlist', loginRequired, async function (req, res, next) {
+  try {
+    // 전체 사용자 목록을 얻음
+    const users = await userService.getUsers();
 
-      res.status(200).json(users);
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
-userRouter.get('/api/user', login_required, async function (req, res, next) {
+userRouter.get('/api/user', loginRequired, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const currentUserInfo = await userService.getUserInfo(userId);
@@ -81,7 +77,7 @@ userRouter.get('/api/user', login_required, async function (req, res, next) {
   }
 });
 
-userRouter.patch('/api/user', login_required, async function (req, res, next) {
+userRouter.patch('/api/user', loginRequired, async function (req, res, next) {
   try {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.

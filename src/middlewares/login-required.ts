@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-function login_required(req: Request, res: Response, next: NextFunction) {
+function loginRequired(req: Request, res: Response, next: NextFunction) {
   // request 헤더로부터 authorization bearer 토큰을 받음.
   const userToken = req.headers['authorization']?.split(' ')[1];
 
@@ -30,4 +30,4 @@ function login_required(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { login_required };
+export { loginRequired };

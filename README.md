@@ -73,5 +73,8 @@
         - (추가 점수) 배포/테스트 환경 퀄리티: 유닛 테스트/UI 기능 테스트의 자동화, continuous build/continuous test 설치
         - (추가 점수) 상품 구매시, 오픈 API를 통해서 구매버튼 생성
 
+2. 주소 API
+https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUwMjIzNDU1OTExMjUyNjk=&returnUrl=http://localhost:1234/
+
 </p>
 </details>

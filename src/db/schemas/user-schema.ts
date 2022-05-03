@@ -18,8 +18,13 @@ const UserSchema = new Schema(
       type: Number,
       required: false,
     },
-    roadFullAddr: {
-      type: String,
+    address: {
+      type: new Schema({
+        road: String,
+        building: String,
+        detail: String,
+        postalCode: String,
+      }),
       required: false,
     },
   },

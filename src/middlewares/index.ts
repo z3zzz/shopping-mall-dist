@@ -1,3 +1,3 @@
-export * from './errorMiddleware';
-export * from './errorLoggerMiddleware';
-export * from './login_required';
+export * from './error-handler';
+export * from './error-logger';
+export * from './login-required';

@@ -1,2 +1,2 @@
-export * from './viewsRouter';
-export * from './userRouter';
+export * from './views-router';
+export * from './user-router';

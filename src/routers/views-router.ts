@@ -8,7 +8,7 @@ viewsRouter.use(express.static(path.join(__dirname, '../views/static')));
 
 // html 파일들 라우팅
 viewsRouter.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/home.html'));
+  res.sendFile(path.join(__dirname, '../views/homepage.html'));
 });
 
 export { viewsRouter };
