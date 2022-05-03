@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 
-function errorLoggerMiddleware(
+function errorLogger(
   error: Error,
   req: Request,
   res: Response,
@@ -36,4 +36,4 @@ function errorLoggerMiddleware(
   next(error);
 }
 
-export { errorLoggerMiddleware };
+export { errorLogger };

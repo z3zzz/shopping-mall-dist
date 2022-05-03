@@ -1,9 +1,7 @@
 import express from 'express';
 import 'reflect-metadata';
 import { viewsRouter, userRouter } from './routers';
-import { errorLoggerMiddleware, errorMiddleware } from './middlewares';
-// 임시
-import './db';
+import { errorLogger, errorHandler } from './middlewares';
 
 const app = express();
 
@@ -16,8 +14,8 @@ app.use(viewsRouter);
 // api 라우팅
 app.use(userRouter);
 
-// 미들웨어
-app.use(errorLoggerMiddleware);
-app.use(errorMiddleware);
+// 미들웨어 (에러를 error.log 파일에 기록 및, 에러를 프론트엔드에 전달)
+app.use(errorLogger);
+app.use(errorHandler);
 
 export { app };

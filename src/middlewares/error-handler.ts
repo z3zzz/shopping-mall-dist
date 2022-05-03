@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-function errorMiddleware(
+function errorHandler(
   error: Error,
   req: Request,
   res: Response,
@@ -11,4 +11,4 @@ function errorMiddleware(
   res.status(400).send(error.message);
 }
 
-export { errorMiddleware };
+export { errorHandler };
