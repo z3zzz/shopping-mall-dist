@@ -76,5 +76,8 @@
 2. 주소 API
 https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUwMjIzNDU1OTExMjUyNjk=&returnUrl=http://localhost:1234/
 
+3. fontawesome kit code
+<script src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
+
 </p>
 </details>
