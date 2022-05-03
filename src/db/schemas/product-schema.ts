@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 
 const ProductSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
@@ -13,6 +13,10 @@ const ProductSchema = new Schema(
     },
     description: {
       type: String,
+      required: true,
+    },
+    image: {
+      type: Buffer,
       required: true,
     },
     inventory: {
