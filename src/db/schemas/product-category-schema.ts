@@ -12,7 +12,7 @@ const ProductCategorySchema = new Schema(
     },
   },
   {
-    collection: 'product-category',
+    collection: 'product-categorys',
     timestamps: true,
   }
 );
