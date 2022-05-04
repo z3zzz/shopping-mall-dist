@@ -1,2 +1,21 @@
+.header-search-input {
+  width: 20rem;
+}
 
+.navbar-menu .is-info:focus {
+  outline: none;
+  box-shadow: none;
+} 
 
+.slider-navigation-previous {
+  display: none;
+}
+.slider-navigation-next {
+  display: none;
+}
+
+.card {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}

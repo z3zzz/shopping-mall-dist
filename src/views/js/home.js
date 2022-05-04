@@ -1,9 +1,9 @@
-import num from './module.js';
-
-const elem = document.querySelector('#test');
-
-console.log('index.js loaded');
-
-setTimeout(() => {
-  elem.innerText = num;
-}, 2000);
+// 이미지 슬라이드
+bulmaCarousel.attach('#slider', {
+  //autoplay: true,
+  autoplaySpeed: 5000,
+  infinite: true,
+  duration: 1200,
+  pauseOnHover: false,
+  navigation: false,
+});

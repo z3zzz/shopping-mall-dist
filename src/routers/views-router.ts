@@ -3,8 +3,8 @@ import path from 'path';
 
 const viewsRouter = express.Router();
 
-// views/static 폴더의 파일들(css, js 등) 라우팅
-viewsRouter.use(express.static(path.join(__dirname, '../views/static')));
+// views 폴더의 css, js 라우팅
+viewsRouter.use(express.static(path.join(__dirname, '../views')));
 
 // html 파일들 라우팅
 viewsRouter.get('/', function (req, res) {
