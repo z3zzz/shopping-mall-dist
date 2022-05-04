@@ -14,24 +14,53 @@
       crossorigin="anonymous"
       defer
     ></script>
+    <script src="js/home.js" type="module" defer></script>
   </head>
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Hello World</h1>
-        <p class="subtitle">My first website with <strong>Bulma</strong>!</p>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="img/elice-rabbit.png" width="30" height="30" />
+          <span class="has-text-link">Kwang's Mall</span>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
-    </section>
-    <span class="icon">
-      <i class="fas fa-home"></i>
-    </span>
-    <span>Home</span>
-    <div class="modal">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        <button class="button is-large is-primary">Button</button>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="select is-info">
+          <select>
+            <option>전체</option>
+            <option>남성 옷</option>
+          </select>
+        </div>
+        <input
+          class="input is-link"
+          type="text"
+          placeholder="원하시는 제품을 검색해 보세요"
+        />
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light"> Log in </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
+    </nav>
   </body>
 </html>
