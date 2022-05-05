@@ -5,7 +5,7 @@ import { userService } from '../services';
 
 const userRouter = Router();
 
-userRouter.post('/api/register', async (req, res, next) => {
+userRouter.post('/register', async (req, res, next) => {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
@@ -32,7 +32,7 @@ userRouter.post('/api/register', async (req, res, next) => {
   }
 });
 
-userRouter.post('/api/login', async function (req, res, next) {
+userRouter.post('/login', async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
@@ -55,7 +55,7 @@ userRouter.post('/api/login', async function (req, res, next) {
   }
 });
 
-userRouter.get('/api/userlist', loginRequired, async function (req, res, next) {
+userRouter.get('/userlist', loginRequired, async function (req, res, next) {
   try {
     // 전체 사용자 목록을 얻음
     const users = await userService.getUsers();
@@ -66,10 +66,10 @@ userRouter.get('/api/userlist', loginRequired, async function (req, res, next) {
   }
 });
 
-userRouter.get('/api/user', loginRequired, async function (req, res, next) {
+userRouter.get('/user', loginRequired, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
-    const currentUserInfo = await userService.getUserInfo(userId);
+    const currentUserInfo = await userService.getUserData(userId);
 
     res.status(200).json(currentUserInfo);
   } catch (error) {
@@ -77,7 +77,7 @@ userRouter.get('/api/user', loginRequired, async function (req, res, next) {
   }
 });
 
-userRouter.patch('/api/user', loginRequired, async function (req, res, next) {
+userRouter.patch('/user', loginRequired, async function (req, res, next) {
   try {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
