@@ -79,5 +79,12 @@ https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUwM
 3. fontawesome kit code
 <script src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
 
+4. aws s3 access (temp)
+```jsx
+const albumBucketName = 'kwang-shopping';
+const bucketRegion = 'ap-northeast-2';
+const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
+```
+
 </p>
 </details>
