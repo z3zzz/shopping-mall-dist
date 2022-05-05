@@ -1,5 +1,4 @@
 import express from 'express';
-import 'reflect-metadata';
 import { viewsRouter, userRouter } from './routers';
 import { errorLogger, errorHandler } from './middlewares';
 
