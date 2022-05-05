@@ -67,7 +67,7 @@
         <div class="field">
           <label class="label">제품 이름</label>
           <div class="control">
-            <input class="input" type="text" placeholder="아이보리 티셔츠" />
+            <input class="input" id="nameInput" type="text" placeholder="아이보리 티셔츠" />
           </div>
         </div>
 
@@ -75,9 +75,9 @@
           <label class="label">카테고리</label>
           <div class="control">
             <div class="select is-fullwidth">
-              <select>
-                <option>남자 옷(Men Clothes)</option>
-                <option>여자 옷(Women Clothes)</option>
+              <select id="categorySelectBox">
+                <option value="1">Men Clothes</option>
+                <option value="2">Women Clothes</option>
               </select>
             </div>
           </div>
@@ -86,7 +86,7 @@
         <div class="field">
           <label class="label">제조사</label>
           <div class="control">
-            <input class="input" type="text" placeholder="OO의류제조(주)" />
+            <input class="input" id="manufacturerInput" type="text" placeholder="OO의류제조(주)" />
           </div>
         </div>
 
@@ -95,6 +95,7 @@
           <div class="control">
             <textarea
               class="textarea"
+              id="shortDescriptionInput"
               rows="3"
               placeholder="제품에 대한 1~2문장의 설명을 적어 주세요."
             ></textarea>
@@ -106,6 +107,7 @@
           <div class="control">
             <textarea
               class="textarea"
+              id="detailDescriptionInput"
               rows="8"
               placeholder="제품에 대한 상세 설명을 적어 주세요."
             ></textarea>
@@ -116,7 +118,7 @@
           <label class="label">제품 사진</label>
           <div class="file has-name is-fullwidth">
             <label class="file-label">
-              <input class="file-input" type="file" name="image-file" />
+              <input class="file-input" id="imageInput" type="file" name="image-file" />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
@@ -131,7 +133,7 @@
         <div class="field">
           <label class="label">재고 수</label>
           <div class="control">
-            <input class="input" type="number" placeholder="10" />
+            <input class="input" id="inventoryInput" type="number" placeholder="10" />
           </div>
         </div>
 
@@ -139,11 +141,11 @@
           <label class="label">가격</label>
         <div class="field mb-5">
           <div class="control has-icons-right">
-            <input class="input" type="number" placeholder="10000" />
+            <input class="input" id="priceInput" type="number" placeholder="10000" />
             <span class="icon is-small is-right"> 원 </span>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth">제품 판매하기</button>
+        <button class="button id="submitBtn" is-primary is-fullwidth">제품 판매하기</button>
       </form>
     </div>
   </body>

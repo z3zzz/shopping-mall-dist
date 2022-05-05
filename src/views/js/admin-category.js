@@ -1,8 +1,8 @@
 import { addImageToS3, Api } from './common/index.js';
 
-// 요소(element)들과 상수들
-const nameInput = document.querySelector('#nameInput');
-const descriptionInput = document.querySelector('#descriptionInput');
+// 요소(element), input 혹은 상수
+const name = document.querySelector('#nameInput').value;
+const description = document.querySelector('#descriptionInput').value;
 const submitButton = document.querySelector('#addCategoryBtn');
 
 addAllEvents();
@@ -15,9 +15,6 @@ function addAllEvents() {
 // 사진은 AWS S3에 저장, 이후 카테고리 정보를 백엔드 db에 저장.
 async function handleSubmit(e) {
   e.preventDefault();
-
-  const name = nameInput.value;
-  const description = descriptionInput.value;
 
   // 입력 칸이 비어 있으면 진행 불가
   if (!name || !description) {
