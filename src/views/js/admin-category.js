@@ -1,4 +1,4 @@
-import { addPhoto } from './utils/aws-s3.js';
+import { addImage, Api } from './common/index.js';
 
 // 요소(element)들과 상수들
 const nameInput = document.querySelector('#nameInput');
@@ -8,19 +8,24 @@ const submitButton = document.querySelector('#addCategoryBtn');
 eventListeners();
 
 // 각 요소에 이벤트 추가
-const eventListeners = () => {
+function eventListeners() {
   submitButton.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    const photoUrl = await addPhoto('imageInput', 'category');
-    console.log({ photoUrl });
-  });
-};
+    const name = nameInput.value;
+    const description = descriptionInput.value;
 
-// 함수들 정의
-const addCategoryToDb = (url) => {
-  // 입력 칸이 비어 있으면 진행 불가
-  if (!nameInput.value || !descriptionInput.value) {
-    return alert('빈 칸이 없어야 합니다.');
-  }
-};
+    // 입력 칸이 비어 있으면 진행 불가
+    if (!name || !description) {
+      return alert('빈 칸이 없어야 합니다.');
+    }
+
+    const imageUrl = await addImage('imageInput', 'category');
+    console.log({ imageUrl });
+    const data = { name, description, imageUrl };
+
+    const newCategory = await Api.post('/api/category', data);
+
+    console.log({ newCategory });
+  });
+}
