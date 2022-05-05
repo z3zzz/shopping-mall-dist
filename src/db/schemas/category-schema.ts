@@ -10,11 +10,8 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: new Schema({
-        data: Buffer,
-        mimetype: String,
-      }),
+    imageUrl: {
+      type: String,
       required: true,
     },
     numberOfProductIds: {

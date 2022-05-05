@@ -3,28 +3,23 @@ import { CategorySchema } from '../schemas/category-schema';
 
 const Category = model('categorys', CategorySchema);
 
-export interface Image {
-  data: Buffer;
-  mimetype: string;
-}
-
 export interface CategoryInfo {
   name: string;
   description: string;
-  image: Image;
+  imageUrl: string;
 }
 
 export interface CategoryData {
   _id: string;
   name: string;
   description: string;
-  image: Image;
+  imageUrl: string;
 }
 
 interface ToUpdate {
   categoryId: string;
   update: {
-    [key: string]: string | Image;
+    [key: string]: string;
   };
 }
 
