@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 
-const ProductCategorySchema = new Schema(
+const CategorySchema = new Schema(
   {
     name: {
       type: String,
@@ -14,16 +14,21 @@ const ProductCategorySchema = new Schema(
       type: Buffer,
       required: true,
     },
-    numberOfProducts: {
+    numberOfProductIds: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    numberOfTotalProducts: {
       type: Number,
       required: false,
       default: 0,
     },
   },
   {
-    collection: 'product-categorys',
+    collection: 'categorys',
     timestamps: true,
   }
 );
 
-export { ProductCategorySchema };
+export { CategorySchema };
