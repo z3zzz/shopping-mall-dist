@@ -15,6 +15,8 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+    <!-- AWS S3 사진 업로드용 -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="css/admin-category.css" />
     <script src="js/admin-category.js" type="module" defer></script>
@@ -68,7 +70,12 @@
         <div class="field">
           <label class="label">카테고리 이름</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Men Clothes" />
+            <input
+              class="input"
+              id="nameInput"
+              type="text"
+              placeholder="Men Clothes"
+            />
           </div>
         </div>
 
@@ -77,6 +84,7 @@
           <div class="control">
             <input
               class="input"
+              id="descriptionInput"
               type="text"
               placeholder="센세이셔널한 봄, 여름 코디"
             />
@@ -87,7 +95,12 @@
           <label class="label">카테고리 사진</label>
           <div class="file has-name is-fullwidth">
             <label class="file-label">
-              <input class="file-input" type="file" name="image-file" />
+              <input
+                class="file-input"
+                id="imageInput"
+                type="file"
+                name="image-file"
+              />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
@@ -98,7 +111,7 @@
             </label>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth">
+        <button class="button is-primary is-fullwidth" id="addCategoryBtn">
           카테고리 추가하기
         </button>
       </form>

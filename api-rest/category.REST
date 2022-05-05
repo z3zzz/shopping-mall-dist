@@ -10,28 +10,29 @@ content-type: application/json
 ###
 POST http://localhost:5000/api/category
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
-content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+content-type: application/json
 
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="name"
-
-test-category
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="description"
-
-this-is-for-test
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image-file"; filename="test-image.png"
-Content-Type: image/png
-
-< ./test-image.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+{
+    "name": "test-photo",
+    "description": "this is test",
+    "imageUrl": "https://aws-s3.com/test.png"
+}
 
 ###
 GET http://localhost:5000/api/categorylist
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
 
 ###
-GET http://localhost:5000/api/categorys/6273c94068f52fb14779f487
+GET http://localhost:5000/api/categorys/6273fd87a9a8230c847d4ce9
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
 
+###
+PATCH http://localhost:5000/api/categorys/6273fd87a9a8230c847d4ce9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+content-type: application/json
+
+{
+    "name": "test-photo2",
+    "description": "this is test2",
+    "imageUrl": "https://aws-s3.com/test.png2"
+}
