@@ -10,6 +10,10 @@ const ProductCategorySchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: Buffer,
+      required: true,
+    },
     numberOfProducts: {
       type: Number,
       required: false,
