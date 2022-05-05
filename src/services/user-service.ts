@@ -65,7 +65,7 @@ class UserService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
-    const token = jwt.sign({ userId: user._id }, secretKey);
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
     return { token };
   }
@@ -132,7 +132,7 @@ class UserService {
     return user;
   }
 
-  async getUserInfo(userId: string): Promise<UserData> {
+  async getUserData(userId: string): Promise<UserData> {
     const user = await this.userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
