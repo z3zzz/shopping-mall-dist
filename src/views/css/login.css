@@ -1,18 +1,18 @@
-.register-form-container {
+.login-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 85vh;
 }
 
-.register-form-box {
+.login-form-box {
   width: 30rem;
 }
 
-.register-form-box .title {
+.login-form-box .title {
   text-align: center;
 }
 
-.register-form-box .button {
+.login-form-box .button {
   font-weight: bold;
 }
