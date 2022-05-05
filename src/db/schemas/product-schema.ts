@@ -6,12 +6,25 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
+    sellerId: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      required: true,
+    },
     categoryId: {
       type: Schema.Types.ObjectId,
-      ref: 'product-category',
+      ref: 'product-categorys',
+      required: true,
+    },
+    menufacturer: {
+      type: String,
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    detailDescription: {
       type: String,
       required: true,
     },
@@ -33,12 +46,16 @@ const ProductSchema = new Schema(
       required: true,
       default: 10,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
     discountPercent: {
       type: Number,
       min: 0,
       max: 90,
       default: 0,
-      required: true,
+      required: false,
     },
     sku: {
       type: String,

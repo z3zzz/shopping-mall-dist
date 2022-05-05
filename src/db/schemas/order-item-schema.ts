@@ -4,12 +4,12 @@ const OrderItemSchema = new Schema(
   {
     orderId: {
       type: Schema.Types.ObjectId,
-      ref: 'order',
+      ref: 'orders',
       required: true,
     },
     productId: {
       type: Schema.Types.ObjectId,
-      ref: 'prouct',
+      ref: 'proucts',
       required: true,
     },
     quantity: {
