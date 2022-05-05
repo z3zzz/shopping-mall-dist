@@ -16,29 +16,28 @@ POST http://localhost:5000/api/login
 content-type: application/json
 
 {
-    "email": "ktkim1@elicer.com",
+    "email": "ktkim@elicer.com",
     "password": "1234"
 }
 
 ###
 GET http://localhost:5000/api/userlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZmOGExMjkzMGY5OTM3NjNhMWU3ZjciLCJpYXQiOjE2NTE0OTczMTd9.vX3Wxp22bcIgVrVn4Mc-KXOkfqf0KugAyT4DkRyr7yY 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MTc0NzA3MH0.mcu-lQeA6GCMC4ZiPTsSlcnDpIjiQpx-pu1aKmSWJT0 
 
 ###
 GET http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZmOGExMjkzMGY5OTM3NjNhMWU3ZjciLCJpYXQiOjE2NTE0OTczMTd9.vX3Wxp22bcIgVrVn4Mc-KXOkfqf0KugAyT4DkRyr7yY 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MTc0NzA3MH0.mcu-lQeA6GCMC4ZiPTsSlcnDpIjiQpx-pu1aKmSWJT0 
 
 
 ###
 PATCH http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjZmOGExMjkzMGY5OTM3NjNhMWU3ZjciLCJpYXQiOjE2NTE0OTczMTd9.vX3Wxp22bcIgVrVn4Mc-KXOkfqf0KugAyT4DkRyr7yY 
-src/middlewares/login_required.ts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MTc0NzA3MH0.mcu-lQeA6GCMC4ZiPTsSlcnDpIjiQpx-pu1aKmSWJT0 
+content-type: application/json
 
 {
     "name": "KwangTae",
     "email": "ktkim@elicer.com",
-    "password": "1234",
-    "currentPassword": "1"
+    "currentPassword": "1234"
 }
 
 
