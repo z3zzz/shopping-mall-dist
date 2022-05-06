@@ -3,62 +3,80 @@ import { ProductSchema } from '../schemas/product-schema';
 
 const Product = model('products', ProductSchema);
 
-export interface ProductInfo {
-  name: string;
-  description: string;
-  imageUrl: string;
+export interface Inventory {
+  quantity: number;
 }
 
-export interface CategoryData {
-  _id: string;
-  name: string;
-  description: string;
+export interface ProductInfo {
+  title: string;
+  sellerId: string;
+  categoryId: string;
+  menufacturer: string;
+  shortDescription: string;
+  detailDescription: string;
   imageUrl: string;
+  inventory: Inventory;
+  price: number;
+  discountPercent: number;
+}
+
+export interface ProductData {
+  _id: string;
+  title: string;
+  sellerId: string;
+  categoryId: string;
+  menufacturer: string;
+  shortDescription: string;
+  detailDescription: string;
+  imageUrl: string;
+  inventory: Inventory;
+  price: number;
+  discountPercent: number;
 }
 
 interface ToUpdate {
-  categoryId: string;
+  productId: string;
   update: {
-    [key: string]: string;
+    [key: string]: string | number | Inventory;
   };
 }
 
-export class CategoryModel {
-  async findByName(name: string): Promise<CategoryData> {
-    const category = await Product.findOne({ name });
-    return category;
+export class ProductModel {
+  async findByTitle(title: string): Promise<ProductData> {
+    const product = await Product.findOne({ title });
+    return product;
   }
 
-  async findById(categoryId: string): Promise<CategoryData> {
-    const category = await Product.findOne({ _id: categoryId });
-    return category;
+  async findById(productId: string): Promise<ProductData> {
+    const product = await Product.findOne({ _id: productId });
+    return product;
   }
 
-  async create(categoryInfo: ProductInfo): Promise<CategoryData> {
-    const createdNewCategory = await Product.create(categoryInfo);
-    return createdNewCategory;
+  async create(productInfo: ProductInfo): Promise<ProductData> {
+    const createdNewProduct = await Product.create(productInfo);
+    return createdNewProduct;
   }
 
-  async findAll(): Promise<CategoryData[]> {
-    const categorys = await Product.find({});
-    return categorys;
+  async findAll(): Promise<ProductData[]> {
+    const products = await Product.find({});
+    return products;
   }
 
-  async update({ categoryId, update }: ToUpdate): Promise<CategoryData> {
-    const filter = { _id: categoryId };
+  async update({ productId, update }: ToUpdate): Promise<ProductData> {
+    const filter = { _id: productId };
     const option = { returnOriginal: false };
 
     console.log({ filter, update, option });
 
-    const updatedCategory = await Product.findOneAndUpdate(
+    const updatedProduct = await Product.findOneAndUpdate(
       filter,
       update,
       option
     );
-    return updatedCategory;
+    return updatedProduct;
   }
 }
 
-const categoryModel = new CategoryModel();
+const productModel = new ProductModel();
 
-export { categoryModel };
+export { productModel };
