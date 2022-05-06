@@ -1,4 +1,4 @@
-import { randomId } from './randomId.js';
+import { randomId } from './usefulFunctions.js';
 
 const s3BucketName = 'kwang-shopping';
 const bucketRegion = 'ap-northeast-2'; // 한국은 항상 ap-northeast-2임.

@@ -15,6 +15,8 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+    <!-- AWS S3 사진 업로드용 -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="css/register-product.css" />
     <script src="js/register-product.js" type="module" defer></script>
@@ -144,8 +146,8 @@
             <input class="input" id="priceInput" type="number" placeholder="10000" />
             <span class="icon is-small is-right"> 원 </span>
           </div>
-        </div>
-        <button class="button id="submitBtn" is-primary is-fullwidth">제품 판매하기</button>
+        </div  >
+        <button class="button is-primary is-fullwidth" id="submitButton">제품 판매하기</button>
       </form>
     </div>
   </body>

@@ -1,4 +1,5 @@
-import { addImageToS3, Api } from './common/index.js';
+import { addImageToS3 } from './common/aws-s3.js';
+import * as Api from './common/api.js';
 
 // 요소(element), input 혹은 상수
 const nameInput = document.querySelector('#nameInput');
@@ -31,7 +32,7 @@ async function handleSubmit(e) {
 
     const newCategory = await Api.post('/api/category', data);
 
-    alert(`정상적으로 db에 카테고리가 등록되었습니다. \n${newCategory}`);
+    alert(`정상적으로 ${name} 카테고리가 등록되었습니다.`);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
