@@ -1,8 +1,8 @@
 import { addImageToS3, Api } from './common/index.js';
 
 // 요소(element), input 혹은 상수
-const name = document.querySelector('#nameInput').value;
-const description = document.querySelector('#descriptionInput').value;
+const nameInput = document.querySelector('#nameInput');
+const descriptionInput = document.querySelector('#descriptionInput');
 const submitButton = document.querySelector('#addCategoryBtn');
 
 addAllEvents();
@@ -16,8 +16,12 @@ function addAllEvents() {
 async function handleSubmit(e) {
   e.preventDefault();
 
+  const name = nameInput.value;
+  const description = descriptionInput.value;
+
   // 입력 칸이 비어 있으면 진행 불가
   if (!name || !description) {
+    console.log({ name, description });
     return alert('빈 칸이 없어야 합니다.');
   }
 
@@ -29,7 +33,7 @@ async function handleSubmit(e) {
 
     alert(`정상적으로 db에 카테고리가 등록되었습니다. \n${newCategory}`);
   } catch (err) {
-    console.error(err);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요.\n${err.message}`);
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }

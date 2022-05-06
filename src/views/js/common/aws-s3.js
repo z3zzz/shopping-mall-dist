@@ -23,7 +23,7 @@ async function addImageToS3(fileInputId, album) {
   // 파일 input 요소에, 사용자가 올린 파일이 있는지 여부 확인
   const files = document.querySelector(`#${fileInputId}`).files;
   if (!files.length) {
-    return alert('사진 파일을 업로드해 주세요.');
+    throw new Error('사진 파일을 업로드해 주세요.');
   }
 
   // 파일 input 요소에서 사진파일 추출 등 AWS S3로의 업로드 준비
@@ -41,11 +41,12 @@ async function addImageToS3(fileInputId, album) {
     },
   });
 
-  // AWS S3에 업로드 진행 -> 성공 시, 업로드된 파일 주소 URL을 반환
+  // AWS S3에 업로드 진행 -> 성공 시, 업로드된 파일 주소를 반환
   try {
     const uploadedFile = await upload.promise();
 
     const fileUrl = uploadedFile.Location;
+    console.log(uploadedFile);
     console.log(`AWS S3에 정상적으로 사진이 업로드되었습니다.\n${fileUrl}`);
 
     return fileUrl;
