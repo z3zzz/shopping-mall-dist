@@ -10,10 +10,10 @@ class CategoryService {
 
   async addCategory(categoryInfo: CategoryInfo): Promise<CategoryData> {
     // 객체 destructuring
-    const { name } = categoryInfo;
+    const { title } = categoryInfo;
 
     // 이름 중복 확인
-    const category = await this.categoryModel.findByName(name);
+    const category = await this.categoryModel.findByTitle(title);
     if (category) {
       throw new Error(
         '이 이름은 현재 사용중입니다. 다른 이름을 입력해 주세요.'
@@ -36,7 +36,7 @@ class CategoryService {
     toUpdate: Partial<CategoryInfo>
   ): Promise<CategoryData> {
     // 객체 destructuring
-    const { name, description, imageUrl } = toUpdate;
+    const { title, description, imageUrl } = toUpdate;
     // 우선 해당 id의 카테고리가 db에 있는지 확인
     let category = await this.categoryModel.findById(categoryId);
 
@@ -47,11 +47,11 @@ class CategoryService {
       );
     }
 
-    // toUpdate 객체에 name 프로퍼티가 있었다면, db에 업데이트함.
-    if (name) {
+    // toUpdate 객체에 title 프로퍼티가 있었다면, db에 업데이트함.
+    if (title) {
       category = await this.categoryModel.update({
         categoryId,
-        update: { name },
+        update: { title },
       });
     }
 

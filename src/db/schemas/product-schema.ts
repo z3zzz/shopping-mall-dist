@@ -29,10 +29,7 @@ const ProductSchema = new Schema(
       required: true,
     },
     image: {
-      type: new Schema({
-        data: Buffer,
-        mimetype: String,
-      }),
+      type: String,
       required: true,
     },
     inventory: {
@@ -47,7 +44,6 @@ const ProductSchema = new Schema(
         { timestamps: true }
       ),
       required: true,
-      default: 10,
     },
     price: {
       type: Number,
@@ -56,7 +52,7 @@ const ProductSchema = new Schema(
     discountPercent: {
       type: Number,
       min: 0,
-      max: 90,
+      max: 95,
       default: 0,
       required: false,
     },

@@ -4,14 +4,14 @@ import { CategorySchema } from '../schemas/category-schema';
 const Category = model('categorys', CategorySchema);
 
 export interface CategoryInfo {
-  name: string;
+  title: string;
   description: string;
   imageUrl: string;
 }
 
 export interface CategoryData {
   _id: string;
-  name: string;
+  title: string;
   description: string;
   imageUrl: string;
 }
@@ -24,8 +24,8 @@ interface ToUpdate {
 }
 
 export class CategoryModel {
-  async findByName(name: string): Promise<CategoryData> {
-    const category = await Category.findOne({ name });
+  async findByTitle(title: string): Promise<CategoryData> {
+    const category = await Category.findOne({ title });
     return category;
   }
 

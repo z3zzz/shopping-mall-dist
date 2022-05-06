@@ -2,7 +2,7 @@ import { addImageToS3 } from './common/aws-s3.js';
 import * as Api from './common/api.js';
 
 // 요소(element)들과 상수들
-const nameInput = document.querySelector('#nameInput');
+const titleInput = document.querySelector('#titleInput');
 const categorySelectBox = document.querySelector('#categorySelectBox');
 const manufacturerInput = document.querySelector('#manufacturerInput');
 const shortDescriptionInput = document.querySelector('#shortDescriptionInput');
@@ -24,7 +24,7 @@ function addAllEvents() {
 async function handleSubmit(e) {
   e.preventDefault();
 
-  const name = nameInput.value;
+  const title = titleInput.value;
   const categoryId = categorySelectBox.value;
   const manufacturer = manufacturerInput.value;
   const shortDescription = shortDescriptionInput.value;
@@ -34,7 +34,7 @@ async function handleSubmit(e) {
 
   // 입력 칸이 비어 있으면 진행 불가
   if (
-    !name ||
+    !title ||
     !categoryId ||
     !manufacturer ||
     !shortDescription ||
@@ -54,7 +54,7 @@ async function handleSubmit(e) {
   try {
     const imageUrl = await addImageToS3('imageInput', categoryName);
     const data = {
-      name,
+      title,
       categoryId,
       manufacturer,
       shortDescription,
@@ -66,7 +66,7 @@ async function handleSubmit(e) {
 
     const newProduct = await Api.post('/api/product', data);
 
-    alert(`정상적으로 ${name} 제품이 등록되었습니다.`);
+    alert(`정상적으로 ${title} 제품이 등록되었습니다.`);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
