@@ -1,6 +1,6 @@
 import is from '@sindresorhus/is';
 import { Router } from 'express';
-import { adminOnly } from '../middlewares';
+import { adminOnly, loginRequired } from '../middlewares';
 import { categoryService } from '../services';
 
 const categoryRouter = Router();
@@ -32,20 +32,24 @@ categoryRouter.post('/category', adminOnly, async (req, res, next) => {
   }
 });
 
-categoryRouter.get('/categorylist', adminOnly, async function (req, res, next) {
-  try {
-    // 전체 사용자 목록을 얻음
-    const categorys = await categoryService.getCategorys();
+categoryRouter.get(
+  '/categorylist',
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      // 전체 사용자 목록을 얻음
+      const categorys = await categoryService.getCategorys();
 
-    res.status(200).json(categorys);
-  } catch (error) {
-    next(error);
+      res.status(200).json(categorys);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 categoryRouter.get(
   '/categorys/:categoryId',
-  adminOnly,
+  loginRequired,
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
