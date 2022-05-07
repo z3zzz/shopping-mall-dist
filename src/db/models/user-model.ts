@@ -5,14 +5,14 @@ const User = model('users', UserSchema);
 
 export interface UserInfo {
   email: string;
-  name: string;
+  fullName: string;
   password: string;
 }
 
 export interface UserData {
   _id: string;
   email: string;
-  name: string;
+  fullName: string;
   password: string;
   role: string;
 }

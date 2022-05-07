@@ -17,7 +17,7 @@ class UserService {
 
   async addUser(userInfo: UserInfo): Promise<UserData> {
     // 객체 destructuring
-    const { email, name, password } = userInfo;
+    const { email, fullName, password } = userInfo;
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
@@ -30,7 +30,7 @@ class UserService {
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { name, email, password: hashedPassword };
+    const newUserInfo = { fullName, email, password: hashedPassword };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -81,15 +81,13 @@ class UserService {
   ): Promise<UserData> {
     // 객체 destructuring
     const { userId, currentPassword } = userInfoRequired;
-    const { name, email, password } = toUpdate;
+    const { fullName, email, password } = toUpdate;
     // 우선 해당 id의 유저가 db에 있는지 확인
     let user = await this.userModel.findById(userId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
-      );
+      throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
     }
 
     // 비밀번호 일치 여부 확인
@@ -105,11 +103,11 @@ class UserService {
       );
     }
 
-    // toUpdate 객체에 name 프로퍼티가 있었다면, db에 업데이트함.
-    if (name) {
+    // toUpdate 객체에 fullName 프로퍼티가 있었다면, db에 업데이트함.
+    if (fullName) {
       user = await this.userModel.update({
         userId,
-        update: { name },
+        update: { fullName },
       });
     }
 
@@ -137,9 +135,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
-      );
+      throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
     }
 
     return user;

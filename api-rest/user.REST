@@ -6,7 +6,7 @@ POST http://localhost:5000/api/register
 content-type: application/json
 
 {
-    "name": "kwangtae",
+    "fullName": "kwangtae",
     "email": "ktkim@elicer.com",
     "password": "1234"
 }
@@ -22,7 +22,7 @@ content-type: application/json
 
 ###
 GET http://localhost:5000/api/userlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MTc0NzA3MH0.mcu-lQeA6GCMC4ZiPTsSlcnDpIjiQpx-pu1aKmSWJT0 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4OTg1MzV9.S5zC0LoGD3cBsfkE8YoLTRbpud4hbjmUtkYKNy7TvHA
 
 ###
 GET http://localhost:5000/api/user
@@ -35,7 +35,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczY
 content-type: application/json
 
 {
-    "name": "KwangTae",
+    "fullName": "KwangTae",
     "email": "ktkim@elicer.com",
     "currentPassword": "1234"
 }
