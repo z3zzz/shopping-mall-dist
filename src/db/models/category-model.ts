@@ -48,8 +48,6 @@ export class CategoryModel {
     const filter = { _id: categoryId };
     const option = { returnOriginal: false };
 
-    console.log({ filter, update, option });
-
     const updatedCategory = await Category.findOneAndUpdate(
       filter,
       update,

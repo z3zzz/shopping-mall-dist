@@ -49,8 +49,6 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    console.log({ filter, update, option });
-
     const updatedUser = await User.findOneAndUpdate(filter, update, option);
     return updatedUser;
   }

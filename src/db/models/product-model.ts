@@ -62,8 +62,6 @@ export class ProductModel {
     const filter = { _id: productId };
     const option = { returnOriginal: false };
 
-    console.log({ filter, update, option });
-
     const updatedProduct = await Product.findOneAndUpdate(
       filter,
       update,
