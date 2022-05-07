@@ -9,6 +9,7 @@ const shortDescriptionInput = document.querySelector('#shortDescriptionInput');
 const detailDescriptionInput = document.querySelector(
   '#detailDescriptionInput'
 );
+const imageInput = document.querySelector('#imageInput');
 const inventoryInput = document.querySelector('#inventoryInput');
 const priceInput = document.querySelector('#priceInput');
 const submitButton = document.querySelector('#submitButton');
@@ -18,9 +19,10 @@ addAllEvents();
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   submitButton.addEventListener('click', handleSubmit);
+  imageInput.addEventListener('change', handleImageUpload);
 }
 
-// 사진은 AWS S3에 저장, 이후 제품 정보를 백엔드 db에 저장.
+// 제품 추가 - 사진은 AWS S3에 저장, 이후 제품 정보를 백엔드 db에 저장.
 async function handleSubmit(e) {
   e.preventDefault();
 
@@ -49,10 +51,8 @@ async function handleSubmit(e) {
   const index = categorySelectBox.selectedIndex;
   const categoryName = categorySelectBox[index].text;
 
-  console.log(categoryName);
-
   try {
-    const imageUrl = await addImageToS3('imageInput', categoryName);
+    const imageUrl = await addImageToS3(imageInput, categoryName);
     const data = {
       title,
       categoryId,
@@ -70,5 +70,15 @@ async function handleSubmit(e) {
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
+
+// 사용자가 사진을 업로드했을 때, 파일 이름이 화면에 나타나도록 함.
+function handleImageUpload() {
+  const file = imageInput.files[0];
+  if (file) {
+    fileNameSpan.innerText = file.name;
+  } else {
+    fileNameSpan.innerText = '';
   }
 }

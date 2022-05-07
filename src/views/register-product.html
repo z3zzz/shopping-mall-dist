@@ -67,18 +67,24 @@
       <form class="box sell-product-form-box">
         <p class="title is-5 has-text-primary">제품을 판매해 보세요</p>
         <div class="field">
-          <label class="label">제품 이름</label>
+          <label class="label" for="titleInput">제품 이름</label>
           <div class="control">
-            <input class="input" id="titleInput" type="text" placeholder="아이보리 티셔츠" />
+            <input
+              class="input"
+              id="titleInput"
+              type="text"
+              placeholder="아이보리 티셔츠"
+              autocomplete="on"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">카테고리</label>
+          <label class="label" for="categorySelectBox">카테고리</label>
           <div class="control">
             <div class="select is-fullwidth">
               <select id="categorySelectBox">
-                <option value="1">Men Clothes</option>
+                <option value="6275cb97e965a15e7fe16f5f">Men Clothes</option>
                 <option value="2">Women Clothes</option>
               </select>
             </div>
@@ -86,68 +92,99 @@
         </div>
 
         <div class="field">
-          <label class="label">제조사</label>
+          <label class="label" for="manufacturerInput">제조사</label>
           <div class="control">
-            <input class="input" id="manufacturerInput" type="text" placeholder="OO의류제조(주)" />
+            <input
+              class="input"
+              id="manufacturerInput"
+              type="text"
+              placeholder="OO의류제조(주)"
+              autocomplete="on"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">요약 설명</label>
+          <label class="label" for="shortDescriptionInput">요약 설명</label>
           <div class="control">
             <textarea
               class="textarea"
               id="shortDescriptionInput"
               rows="3"
               placeholder="제품에 대한 1~2문장의 설명을 적어 주세요."
+              autocomplete="on"
             ></textarea>
           </div>
         </div>
 
         <div class="field">
-          <label class="label">상세 설명</label>
+          <label class="label" for="detailDescriptionInput">상세 설명</label>
           <div class="control">
             <textarea
               class="textarea"
               id="detailDescriptionInput"
               rows="8"
               placeholder="제품에 대한 상세 설명을 적어 주세요."
+              autocomplete="on"
             ></textarea>
           </div>
         </div>
 
         <div class="field is-fullwidth">
-          <label class="label">제품 사진</label>
+          <label class="label" for="imageInput">제품 사진</label>
           <div class="file has-name is-fullwidth">
             <label class="file-label">
-              <input class="file-input" id="imageInput" type="file" name="image-file" />
+              <input
+                class="file-input"
+                id="imageInput"
+                type="file"
+                name="image-file"
+                accept=".png, .jpeg, .jpg"
+              />
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
                 <span class="file-label"> 사진 업로드 </span>
               </span>
-              <span class="file-name"> men-clothes-1.png </span>
+              <span class="file-name" id="fileNameSpan">
+                사진파일 (png, jpg, jpeg)
+              </span>
             </label>
           </div>
         </div>
 
         <div class="field">
-          <label class="label">재고 수</label>
+          <label class="label" for="inventoryInput">재고 수</label>
           <div class="control">
-            <input class="input" id="inventoryInput" type="number" placeholder="10" />
+            <input
+              class="input"
+              id="inventoryInput"
+              type="number"
+              placeholder="10"
+              autocomplete="on"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">가격</label>
-        <div class="field mb-5">
-          <div class="control has-icons-right">
-            <input class="input" id="priceInput" type="number" placeholder="10000" />
-            <span class="icon is-small is-right"> 원 </span>
+          <label class="label" for="priceInput">가격</label>
+          <div class="field mb-5">
+            <div class="control has-icons-right">
+              <input
+                class="input"
+                id="priceInput"
+                type="number"
+                placeholder="10000"
+                autocomplete="on"
+              />
+              <span class="icon is-small is-right"> 원 </span>
+            </div>
           </div>
-        </div  >
-        <button class="button is-primary is-fullwidth" id="submitButton">제품 판매하기</button>
+        </div>
+        <button class="button is-primary is-fullwidth" id="submitButton">
+          제품 판매하기
+        </button>
       </form>
     </div>
   </body>
