@@ -15,11 +15,17 @@ const priceInput = document.querySelector('#priceInput');
 const submitButton = document.querySelector('#submitButton');
 
 addAllEvents();
+addAllElements();
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  submitButton.addEventListener('click', handleSubmit);
   imageInput.addEventListener('change', handleImageUpload);
+  submitButton.addEventListener('click', handleSubmit);
+}
+
+// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+function addAllElements() {
+  addOptionsToSelectBox();
 }
 
 // 제품 추가 - 사진은 AWS S3에 저장, 이후 제품 정보를 백엔드 db에 저장.
@@ -81,4 +87,15 @@ function handleImageUpload() {
   } else {
     fileNameSpan.innerText = '';
   }
+}
+
+// 선택할 수 있는 카테고리 종류를 api로 가져와서, 옵션 태그를 만들어 삽입함.
+async function addOptionsToSelectBox() {
+  const categorys = await Api.get('/api/categorylist');
+  categorys.forEach((category) => {
+    const categoryId = category._id;
+    const categoryTitle = category.title;
+
+    categorySelectBox.innerHTML += `<option value=${categoryId}>${categoryTitle}</option>`;
+  });
 }
