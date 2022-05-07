@@ -1,0 +1,117 @@
+import request from 'supertest';
+import jwt from 'jsonwebtoken';
+import { clearCollection, closeConnection } from './__config__/mongodb-config';
+import { app } from '../src/app';
+
+describe('categoryRouter 테스트', () => {
+  let token: string;
+  let categoryId: string;
+
+  beforeAll(async () => {
+    const res = await request(app)
+      .post('/api/register')
+      .set('Content-Type', 'application/json')
+      .send({ fullName: 'tester', email: 'abc@example.com', password: '1234' });
+
+    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    token = jwt.sign({ userId: res.body._id, role: 'admin' }, secretKey);
+  });
+
+  afterAll(async () => {
+    await clearCollection('users');
+    await clearCollection('categorys');
+    await closeConnection();
+  });
+
+  describe('post -> /api/category', () => {
+    it('카테고리 db에 카테고리 정보가 추가된다.', async () => {
+      const res = await request(app)
+        .post('/api/category')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          title: 'test-category',
+          description: '테스트 카테고리입니다.',
+          imageUrl: 'https://test-category/test.png',
+        });
+
+      // 다른 테스트에 쓰일 카테고리 id
+      categoryId = res.body._id;
+
+      expect(res.statusCode).toEqual(201);
+      expect(categoryId).toBeDefined();
+      expect(res.body.title).toBe('test-category');
+      expect(res.body.imageUrl).toBe('https://test-category/test.png');
+    });
+  });
+
+  describe('get -> /api/categorylist', () => {
+    it('최소 3개의 카테고리 리스트 배열을 반환한다.', async () => {
+      await request(app)
+        .post('/api/category')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          title: 'test-category1',
+          description: '테스트용 카테고리입니다.',
+          imageUrl: 'https://test-category/test.png',
+        });
+
+      await request(app)
+        .post('/api/category')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          title: 'test-category2',
+          description: '테스트용 카테고리입니다.',
+          imageUrl: 'https://test-category/test.png',
+        });
+
+      await request(app)
+        .post('/api/category')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          title: 'test-category3',
+          description: '테스트용 카테고리입니다.',
+          imageUrl: 'https://test-category/test.png',
+        });
+
+      const res = await request(app)
+        .get('/api/categorylist')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(3);
+    });
+  });
+
+  describe('get -> /api/categorys/:categoryId', () => {
+    it('카테고리 정보를 반환한다.', async () => {
+      const res = await request(app)
+        .get(`/api/categorys/${categoryId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.title).toBe('test-category');
+      expect(res.body.imageUrl).toBe('https://test-category/test.png');
+    });
+  });
+
+  describe('patch -> /api/categorys/:categoryId', () => {
+    it('카테고리 정보의 수정이 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .patch(`/api/categorys/${categoryId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          title: 'test-category99',
+          imageUrl: 'https://test-category/test-change.png',
+        });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.title).toBe('test-category99');
+      expect(res.body.imageUrl).toBe('https://test-category/test-change.png');
+    });
+  });
+});
