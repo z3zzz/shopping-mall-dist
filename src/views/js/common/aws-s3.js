@@ -17,11 +17,11 @@ new AWS.S3({
 });
 
 // 아마존 S3에 사진파일 올리는 함수
-// fileInputId: input 요소의 id
+// fileInputElement: input 요소
 // album: S3에서 업로드된 사진파일이 속할 폴더 이름.
-async function addImageToS3(fileInputId, album) {
+async function addImageToS3(fileInputElement, album) {
   // 파일 input 요소에, 사용자가 올린 파일이 있는지 여부 확인
-  const files = document.querySelector(`#${fileInputId}`).files;
+  const files = fileInputElement.files;
   if (!files.length) {
     throw new Error('사진 파일을 업로드해 주세요.');
   }

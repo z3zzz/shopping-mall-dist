@@ -64,7 +64,7 @@ async function handleSubmit(e) {
       imageUrl,
     };
 
-    const newProduct = await Api.post('/api/product', data);
+    await Api.post('/api/product', data);
 
     alert(`정상적으로 ${title} 제품이 등록되었습니다.`);
   } catch (err) {

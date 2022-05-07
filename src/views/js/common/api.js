@@ -52,8 +52,6 @@ async function post(endpoint, data) {
     throw new Error(`\n${result}: ${reason}`);
   }
 
-  console.log(res);
-
   const result = await res.json();
 
   return result;

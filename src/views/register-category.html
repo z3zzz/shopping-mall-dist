@@ -68,31 +68,33 @@
       <form class="box sell-product-form-box">
         <p class="title is-5 has-text-primary">카테고리 추가하기</p>
         <div class="field">
-          <label class="label">카테고리 이름</label>
+          <label class="label" for="titleInput">카테고리 이름</label>
           <div class="control">
             <input
               class="input"
               id="titleInput"
               type="text"
               placeholder="Men Clothes"
+              autocomplete="on"
             />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">카테고리 설명</label>
+          <label class="label" for="descriptionInput">카테고리 설명</label>
           <div class="control">
             <input
               class="input"
               id="descriptionInput"
               type="text"
               placeholder="센세이셔널한 봄, 여름 코디"
+              autocomplete="on"
             />
           </div>
         </div>
 
         <div class="field is-fullwidth mb-5">
-          <label class="label">카테고리 사진</label>
+          <label class="label" for="imageInput">카테고리 사진</label>
           <div class="file has-name is-fullwidth">
             <label class="file-label">
               <input
@@ -100,6 +102,7 @@
                 id="imageInput"
                 type="file"
                 name="image-file"
+                accept=".png, .jpeg, .jpg"
               />
               <span class="file-cta">
                 <span class="file-icon">
@@ -107,11 +110,13 @@
                 </span>
                 <span class="file-label"> 사진 업로드 </span>
               </span>
-              <span class="file-name"> men-clothes.png </span>
+              <span class="file-name" id="fileNameSpan">
+                사진파일 (png, jpg, jpeg)
+              </span>
             </label>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth" id="addCategoryBtn">
+        <button class="button is-primary is-fullwidth" id="addCategoryButton">
           카테고리 추가하기
         </button>
       </form>
