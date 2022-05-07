@@ -2,9 +2,9 @@ import { clearCollection } from './__config__/mongodb-config';
 import request from 'supertest';
 import { app } from '../src/app';
 
-describe('userRouter 통합 테스트', () => {
+describe('userRouter 테스트', () => {
   afterAll(async () => {
-    await clearCollection('user');
+    await clearCollection('users');
   });
 
   describe('post -> /api/register', () => {
@@ -13,13 +13,13 @@ describe('userRouter 통합 테스트', () => {
         .post('/api/register')
         .set('Content-Type', 'application/json')
         .send({
-          name: 'tester',
+          fullName: 'tester',
           email: 'abc@def.com',
           password: '1234',
         });
 
       expect(res.statusCode).toEqual(201);
-      expect(res.body.name).toBe('tester');
+      expect(res.body.fullName).toBe('tester');
       expect(res.body.email).toBe('abc@def.com');
     });
   });
@@ -42,7 +42,7 @@ describe('userRouter 통합 테스트', () => {
         .post('/api/register')
         .set('Content-Type', 'application/json')
         .send({
-          name: 'tester1',
+          fullName: 'tester1',
           email: 'abc1@def.com',
           password: '1234',
         });
@@ -50,7 +50,7 @@ describe('userRouter 통합 테스트', () => {
         .post('/api/register')
         .set('Content-Type', 'application/json')
         .send({
-          name: 'tester2',
+          fullName: 'tester2',
           email: 'abc2@def.com',
           password: '1234',
         });
@@ -58,7 +58,7 @@ describe('userRouter 통합 테스트', () => {
         .post('/api/register')
         .set('Content-Type', 'application/json')
         .send({
-          name: 'tester3',
+          fullName: 'tester3',
           email: 'abc3@def.com',
           password: '1234',
         });
@@ -112,13 +112,13 @@ describe('userRouter 통합 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           email: 'abc2@def.com',
-          name: 'tester-changed',
+          fullName: 'tester-changed',
           currentPassword: '1234',
         });
 
       expect(res2.statusCode).toEqual(200);
       expect(res2.body.email).toBe('abc2@def.com');
-      expect(res2.body.name).toBe('tester-changed');
+      expect(res2.body.fullName).toBe('tester-changed');
     });
   });
 });
