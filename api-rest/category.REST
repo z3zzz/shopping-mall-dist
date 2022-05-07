@@ -9,13 +9,13 @@ content-type: application/json
 
 ###
 POST http://localhost:5000/api/category
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
 content-type: application/json
 
 {
-    "name": "test-photo",
-    "description": "this is test",
-    "imageUrl": "https://aws-s3.com/test.png"
+    "title": "test-category",
+    "description": "테스트용 카테고리입니다.",
+    "imageUrl": "https://test-category/test.png"
 }
 
 ###
@@ -32,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczY
 content-type: application/json
 
 {
-    "name": "test-photo2",
-    "description": "this is test2",
-    "imageUrl": "https://aws-s3.com/test.png2"
+    "title": "test-category2",
+    "description": "테스트용 카테고리 수정했음",
+    "imageUrl": "https://test-category/test2.png"
 }
