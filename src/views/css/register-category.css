@@ -1,25 +1,25 @@
-.sell-product-form-container {
+.register-category-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 70vh;
 }
 
-.sell-product-form-box {
+.register-category-form-box {
   width: 40rem;
 }
 
-.sell-product-form-box .title {
+.register-category-form-box .title {
   text-align: center;
 }
 
-.sell-product-form-box .button {
+.register-category-form-box .button {
   font-weight: bold;
 }
 
-.sell-product-form-box .input:focus,
-.sell-product-form-box .textarea:focus,
-.sell-product-form-box select:focus {
+.register-category-form-box .input:focus,
+.register-category-form-box .textarea:focus,
+.register-category-form-box select:focus {
   border-color: #00d1b2;
   box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
 }

@@ -13,6 +13,7 @@ const imageInput = document.querySelector('#imageInput');
 const inventoryInput = document.querySelector('#inventoryInput');
 const priceInput = document.querySelector('#priceInput');
 const submitButton = document.querySelector('#submitButton');
+const registerProductForm = document.querySelector('#registerProductForm');
 
 addAllEvents();
 addAllElements();
@@ -73,6 +74,10 @@ async function handleSubmit(e) {
     await Api.post('/api/product', data);
 
     alert(`정상적으로 ${title} 제품이 등록되었습니다.`);
+
+    // 폼 초기화
+    registerProductForm.reset();
+    fileNameSpan.innerText = '';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

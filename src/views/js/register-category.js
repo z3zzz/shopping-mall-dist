@@ -7,6 +7,7 @@ const descriptionInput = document.querySelector('#descriptionInput');
 const imageInput = document.querySelector('#imageInput');
 const fileNameSpan = document.querySelector('#fileNameSpan');
 const submitButton = document.querySelector('#addCategoryButton');
+const registerCategoryForm = document.querySelector('#registerCategoryForm');
 
 addAllEvents();
 
@@ -36,6 +37,10 @@ async function handleSubmit(e) {
     await Api.post('/api/category', data);
 
     alert(`정상적으로 ${title} 카테고리가 등록되었습니다.`);
+
+    // 폼 초기화
+    registerCategoryForm.reset();
+    fileNameSpan.innerText = '';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

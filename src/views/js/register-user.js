@@ -7,6 +7,7 @@ const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const submitButton = document.querySelector('#submitButton');
+const registerUserForm = document.querySelector('#registerUserForm');
 
 addAllEvents();
 
@@ -49,6 +50,9 @@ async function handleSubmit(e) {
     await Api.post('/api/register', data);
 
     alert(`정상적으로 회원가입되었습니다.`);
+
+    // 폼 초기화
+    registerUserForm.reset();
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
