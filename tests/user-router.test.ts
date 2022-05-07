@@ -1,5 +1,5 @@
-import { clearCollection } from './__config__/mongodb-config';
 import request from 'supertest';
+import { clearCollection } from './__config__/mongodb-config';
 import { app } from '../src/app';
 
 describe('userRouter 테스트', () => {
