@@ -33,16 +33,9 @@ const ProductSchema = new Schema(
       required: true,
     },
     inventory: {
-      type: new Schema(
-        {
-          quantity: {
-            type: Number,
-            min: 0,
-            default: 10,
-          },
-        },
-        { timestamps: true }
-      ),
+      type: Number,
+      min: 0,
+      default: 10,
       required: true,
     },
     price: {

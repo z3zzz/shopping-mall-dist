@@ -1,5 +1,16 @@
 import { productModel, ProductModel, ProductInfo, ProductData } from '../db';
 
+export interface ProductUpdateInfo {
+  title?: string;
+  categoryId?: string;
+  shortDescription?: string;
+  detailDescription?: string;
+  imageUrl?: string;
+  inventory?: number;
+  price?: number;
+  discountPercent?: number;
+}
+
 class ProductService {
   constructor(private productModel: ProductModel) {}
 
@@ -28,7 +39,7 @@ class ProductService {
 
   async setProduct(
     productId: string,
-    toUpdate: Partial<ProductInfo>
+    toUpdate: Partial<ProductUpdateInfo>
   ): Promise<ProductData> {
     // 객체 destructuring
     const {
@@ -41,7 +52,7 @@ class ProductService {
       price,
       discountPercent,
     } = toUpdate;
-    // 우선 해당 id의 카테고리가 db에 있는지 확인
+    // 우선 해당 id의 제품이 db에 있는지 확인
     let product = await this.productModel.findById(productId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
@@ -109,20 +120,18 @@ class ProductService {
     return product;
   }
 
-  async getCategoryData(categoryId: string): Promise<ProductData> {
-    const category = await this.productModel.findById(categoryId);
+  async getProductData(productId: string): Promise<ProductData> {
+    const product = await this.productModel.findById(productId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!category) {
-      throw new Error(
-        '해당 id의 카테고리는 없습니다. 다시 한 번 확인해 주세요.'
-      );
+    if (!product) {
+      throw new Error('해당 id의 제품은 없습니다. 다시 한 번 확인해 주세요.');
     }
 
-    return category;
+    return product;
   }
 }
 
-const categoryService = new ProductService(productModel);
+const productService = new ProductService(productModel);
 
-export { categoryService };
+export { productService };

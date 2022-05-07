@@ -3,10 +3,6 @@ import { ProductSchema } from '../schemas/product-schema';
 
 const Product = model('products', ProductSchema);
 
-export interface Inventory {
-  quantity: number;
-}
-
 export interface ProductInfo {
   title: string;
   sellerId: string;
@@ -15,9 +11,8 @@ export interface ProductInfo {
   shortDescription: string;
   detailDescription: string;
   imageUrl: string;
-  inventory: Inventory;
+  inventory: number;
   price: number;
-  discountPercent: number;
 }
 
 export interface ProductData {
@@ -29,15 +24,16 @@ export interface ProductData {
   shortDescription: string;
   detailDescription: string;
   imageUrl: string;
-  inventory: Inventory;
+  inventory: number;
   price: number;
-  discountPercent: number;
+  discountPercent?: number;
+  sku?: string;
 }
 
 interface ToUpdate {
   productId: string;
   update: {
-    [key: string]: string | number | Inventory;
+    [key: string]: string | number;
   };
 }
 

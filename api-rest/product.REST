@@ -1,0 +1,45 @@
+###
+POST http://localhost:5000/api/login
+content-type: application/json
+
+{
+    "email": "ktkim@elicer.com",
+    "password": "1234"
+}
+
+###
+POST http://localhost:5000/api/product
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
+content-type: application/json
+
+{
+    "title": "테스트-제품",
+    "categoryId": "6275cb97e965a15e7fe16f5f",
+    "menufacturer": "삼성전자짱",
+    "shortDescription": "테스트용 제품입니다.",
+    "detailDescription": "테스트용 제품의 자세한 설명입니다.",
+    "imageUrl": "https://test-product/test.png",
+    "inventory": 100,
+    "price": 50000
+}
+
+###
+GET http://localhost:5000/api/productlist
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
+
+###
+GET http://localhost:5000/api/products/6275d376ff7879103040519f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+
+###
+PATCH http://localhost:5000/api/products/6275d376ff7879103040519f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+content-type: application/json
+
+{
+    "title": "테스트-제품2",
+    "menufacturer": "삼성전자짱2",
+    "shortDescription": "테스트용 제품입니다.2",
+    "imageUrl": "https://test-product/test2.png",
+    "inventory": 50
+}
