@@ -3,6 +3,8 @@ import { UserSchema } from '../schemas/user-schema';
 
 const User = model('users', UserSchema);
 
+export type Role = 'basic-user' | 'admin';
+
 export interface UserInfo {
   email: string;
   fullName: string;
@@ -14,7 +16,7 @@ export interface UserData {
   email: string;
   fullName: string;
   password: string;
-  role: string;
+  role: Role;
 }
 
 interface ToUpdate {
