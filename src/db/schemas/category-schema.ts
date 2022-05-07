@@ -14,16 +14,6 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    numberOfProductIds: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
-    numberOfTotalProducts: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
   },
   {
     collection: 'categorys',
