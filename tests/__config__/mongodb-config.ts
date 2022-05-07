@@ -22,9 +22,10 @@ if (currentDB.startsWith('mongodb://')) {
 
 process.env['MONGODB_URL'] = testDB;
 
-async function clearCollection(collectionName: string) {
+export async function clearCollection(collectionName: string) {
   await mongoose.connection.dropCollection(collectionName);
-  await mongoose.connection.close();
 }
 
-export { clearCollection };
+export async function closeConnection() {
+  await mongoose.connection.close();
+}

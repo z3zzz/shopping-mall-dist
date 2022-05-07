@@ -1,10 +1,11 @@
 import request from 'supertest';
-import { clearCollection } from './__config__/mongodb-config';
+import { clearCollection, closeConnection } from './__config__/mongodb-config';
 import { app } from '../src/app';
 
 describe('userRouter 테스트', () => {
   afterAll(async () => {
     await clearCollection('users');
+    await closeConnection();
   });
 
   describe('post -> /api/register', () => {
