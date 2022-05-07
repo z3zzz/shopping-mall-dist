@@ -66,34 +66,56 @@
       <form class="box register-form-box">
         <p class="title is-5 has-text-primary">환영합니다!</p>
         <div class="field">
-          <label class="label">이름</label>
+          <label class="label" for="fullNameInput">이름</label>
           <div class="control">
-            <input class="input" type="text" placeholder="유재석" />
+            <input
+              class="input"
+              id="fullNameInput"
+              type="text"
+              placeholder="유재석"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">이메일</label>
+          <label class="label" for="emailInput">이메일</label>
           <div class="control">
-            <input class="input" type="email" placeholder="abc@example.com" />
+            <input
+              class="input"
+              id="emailInput"
+              type="email"
+              placeholder="abc@example.com"
+            />
           </div>
         </div>
 
         <div class="field">
-          <label class="label">비밀번호</label>
+          <label class="label" for="passwordInput">비밀번호</label>
           <div class="control">
-            <input class="input" type="password" placeholder="********" />
+            <input
+              class="input"
+              id="passwordInput"
+              type="password"
+              placeholder="********"
+            />
           </div>
         </div>
 
         <div class="field mb-5">
-          <label class="label">비밀번호 확인</label>
+          <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
           <div class="control">
-            <input class="input" type="password" placeholder="********" />
+            <input
+              class="input"
+              id="passwordConfirmInput"
+              type="password"
+              placeholder="********"
+            />
           </div>
         </div>
 
-        <button class="button is-primary is-fullwidth">회원가입하기</button>
+        <button class="button is-primary is-fullwidth" id="submitButton">
+          회원가입하기
+        </button>
       </form>
     </div>
   </body>
