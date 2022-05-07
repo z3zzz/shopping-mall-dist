@@ -18,7 +18,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
     const title: string = req.body.title;
     const categoryId: string = req.body.categoryId;
     const sellerId: string = req.currentUserId;
-    const menufacturer: string = req.body.menufacturer;
+    const manufacturer: string = req.body.manufacturer;
     const shortDescription: string = req.body.shortDescription;
     const detailDescription: string = req.body.detailDescription;
     const imageUrl: string = req.body.imageUrl;
@@ -30,7 +30,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
       title,
       categoryId,
       sellerId,
-      menufacturer,
+      manufacturer,
       shortDescription,
       detailDescription,
       imageUrl,

@@ -7,7 +7,7 @@ export interface ProductInfo {
   title: string;
   sellerId: string;
   categoryId: string;
-  menufacturer: string;
+  manufacturer: string;
   shortDescription: string;
   detailDescription: string;
   imageUrl: string;
@@ -20,7 +20,7 @@ export interface ProductData {
   title: string;
   sellerId: string;
   categoryId: string;
-  menufacturer: string;
+  manufacturer: string;
   shortDescription: string;
   detailDescription: string;
   imageUrl: string;

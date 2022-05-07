@@ -16,7 +16,7 @@ const ProductSchema = new Schema(
       ref: 'product-categorys',
       required: true,
     },
-    menufacturer: {
+    manufacturer: {
       type: String,
       required: true,
     },
