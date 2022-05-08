@@ -6,14 +6,16 @@ const Category = model('categorys', CategorySchema);
 export interface CategoryInfo {
   title: string;
   description: string;
-  imageUrl: string;
+  themeClass: string;
+  imageKey: string;
 }
 
 export interface CategoryData {
   _id: string;
   title: string;
   description: string;
-  imageUrl: string;
+  themeClass: string;
+  imageKey: string;
 }
 
 interface ToUpdate {

@@ -36,7 +36,7 @@ class CategoryService {
     toUpdate: Partial<CategoryInfo>
   ): Promise<CategoryData> {
     // 객체 destructuring
-    const { title, description, imageUrl } = toUpdate;
+    const { title, description, themeClass, imageKey } = toUpdate;
     // 우선 해당 id의 카테고리가 db에 있는지 확인
     let category = await this.categoryModel.findById(categoryId);
 
@@ -62,10 +62,17 @@ class CategoryService {
       });
     }
 
-    if (imageUrl) {
+    if (themeClass) {
       category = await this.categoryModel.update({
         categoryId,
-        update: { imageUrl },
+        update: { themeClass },
+      });
+    }
+
+    if (imageKey) {
+      category = await this.categoryModel.update({
+        categoryId,
+        update: { imageKey },
       });
     }
 

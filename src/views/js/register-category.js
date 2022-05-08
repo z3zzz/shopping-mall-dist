@@ -4,6 +4,7 @@ import * as Api from './common/api.js';
 // 요소(element), input 혹은 상수
 const titleInput = document.querySelector('#titleInput');
 const descriptionInput = document.querySelector('#descriptionInput');
+const themeSelectBox = document.querySelector('#themeSelectBox');
 const imageInput = document.querySelector('#imageInput');
 const fileNameSpan = document.querySelector('#fileNameSpan');
 const submitButton = document.querySelector('#addCategoryButton');
@@ -14,6 +15,7 @@ addAllEvents();
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   submitButton.addEventListener('click', handleSubmit);
+  themeSelectBox.addEventListener('change', handleColorChange);
   imageInput.addEventListener('change', handleImageUpload);
 }
 
@@ -23,16 +25,20 @@ async function handleSubmit(e) {
 
   const title = titleInput.value;
   const description = descriptionInput.value;
+  const themeClass = themeSelectBox.value;
 
   // 입력 칸이 비어 있으면 진행 불가
   if (!title || !description) {
-    console.log({ title, description });
     return alert('빈 칸이 없어야 합니다.');
   }
 
+  if (!themeClass) {
+    return alert('테마를 선택해 주세요.');
+  }
+
   try {
-    const imageUrl = await addImageToS3(imageInput, 'category');
-    const data = { title, description, imageUrl };
+    const imageKey = await addImageToS3(imageInput, 'category');
+    const data = { title, description, themeClass, imageKey };
 
     await Api.post('/api/category', data);
 
@@ -55,4 +61,13 @@ function handleImageUpload() {
   } else {
     fileNameSpan.innerText = '';
   }
+}
+
+// 색상 선택 시, 선택박스에 해당 색상 반영되게 함.
+function handleColorChange() {
+  const index = themeSelectBox.selectedIndex;
+
+  themeSelectBox.style.color = themeSelectBox[index].style.color;
+  themeSelectBox.style.backgroundColor =
+    themeSelectBox[index].style.backgroundColor;
 }

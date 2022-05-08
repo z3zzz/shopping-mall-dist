@@ -10,7 +10,11 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    imageUrl: {
+    themeClass: {
+      type: String,
+      required: true,
+    },
+    imageKey: {
       type: String,
       required: true,
     },

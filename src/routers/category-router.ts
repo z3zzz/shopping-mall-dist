@@ -17,13 +17,15 @@ categoryRouter.post('/category', adminOnly, async (req, res, next) => {
     // req (request) 에서 데이터 가져오기
     const title: string = req.body.title;
     const description: string = req.body.description;
-    const imageUrl: string = req.body.imageUrl;
+    const themeClass: string = req.body.themeClass;
+    const imageKey: string = req.body.imageKey;
 
     // 위 데이터를 카테고리 db에 추가하기
     const newCategory = await categoryService.addCategory({
       title,
       description,
-      imageUrl,
+      themeClass,
+      imageKey,
     });
 
     res.status(201).json(newCategory);
@@ -78,9 +80,10 @@ categoryRouter.patch(
       const categoryId = req.params.categoryId;
       const title: string = req.body.title;
       const description: string = req.body.description;
-      const imageUrl: string = req.body.imageUrl;
+      const themeClass: string = req.body.themeClass;
+      const imageKey: string = req.body.imageKey;
 
-      const toUpdate = { title, description, imageUrl };
+      const toUpdate = { title, description, imageKey, themeClass };
 
       // 카테고리 정보를 업데이트함.
       const updatedCategory = await categoryService.setCategory(

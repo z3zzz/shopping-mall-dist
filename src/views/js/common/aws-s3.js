@@ -45,11 +45,13 @@ async function addImageToS3(fileInputElement, album) {
   try {
     const uploadedFile = await upload.promise();
 
-    const fileUrl = uploadedFile.Location;
+    const fileKey = uploadedFile.Key;
     console.log(uploadedFile);
-    console.log(`AWS S3에 정상적으로 사진이 업로드되었습니다.\n${fileUrl}`);
+    console.log(
+      `AWS S3에 정상적으로 사진이 업로드되었습니다.\n파일 위치: ${fileKey}`
+    );
 
-    return fileUrl;
+    return fileKey;
   } catch (err) {
     throw new Error(
       `S3에 업로드하는 과정에서 에러가 발생하였습니다.\n${err.message}`

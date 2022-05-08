@@ -15,6 +15,7 @@ content-type: application/json
 {
     "title": "test-category",
     "description": "테스트용 카테고리입니다.",
+    "themeClass": "is-primary is-light",
     "imageUrl": "https://test-category/test.png"
 }
 
@@ -34,5 +35,6 @@ content-type: application/json
 {
     "title": "test-category2",
     "description": "테스트용 카테고리 수정했음",
+    "themeClass": "is-info",
     "imageUrl": "https://test-category/test2.png"
 }

@@ -24,12 +24,12 @@ async function addImageCardsToSlider() {
 
   categorys.forEach(async (category) => {
     // 객체 destructuring
-    const { title, description } = category;
-    const imageUrl = await getImageUrl('category/bpkpm_men-clothes.jpg');
+    const { title, description, themeClass, imageKey } = category;
+    const imageUrl = await getImageUrl(imageKey);
 
     sliderDiv.innerHTML += `
       <div class="card">
-        <div class="notification is-primary is-light">
+        <div class="notification ${themeClass}">
           <p class="title is-3 is-spaced">${title}</p>
           <p class="subtitle is-6">${description}</p>
         </div>
