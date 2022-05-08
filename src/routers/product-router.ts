@@ -95,7 +95,7 @@ productRouter.patch(
       const imageUrl: string = req.body.imageUrl;
       const inventory: number = req.body.inventory;
       const price: number = req.body.price;
-      const percentDiscount: number = req.body.percentDiscount;
+      const discountPercent: number = req.body.discountPercent;
 
       const toUpdate = {
         title,
@@ -105,7 +105,7 @@ productRouter.patch(
         imageUrl,
         inventory,
         price,
-        percentDiscount,
+        discountPercent,
       };
 
       // 제품 정보를 업데이트함.
