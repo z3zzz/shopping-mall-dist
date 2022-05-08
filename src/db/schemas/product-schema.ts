@@ -42,6 +42,11 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    isRecommended: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
     discountPercent: {
       type: Number,
       min: 0,

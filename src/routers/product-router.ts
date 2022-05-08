@@ -95,6 +95,7 @@ productRouter.post(
       const imageKey: string = req.body.imageKey;
       const inventory: number = req.body.inventory;
       const price: number = req.body.price;
+      const isRecommended: boolean = req.body.isRecommended;
       const discountPercent: number = req.body.discountPercent;
 
       const toUpdate = {
@@ -105,6 +106,7 @@ productRouter.post(
         imageKey,
         inventory,
         price,
+        isRecommended,
         discountPercent,
       };
 

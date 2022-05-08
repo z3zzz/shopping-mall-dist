@@ -158,6 +158,7 @@ describe('productRouter 테스트', () => {
           title: `${random}-product-999`,
           imageKey: 'test-product/test-change.png',
           inventory: 50,
+          isRecommended: true,
           discountPercent: 20,
         });
 
@@ -165,6 +166,7 @@ describe('productRouter 테스트', () => {
       expect(res.body.title).toBe(`${random}-product-999`);
       expect(res.body.imageKey).toBe('test-product/test-change.png');
       expect(res.body.inventory).toBe(50);
+      expect(res.body.isRecommended).toBe(true);
       expect(res.body.discountPercent).toBe(20);
     });
   });

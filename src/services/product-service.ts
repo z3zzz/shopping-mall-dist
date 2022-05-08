@@ -9,6 +9,7 @@ export interface ProductUpdateInfo {
   inventory?: number;
   price?: number;
   discountPercent?: number;
+  isRecommended?: boolean;
 }
 
 class ProductService {
@@ -50,6 +51,7 @@ class ProductService {
       imageKey,
       inventory,
       price,
+      isRecommended,
       discountPercent,
     } = toUpdate;
     // 우선 해당 id의 제품이 db에 있는지 확인
@@ -107,6 +109,13 @@ class ProductService {
       product = await this.productModel.update({
         productId,
         update: { price },
+      });
+    }
+
+    if (isRecommended) {
+      product = await this.productModel.update({
+        productId,
+        update: { isRecommended },
       });
     }
 

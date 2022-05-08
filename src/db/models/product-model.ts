@@ -26,6 +26,7 @@ export interface ProductData {
   imageKey: string;
   inventory: number;
   price: number;
+  isRecommended?: boolean;
   discountPercent?: number;
   sku?: string;
 }
@@ -33,7 +34,7 @@ export interface ProductData {
 interface ToUpdate {
   productId: string;
   update: {
-    [key: string]: string | number;
+    [key: string]: string | number | boolean;
   };
 }
 
