@@ -26,6 +26,7 @@ async function handleSubmit(e) {
   const title = titleInput.value;
   const description = descriptionInput.value;
   const themeClass = themeSelectBox.value;
+  const image = imageInput.files[0];
 
   // 입력 칸이 비어 있으면 진행 불가
   if (!title || !description) {
@@ -34,6 +35,10 @@ async function handleSubmit(e) {
 
   if (!themeClass) {
     return alert('테마를 선택해 주세요.');
+  }
+
+  if (image.size > 3e6) {
+    return alert('사진은 최대 2.5MB 크기까지 가능합니다.');
   }
 
   try {

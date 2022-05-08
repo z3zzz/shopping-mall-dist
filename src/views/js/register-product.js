@@ -39,6 +39,7 @@ async function handleSubmit(e) {
   const manufacturer = manufacturerInput.value;
   const shortDescription = shortDescriptionInput.value;
   const detailDescription = detailDescriptionInput.value;
+  const image = imageInput.files[0];
   const inventory = parseInt(inventoryInput.value);
   const price = parseInt(priceInput.value);
 
@@ -55,12 +56,16 @@ async function handleSubmit(e) {
     return alert('빈 칸 및 0이 없어야 합니다.');
   }
 
+  if (image.size > 3e6) {
+    return alert('사진은 최대 2.5MB 크기까지 가능합니다.');
+  }
+
   // S3 에 이미지가 속할 폴더 이름은 카테고리명으로 함.
   const index = categorySelectBox.selectedIndex;
   const categoryName = categorySelectBox[index].text;
 
   try {
-    const imageUrl = await addImageToS3(imageInput, categoryName);
+    const imageKey = await addImageToS3(imageInput, categoryName);
     const data = {
       title,
       categoryId,
@@ -69,7 +74,7 @@ async function handleSubmit(e) {
       detailDescription,
       inventory,
       price,
-      imageUrl,
+      imageKey,
     };
 
     await Api.post('/api/product', data);
