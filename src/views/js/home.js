@@ -1,5 +1,6 @@
 import * as Api from './common/api.js';
 import { getImageUrl } from './common/aws-s3.js';
+import { randomId } from './common/usefulFunctions.js';
 
 // 요소(element), input 혹은 상수
 const sliderDiv = document.querySelector('#slider');
@@ -18,7 +19,7 @@ async function addAllElements() {
   attachSlider();
 }
 
-// api에서 카테고리 정보 및 사진 가져와서 슬라이드로 사용
+// api에서 카테고리 정보 및 사진 가져와서 슬라이드 카드로 사용
 async function addImageCardsToSlider() {
   const categorys = await Api.get('/api/categorylist');
 
@@ -27,8 +28,10 @@ async function addImageCardsToSlider() {
     const { title, description, themeClass, imageKey } = category;
     const imageUrl = await getImageUrl(imageKey);
 
+    const random = randomId();
+
     sliderDiv.innerHTML += `
-      <div class="card">
+      <div class="card" id="a${random}">
         <div class="notification ${themeClass}">
           <p class="title is-3 is-spaced">${title}</p>
           <p class="subtitle is-6">${description}</p>
@@ -43,6 +46,14 @@ async function addImageCardsToSlider() {
         </div>
       </div>
     `;
+
+    // 카드 클릭 시 해당 카테고리 페이지로 이동 (timeout 약간 줌, 아래와 동일 이유)
+    setTimeout(() => {
+      const card = document.querySelector(`#a${random}`);
+      card.addEventListener('click', () => {
+        window.location.href = `#/products?category=${title}`;
+      });
+    }, 100);
   });
 }
 
@@ -53,7 +64,7 @@ function attachSlider() {
       //autoplay: true,
       autoplaySpeed: 5000,
       infinite: true,
-      duration: 1200,
+      duration: 600,
       pauseOnHover: false,
       navigation: false,
     });
