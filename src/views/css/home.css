@@ -14,10 +14,11 @@
 }
 .slider-arrow {
   position: absolute;
-  bottom: 420px;
+  top: 400px;
   border: none;
   background-color: transparent;
   cursor: pointer;
+  z-index: 1;
 }
 .slider-arrow-left {
   left: 0;

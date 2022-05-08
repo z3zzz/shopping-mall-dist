@@ -11,7 +11,7 @@ AWS.config.update({
   }),
 });
 
-new AWS.S3({
+const s3 = new AWS.S3({
   apiVersion: '2006-03-01',
   params: { Bucket: s3BucketName },
 });
@@ -57,4 +57,20 @@ async function addImageToS3(fileInputElement, album) {
   }
 }
 
-export { addImageToS3 };
+function getImageUrl(imageKey) {
+  const imageUrl = new Promise((resolve) => {
+    const params = {
+      Bucket: s3BucketName,
+      Key: imageKey,
+      Expires: 60,
+    };
+
+    s3.getSignedUrl('getObject', params, (_, url) => {
+      resolve(url);
+    });
+  });
+
+  return Promise.resolve(imageUrl);
+}
+
+export { addImageToS3, getImageUrl };

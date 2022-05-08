@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Kwang's Mall</title>
-    <!-- bulma css 관련 -->
+    <!-- bulma css -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
+    <!-- 슬라이드 이미지용 css, js -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css"
@@ -23,6 +24,8 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+    <!-- AWS S3 사진 업로드용 -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="css/home.css" />
     <script src="js/home.js" type="module" defer></script>
@@ -91,49 +94,49 @@
     <!-- 슬라이드 이미지 -->
     <section class="section">
       <div class="container is-clipped">
-        <div id="slider">
-          <div class="card">
-            <div class="notification is-primary is-light">
-              <p class="title is-3 is-spaced">Men Clothes</p>
-              <p class="subtitle is-6">센세이셔널한 봄, 여름 코디</p>
-            </div>
-            <div class="card-image">
-              <figure class="image is-3by2">
-                <img
-                  src="image/home-slider/men-clothes.jpg"
-                  alt="Sensational men-clothes"
-                />
-              </figure>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="notification is-warning is-light">
-              <p class="title is-3 is-spaced">Women Clothes</p>
-              <p class="subtitle is-6">언제, 어디서나 아름답게</p>
-            </div>
-            <div class="card-image">
-              <figure class="image is-3by2">
-                <img
-                  src="image/home-slider/women-clothes.jpg"
-                  alt="Beautiful women-clothes"
-                />
-              </figure>
-            </div>
-          </div>
-        </div>
-
         <div class="slider-arrow-container">
-          <button class="slider-arrow slider-arrow-left">
+          <button class="slider-arrow slider-arrow-left" id="sliderArrowLeft">
             <span class="icon is-large">
               <i class="fas fa-chevron-left fa-2x"></i>
             </span>
           </button>
-          <button class="slider-arrow slider-arrow-right">
+          <button class="slider-arrow slider-arrow-right" id="sliderArrowRight">
             <span class="icon is-large">
               <i class="fas fa-chevron-right fa-2x"></i>
             </span>
           </button>
+        </div>
+
+        <div id="slider">
+          <!--<div class="card">-->
+          <!--<div class="notification is-primary is-light">-->
+          <!--<p class="title is-3 is-spaced">Men Clothes</p>-->
+          <!--<p class="subtitle is-6">센세이셔널한 봄, 여름 코디</p>-->
+          <!--</div>-->
+          <!--<div class="card-image">-->
+          <!--<figure class="image is-3by2">-->
+          <!--<img-->
+          <!--src="image/home-slider/men-clothes.jpg"-->
+          <!--alt="Sensational men-clothes"-->
+          <!--/>-->
+          <!--</figure>-->
+          <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="card">-->
+          <!--<div class="notification is-warning is-light">-->
+          <!--<p class="title is-3 is-spaced">Women Clothes</p>-->
+          <!--<p class="subtitle is-6">언제, 어디서나 아름답게</p>-->
+          <!--</div>-->
+          <!--<div class="card-image">-->
+          <!--<figure class="image is-3by2">-->
+          <!--<img-->
+          <!--src="image/home-slider/women-clothes.jpg"-->
+          <!--alt="Beautiful women-clothes"-->
+          <!--/>-->
+          <!--</figure>-->
+          <!--</div>-->
+          <!--</div>-->
         </div>
       </div>
     </section>
