@@ -15,14 +15,14 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
-    <!-- AWS S3용 -->
+    <!-- AWS S3 사용하기 위한 파일 -->
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="css/register-category.css" />
-    <script src="js/register-category.js" type="module" defer></script>
+    <link rel="stylesheet" href="css/products.css" />
+    <script src="js/products.js" type="module" defer></script>
   </head>
   <body>
-    <!-- 헤더 (로고, 관리페이지, 로그아웃, 카트 ) -->
+    <!-- 헤더 (로고, 계정관리, 로그아웃, 카트 ) -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container mt-3">
         <div class="navbar-brand">
@@ -45,9 +45,26 @@
         </div>
 
         <div id="navbarBasicExample" class="navbar-menu">
+          <div class="field has-addons my-auto is-flex-grow-1">
+            <div class="control header-search-input">
+              <input
+                class="input is-info"
+                type="text"
+                placeholder="원하시는 제품을 검색해 보세요."
+              />
+            </div>
+            <div class="control">
+              <button class="button is-info">
+                <span class="icon">
+                  <i class="fas fa-magnifying-glass"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul>
-              <li><a href="#">사이트 관리</a></li>
+              <li><a href="#">계정 관리</a></li>
               <li><a href="#">로그아웃</a></li>
               <li>
                 <a href="#" aria-current="page">
@@ -63,158 +80,53 @@
       </div>
     </nav>
 
-    <!-- 카테고리 추가 폼(Form) -->
-    <div class="register-category-form-container">
-      <form class="box register-category-form-box" id="registerCategoryForm">
-        <p class="title is-5 has-text-primary">카테고리 추가하기</p>
-        <div class="field">
-          <label class="label" for="titleInput">카테고리 이름</label>
-          <div class="control">
-            <input
-              class="input"
-              id="titleInput"
-              type="text"
-              placeholder="Men Clothes"
-              autocomplete="on"
-            />
+    <!-- 제품 목록 -->
+    <section class="section">
+      <div class="container product-item-container" id="producItemContainer">
+        <div class="message media is-dark product-item">
+          <div class="media-left">
+            <figure class="image">
+              <img
+                src="https://bulma.io/images/placeholders/128x128.png"
+                alt="Image"
+              />
+            </figure>
           </div>
-        </div>
-
-        <div class="field">
-          <label class="label" for="descriptionInput">카테고리 설명</label>
-          <div class="control">
-            <input
-              class="input"
-              id="descriptionInput"
-              type="text"
-              placeholder="센세이셔널한 봄, 여름 코디"
-              autocomplete="on"
-            />
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label" for="themeSelectBox">카테고리 테마</label>
-          <div class="control">
-            <div class="select is-fullwidth">
-              <select id="themeSelectBox">
-                <option value="">테마를 선택해 주세요.</option>
-
-                <option
-                  value="is-primary is-light"
-                  style="background-color: #ebfffc; color: #00947e"
-                >
-                  light skygreen
-                </option>
-
-                <option
-                  value="is-link is-light"
-                  style="background-color: #eff1fa; color: #3850b7"
-                >
-                  light purple
-                </option>
-
-                <option
-                  value="is-info is-light"
-                  style="background-color: #eff5fb; color: #296fa8"
-                >
-                  light blue
-                </option>
-
-                <option
-                  value="is-success is-light"
-                  style="background-color: #effaf5; color: #257953"
-                >
-                  light green
-                </option>
-
-                <option
-                  value="is-warning is-light"
-                  style="background-color: #fffaeb; color: #946c00"
-                >
-                  light yellow
-                </option>
-
-                <option
-                  value="is-danger is-light"
-                  style="background-color: #feecf0; color: #cc0f35"
-                >
-                  light pink
-                </option>
-
-                <option
-                  value="is-primary"
-                  style="background-color: #00d1b2; color: #fff"
-                >
-                  skygreen
-                </option>
-
-                <option
-                  value="is-link"
-                  style="background-color: #485fc7; color: #fff"
-                >
-                  blue
-                </option>
-
-                <option
-                  value="is-info"
-                  style="background-color: #3e8ed0; color: #fff"
-                >
-                  skyblue
-                </option>
-
-                <option
-                  value="is-success"
-                  style="background-color: #48c78e; color: #fff"
-                >
-                  green
-                </option>
-
-                <option
-                  value="is-warning"
-                  style="background-color: #ffe08a; color: rgba(0, 0, 0, 0.7)"
-                >
-                  yellow
-                </option>
-
-                <option
-                  value="is-danger"
-                  style="background-color: #f14668; color: #fff"
-                >
-                  red
-                </option>
-              </select>
+          <div class="media-content">
+            <div class="content">
+              <p class="title">
+                아이보리 티셔츠<span class="tag is-success is-rounded">
+                  추천
+                </span>
+              </p>
+              <p class="description">언제나 산뜻한 느낌을 줍니다.</p>
+              <p class="price">12,000원</p>
             </div>
           </div>
         </div>
 
-        <div class="field is-fullwidth mb-5">
-          <label class="label" for="imageInput">카테고리 사진</label>
-          <div class="file has-name is-fullwidth">
-            <label class="file-label">
-              <input
-                class="file-input"
-                id="imageInput"
-                type="file"
-                name="image-file"
-                accept=".png, .jpeg, .jpg"
+        <div class="message media is-dark product-item">
+          <div class="media-left">
+            <figure class="image">
+              <img
+                src="https://bulma.io/images/placeholders/128x128.png"
+                alt="Image"
               />
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fas fa-upload"></i>
+            </figure>
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <p class="title">
+                아이보리 티셔츠<span class="tag is-success is-rounded">
+                  추천
                 </span>
-                <span class="file-label"> 사진 업로드 </span>
-              </span>
-              <span class="file-name" id="fileNameSpan">
-                사진파일 (png, jpg, jpeg)
-              </span>
-            </label>
+              </p>
+              <p class="description">언제나 산뜻한 느낌을 줍니다.</p>
+              <p class="price">12,000원</p>
+            </div>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth" id="addCategoryButton">
-          카테고리 추가하기
-        </button>
-      </form>
-    </div>
+      </div>
+    </section>
   </body>
 </html>
