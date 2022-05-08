@@ -89,8 +89,10 @@ async function handleSubmit(e) {
     // 폼 초기화
     registerProductForm.reset();
     fileNameSpan.innerText = '';
+    keywordsContainer.innerHTML = '';
   } catch (err) {
-    console.error(err.stack);
+    console.log(err.stack);
+
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
@@ -131,6 +133,11 @@ function handleKeywordAdd(e) {
   e.preventDefault();
 
   const newKeyword = searchKeywordInput.value;
+
+  if (!newKeyword) {
+    return;
+  }
+
   if (searchKeywords.includes(newKeyword)) {
     return alert('이미 추가한 검색어입니다.');
   }
