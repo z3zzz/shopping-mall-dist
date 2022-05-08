@@ -1,4 +1,5 @@
 import { productModel, ProductModel, ProductInfo, ProductData } from '../db';
+import { categoryService } from './category-service';
 
 export interface ProductUpdateInfo {
   title?: string;
@@ -36,6 +37,18 @@ class ProductService {
 
   async getProducts(): Promise<ProductData[]> {
     const products = await this.productModel.findAll();
+
+    return products;
+  }
+
+  async getProductsByCategoryTitle(
+    categoryTitle: string
+  ): Promise<ProductData[]> {
+    const category = await categoryService.getCategoryDataByTitle(
+      categoryTitle
+    );
+    const products = await this.productModel.findAllByCategoryId(category._id);
+
     return products;
   }
 

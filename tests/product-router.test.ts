@@ -11,6 +11,7 @@ describe('productRouter 테스트', () => {
   let token: string;
   let sellerId: string;
   let categoryId: string;
+  let categoryTitle: string;
   let productId: string;
 
   beforeAll(async () => {
@@ -40,6 +41,7 @@ describe('productRouter 테스트', () => {
       });
 
     categoryId = res2.body._id;
+    categoryTitle = res2.body.title;
   });
 
   afterAll(async () => {
@@ -132,6 +134,17 @@ describe('productRouter 테스트', () => {
 
       const res = await request(app)
         .get('/api/productlist')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(3);
+    });
+  });
+
+  describe('get -> /api/productlist/category/:categoryTitle', () => {
+    it('해당 카테고리의 제품들 목록을 반환한다.', async () => {
+      const res = await request(app)
+        .get(`/api/productlist/category/${categoryTitle}`)
         .set('Authorization', `Bearer ${token}`);
 
       expect(res.statusCode).toEqual(200);

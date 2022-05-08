@@ -51,8 +51,27 @@ productRouter.get(
   loginRequired,
   async function (req, res, next) {
     try {
-      // 전체 사용자 목록을 얻음
+      // 전체 제품 목록을 얻음
       const products = await productService.getProducts();
+
+      res.status(200).json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+productRouter.get(
+  '/productlist/category/:categoryTitle',
+  loginRequired,
+  async function (req, res, next) {
+    const categoryTitle = req.params.categoryTitle;
+
+    try {
+      // 전체 사용자 목록을 얻음
+      const products = await productService.getProductsByCategoryTitle(
+        categoryTitle
+      );
 
       res.status(200).json(products);
     } catch (error) {

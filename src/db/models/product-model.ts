@@ -51,6 +51,11 @@ export class ProductModel {
     return product;
   }
 
+  async findAllByCategoryId(categoryId: string): Promise<ProductData[]> {
+    const products = await Product.find({ categoryId });
+    return products;
+  }
+
   async create(productInfo: ProductInfo): Promise<ProductData> {
     const createdNewProduct = await Product.create(productInfo);
     return createdNewProduct;

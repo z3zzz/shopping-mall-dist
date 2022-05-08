@@ -55,7 +55,9 @@ categoryRouter.get(
   async function (req, res, next) {
     try {
       const categoryId = req.params.categoryId;
-      const categoryData = await categoryService.getCategoryData(categoryId);
+      const categoryData = await categoryService.getCategoryDataById(
+        categoryId
+      );
 
       res.status(200).json(categoryData);
     } catch (error) {
