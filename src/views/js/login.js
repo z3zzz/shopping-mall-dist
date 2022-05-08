@@ -5,6 +5,7 @@ import { validateEmail } from './common/usefulFunctions.js';
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const submitButton = document.querySelector('#submitButton');
+const loginForm = document.querySelector('#loginForm');
 
 addAllEvents();
 
@@ -41,6 +42,9 @@ async function handleSubmit(e) {
     sessionStorage.setItem('token', token);
 
     alert(`정상적으로 로그인되었습니다.`);
+
+    // 폼 초기화
+    loginForm.reset();
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
