@@ -11,6 +11,12 @@ export default async function () {
     );
   }
 
+  // jest --watch 옵션인 경우, 이미 만들어진 testDBUrl에
+  // 추가로 또 --test를 붙이지 않도록, return시킴
+  if (currentDBUrl.includes('test')) {
+    return;
+  }
+
   let testDBUrl: string;
 
   if (currentDBUrl.startsWith('mongodb://')) {
