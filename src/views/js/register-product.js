@@ -98,9 +98,10 @@ function handleImageUpload() {
 async function addOptionsToSelectBox() {
   const categorys = await Api.get('/api/categorylist');
   categorys.forEach((category) => {
-    const categoryId = category._id;
-    const categoryTitle = category.title;
+    // 객체 destructuring
+    const { _id, title, themeClass } = category;
 
-    categorySelectBox.innerHTML += `<option value=${categoryId}>${categoryTitle}</option>`;
+    categorySelectBox.innerHTML += `
+      <option value=${_id} class="notification ${themeClass}"> ${title} </option>`;
   });
 }
