@@ -1,5 +1,6 @@
 import { addImageToS3 } from './common/aws-s3.js';
 import * as Api from './common/api.js';
+import { randomId } from './common/usefulFunctions.js';
 
 // 요소(element)들과 상수들
 const titleInput = document.querySelector('#titleInput');
@@ -90,6 +91,9 @@ async function handleSubmit(e) {
     registerProductForm.reset();
     fileNameSpan.innerText = '';
     keywordsContainer.innerHTML = '';
+    categorySelectBox.style.color = 'black';
+    categorySelectBox.style.backgroundColor = 'white';
+    searchKeywords = [];
   } catch (err) {
     console.log(err.stack);
 
@@ -144,10 +148,12 @@ function handleKeywordAdd(e) {
 
   searchKeywords.push(newKeyword);
 
+  const random = randomId();
+
   keywordsContainer.insertAdjacentHTML(
     'beforeend',
     `
-    <div class="control" id="a${newKeyword}">
+    <div class="control" id="a${random}">
       <div class="tags has-addons">
         <span class="tag is-link is-light">${newKeyword}</span>
         <a class="tag is-link is-light is-delete"></a>
@@ -156,9 +162,9 @@ function handleKeywordAdd(e) {
   `
   );
 
-  // 위 html 주입에 약간 시간이 걸리므로, 딜레이를 준 후 이벤트 추가함.
+  // x 버튼에 삭제 기능 추가.
   keywordsContainer
-    .querySelector(`#a${newKeyword} .is-delete`)
+    .querySelector(`#a${random} .is-delete`)
     .addEventListener('click', handleKeywordDelete);
 
   // 초기화 및 사용성 향상
@@ -175,5 +181,5 @@ function handleKeywordDelete(e) {
   searchKeywords.splice(index, 1);
 
   // 요소 삭제
-  keywordsContainer.querySelector(`#a${keywordToDelete}`).remove();
+  e.target.parentElement.parentElement.remove();
 }
