@@ -13,7 +13,7 @@ const ProductSchema = new Schema(
     },
     categoryId: {
       type: Schema.Types.ObjectId,
-      ref: 'product-categorys',
+      ref: 'categorys',
       required: true,
     },
     manufacturer: {
