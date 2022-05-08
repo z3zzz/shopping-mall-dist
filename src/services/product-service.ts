@@ -5,7 +5,7 @@ export interface ProductUpdateInfo {
   categoryId?: string;
   shortDescription?: string;
   detailDescription?: string;
-  imageUrl?: string;
+  imageKey?: string;
   inventory?: number;
   price?: number;
   discountPercent?: number;
@@ -47,7 +47,7 @@ class ProductService {
       categoryId,
       shortDescription,
       detailDescription,
-      imageUrl,
+      imageKey,
       inventory,
       price,
       discountPercent,
@@ -89,10 +89,10 @@ class ProductService {
       });
     }
 
-    if (imageUrl) {
+    if (imageKey) {
       product = await this.productModel.update({
         productId,
-        update: { imageUrl },
+        update: { imageKey },
       });
     }
 

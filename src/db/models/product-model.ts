@@ -10,7 +10,7 @@ export interface ProductInfo {
   manufacturer: string;
   shortDescription: string;
   detailDescription: string;
-  imageUrl: string;
+  imageKey: string;
   inventory: number;
   price: number;
 }
@@ -23,7 +23,7 @@ export interface ProductData {
   manufacturer: string;
   shortDescription: string;
   detailDescription: string;
-  imageUrl: string;
+  imageKey: string;
   inventory: number;
   price: number;
   discountPercent?: number;

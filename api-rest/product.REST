@@ -15,10 +15,10 @@ content-type: application/json
 {
     "title": "테스트-제품",
     "categoryId": "6275cb97e965a15e7fe16f5f",
-    "menufacturer": "삼성전자짱",
+    "manufacturer": "삼성전자짱",
     "shortDescription": "테스트용 제품입니다.",
     "detailDescription": "테스트용 제품의 자세한 설명입니다.",
-    "imageUrl": "https://test-product/test.png",
+    "imageKey": "test-product/test.png",
     "inventory": 100,
     "price": 50000
 }
@@ -38,8 +38,8 @@ content-type: application/json
 
 {
     "title": "테스트-제품2",
-    "menufacturer": "삼성전자짱2",
+    "manufacturer": "삼성전자짱2",
     "shortDescription": "테스트용 제품입니다.2",
-    "imageUrl": "https://test-product/test2.png",
+    "imageKey": "test-product999/test.png",
     "inventory": 50
 }

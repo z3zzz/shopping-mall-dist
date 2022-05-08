@@ -38,7 +38,8 @@ describe('categoryRouter 테스트', () => {
         .send({
           title: `${random}-category`,
           description: '테스트 카테고리입니다.',
-          imageUrl: 'https://test-category/test.png',
+          themeClass: 'is-primary is-light',
+          imageKey: 'test-category/test.png',
         });
 
       // 다른 테스트에 쓰일 카테고리 id
@@ -47,7 +48,8 @@ describe('categoryRouter 테스트', () => {
       expect(res.statusCode).toEqual(201);
       expect(categoryId).toBeDefined();
       expect(res.body.title).toBe(`${random}-category`);
-      expect(res.body.imageUrl).toBe('https://test-category/test.png');
+      expect(res.body.themeClass).toMatch('is-primary is-light');
+      expect(res.body.imageKey).toBe('test-category/test.png');
     });
   });
 
@@ -60,7 +62,8 @@ describe('categoryRouter 테스트', () => {
         .send({
           title: `${random}-category-1`,
           description: '테스트용 카테고리입니다.',
-          imageUrl: 'https://test-category/test.png',
+          themeClass: 'is-primary is-light',
+          imageKey: 'test-category/test.png',
         });
 
       await request(app)
@@ -70,7 +73,8 @@ describe('categoryRouter 테스트', () => {
         .send({
           title: `${random}-category-2`,
           description: '테스트용 카테고리입니다.',
-          imageUrl: 'https://test-category/test.png',
+          themeClass: 'is-primary is-light',
+          imageKey: 'test-category/test.png',
         });
 
       await request(app)
@@ -80,7 +84,8 @@ describe('categoryRouter 테스트', () => {
         .send({
           title: `${random}-category-3`,
           description: '테스트용 카테고리입니다.',
-          imageUrl: 'https://test-category/test.png',
+          themeClass: 'is-primary is-light',
+          imageKey: 'test-category/test.png',
         });
 
       const res = await request(app)
@@ -100,7 +105,7 @@ describe('categoryRouter 테스트', () => {
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.title).toBe(`${random}-category`);
-      expect(res.body.imageUrl).toBe('https://test-category/test.png');
+      expect(res.body.imageKey).toBe('test-category/test.png');
     });
   });
 
@@ -112,12 +117,14 @@ describe('categoryRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           title: `${random}-category-999`,
-          imageUrl: 'https://test-category/test-change.png',
+          imageKey: 'test-category/test-change.png',
+          themeClass: 'is-info',
         });
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.title).toBe(`${random}-category-999`);
-      expect(res.body.imageUrl).toBe('https://test-category/test-change.png');
+      expect(res.body.themeClass).toMatch('is-info');
+      expect(res.body.imageKey).toBe('test-category/test-change.png');
     });
   });
 });

@@ -35,7 +35,8 @@ describe('productRouter 테스트', () => {
       .send({
         title: `${random}-category`,
         description: '테스트 카테고리입니다.',
-        imageUrl: 'https://test-category/test.png',
+        themeClass: 'is-primary is-light',
+        imageKey: 'test-category/test.png',
       });
 
     categoryId = res2.body._id;
@@ -58,7 +59,7 @@ describe('productRouter 테스트', () => {
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
-          imageUrl: 'https://test-product/test.png',
+          imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
         });
@@ -70,7 +71,7 @@ describe('productRouter 테스트', () => {
       expect(productId).toBeDefined();
       expect(res.body.title).toBe(`${random}-product`);
       expect(res.body.manufacturer).toBe('삼성');
-      expect(res.body.imageUrl).toBe('https://test-product/test.png');
+      expect(res.body.imageKey).toBe('test-product/test.png');
       expect(res.body.inventory).toBe(100);
     });
   });
@@ -88,7 +89,7 @@ describe('productRouter 테스트', () => {
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
-          imageUrl: 'https://test-product/test.png',
+          imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
         });
@@ -104,7 +105,7 @@ describe('productRouter 테스트', () => {
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
-          imageUrl: 'https://test-product/test.png',
+          imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
         });
@@ -120,7 +121,7 @@ describe('productRouter 테스트', () => {
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
-          imageUrl: 'https://test-product/test.png',
+          imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
         });
@@ -142,7 +143,7 @@ describe('productRouter 테스트', () => {
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.title).toBe(`${random}-product`);
-      expect(res.body.imageUrl).toBe('https://test-product/test.png');
+      expect(res.body.imageKey).toBe('test-product/test.png');
       expect(res.body.shortDescription).toMatch('테스트 제품입니다.');
     });
   });
@@ -155,14 +156,14 @@ describe('productRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           title: `${random}-product-999`,
-          imageUrl: 'https://test-product/test-change.png',
+          imageKey: 'test-product/test-change.png',
           inventory: 50,
           discountPercent: 20,
         });
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.title).toBe(`${random}-product-999`);
-      expect(res.body.imageUrl).toBe('https://test-product/test-change.png');
+      expect(res.body.imageKey).toBe('test-product/test-change.png');
       expect(res.body.inventory).toBe(50);
       expect(res.body.discountPercent).toBe(20);
     });

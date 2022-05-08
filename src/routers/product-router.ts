@@ -21,7 +21,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
     const manufacturer: string = req.body.manufacturer;
     const shortDescription: string = req.body.shortDescription;
     const detailDescription: string = req.body.detailDescription;
-    const imageUrl: string = req.body.imageUrl;
+    const imageKey: string = req.body.imageKey;
     const inventory: number = req.body.inventory;
     const price: number = req.body.price;
 
@@ -33,7 +33,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
       manufacturer,
       shortDescription,
       detailDescription,
-      imageUrl,
+      imageKey,
       inventory,
       price,
     });
@@ -92,7 +92,7 @@ productRouter.patch(
       const categoryId: string = req.body.categoryId;
       const shortDescription: string = req.body.shortDescription;
       const detailDescription: string = req.body.detailDescription;
-      const imageUrl: string = req.body.imageUrl;
+      const imageKey: string = req.body.imageKey;
       const inventory: number = req.body.inventory;
       const price: number = req.body.price;
       const discountPercent: number = req.body.discountPercent;
@@ -102,7 +102,7 @@ productRouter.patch(
         categoryId,
         shortDescription,
         detailDescription,
-        imageUrl,
+        imageKey,
         inventory,
         price,
         discountPercent,
