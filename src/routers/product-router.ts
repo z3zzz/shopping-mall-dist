@@ -24,6 +24,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
     const imageKey: string = req.body.imageKey;
     const inventory: number = req.body.inventory;
     const price: number = req.body.price;
+    const searchKeywords: string[] = req.body.searchKeywords;
 
     // 위 데이터를 제품 db에 추가하기
     const newProduct = await productService.addProduct({
@@ -36,6 +37,7 @@ productRouter.post('/product', loginRequired, async (req, res, next) => {
       imageKey,
       inventory,
       price,
+      searchKeywords,
     });
 
     res.status(201).json(newProduct);
@@ -95,6 +97,7 @@ productRouter.post(
       const imageKey: string = req.body.imageKey;
       const inventory: number = req.body.inventory;
       const price: number = req.body.price;
+      const searchKeywords: string[] = req.body.searchKeywords;
       const isRecommended: boolean = req.body.isRecommended;
       const discountPercent: number = req.body.discountPercent;
 
@@ -106,6 +109,7 @@ productRouter.post(
         imageKey,
         inventory,
         price,
+        searchKeywords,
         isRecommended,
         discountPercent,
       };

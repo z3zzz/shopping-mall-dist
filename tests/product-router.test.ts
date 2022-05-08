@@ -62,6 +62,7 @@ describe('productRouter 테스트', () => {
           imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
+          searchKeywords: ['한국', '남자옷'],
         });
 
       // 다른 테스트에 쓰일 제품 id
@@ -92,6 +93,7 @@ describe('productRouter 테스트', () => {
           imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
+          searchKeywords: ['한국', '남자옷'],
         });
 
       await request(app)
@@ -108,6 +110,7 @@ describe('productRouter 테스트', () => {
           imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
+          searchKeywords: ['한국', '남자옷'],
         });
 
       await request(app)
@@ -124,6 +127,7 @@ describe('productRouter 테스트', () => {
           imageKey: 'test-product/test.png',
           inventory: 100,
           price: 20000,
+          searchKeywords: ['한국', '남자옷'],
         });
 
       const res = await request(app)
@@ -158,6 +162,7 @@ describe('productRouter 테스트', () => {
           title: `${random}-product-999`,
           imageKey: 'test-product/test-change.png',
           inventory: 50,
+          searchKeywords: ['미국', '나이키'],
           isRecommended: true,
           discountPercent: 20,
         });
@@ -167,6 +172,7 @@ describe('productRouter 테스트', () => {
       expect(res.body.imageKey).toBe('test-product/test-change.png');
       expect(res.body.inventory).toBe(50);
       expect(res.body.isRecommended).toBe(true);
+      expect(res.body.searchKeywords).toEqual(['미국', '나이키']);
       expect(res.body.discountPercent).toBe(20);
     });
   });

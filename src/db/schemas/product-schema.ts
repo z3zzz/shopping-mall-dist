@@ -42,6 +42,10 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    searchKeywords: {
+      type: [String],
+      required: true,
+    },
     isRecommended: {
       type: Boolean,
       default: false,

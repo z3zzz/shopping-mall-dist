@@ -8,6 +8,7 @@ export interface ProductUpdateInfo {
   imageKey?: string;
   inventory?: number;
   price?: number;
+  searchKeywords?: string[];
   discountPercent?: number;
   isRecommended?: boolean;
 }
@@ -51,6 +52,7 @@ class ProductService {
       imageKey,
       inventory,
       price,
+      searchKeywords,
       isRecommended,
       discountPercent,
     } = toUpdate;
@@ -109,6 +111,13 @@ class ProductService {
       product = await this.productModel.update({
         productId,
         update: { price },
+      });
+    }
+
+    if (searchKeywords) {
+      product = await this.productModel.update({
+        productId,
+        update: { searchKeywords },
       });
     }
 
