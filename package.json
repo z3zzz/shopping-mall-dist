@@ -4,9 +4,13 @@
   "version": "1.0.0",
   "main": "index.ts",
   "license": "MIT",
+  "jest": {
+    "globalSetup": "./tests/__config__/setup.ts",
+    "globalTeardown": "./tests/__config__/teardown.ts"
+  },
   "scripts": {
     "start": "nodemon index.ts --exec ts-node",
-    "test": "jest --setupFiles dotenv/config"
+    "test": "jest"
   },
   "homepage": "",
   "repository": {

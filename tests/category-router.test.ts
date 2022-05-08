@@ -1,9 +1,13 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
-import { clearCollection, closeConnection } from './__config__/mongodb-config';
 import { app } from '../src/app';
 
 describe('categoryRouter 테스트', () => {
+  // 임시 랜덤 문자열 제작용
+  const random = Math.random().toString(36).substring(2, 7);
+
+  // 각 테스트에서 공통으로 사용할 변수
   let token: string;
   let categoryId: string;
 
@@ -11,16 +15,18 @@ describe('categoryRouter 테스트', () => {
     const res = await request(app)
       .post('/api/register')
       .set('Content-Type', 'application/json')
-      .send({ fullName: 'tester', email: 'abc@example.com', password: '1234' });
+      .send({
+        fullName: 'tester',
+        email: `${random}@example.com`,
+        password: '1234',
+      });
 
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     token = jwt.sign({ userId: res.body._id, role: 'admin' }, secretKey);
   });
 
   afterAll(async () => {
-    await clearCollection('users');
-    await clearCollection('categorys');
-    await closeConnection();
+    await mongoose.connection.close();
   });
 
   describe('post -> /api/category', () => {
@@ -30,7 +36,7 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          title: 'test-category',
+          title: `${random}-category`,
           description: '테스트 카테고리입니다.',
           imageUrl: 'https://test-category/test.png',
         });
@@ -40,7 +46,7 @@ describe('categoryRouter 테스트', () => {
 
       expect(res.statusCode).toEqual(201);
       expect(categoryId).toBeDefined();
-      expect(res.body.title).toBe('test-category');
+      expect(res.body.title).toBe(`${random}-category`);
       expect(res.body.imageUrl).toBe('https://test-category/test.png');
     });
   });
@@ -52,7 +58,7 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          title: 'test-category1',
+          title: `${random}-category-1`,
           description: '테스트용 카테고리입니다.',
           imageUrl: 'https://test-category/test.png',
         });
@@ -62,7 +68,7 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          title: 'test-category2',
+          title: `${random}-category-2`,
           description: '테스트용 카테고리입니다.',
           imageUrl: 'https://test-category/test.png',
         });
@@ -72,7 +78,7 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          title: 'test-category3',
+          title: `${random}-category-3`,
           description: '테스트용 카테고리입니다.',
           imageUrl: 'https://test-category/test.png',
         });
@@ -93,7 +99,7 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(res.statusCode).toEqual(200);
-      expect(res.body.title).toBe('test-category');
+      expect(res.body.title).toBe(`${random}-category`);
       expect(res.body.imageUrl).toBe('https://test-category/test.png');
     });
   });
@@ -105,12 +111,12 @@ describe('categoryRouter 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          title: 'test-category99',
+          title: `${random}-category-999`,
           imageUrl: 'https://test-category/test-change.png',
         });
 
       expect(res.statusCode).toEqual(200);
-      expect(res.body.title).toBe('test-category99');
+      expect(res.body.title).toBe(`${random}-category-999`);
       expect(res.body.imageUrl).toBe('https://test-category/test-change.png');
     });
   });

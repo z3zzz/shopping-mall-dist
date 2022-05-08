@@ -1,11 +1,16 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
-import { clearCollection, closeConnection } from './__config__/mongodb-config';
 import { app } from '../src/app';
 
 describe('userRouter 테스트', () => {
+  // 임시 랜덤 문자열 제작용
+  const random = Math.random().toString(36).substring(2, 7);
+
+  // 여러 테스트에서 공통으로 쓸 토큰
+  let token: string;
+
   afterAll(async () => {
-    await clearCollection('users');
-    await closeConnection();
+    await mongoose.connection.close();
   });
 
   describe('post -> /api/register', () => {
@@ -15,13 +20,13 @@ describe('userRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           fullName: 'tester',
-          email: 'abc@def.com',
+          email: `${random}@def.com`,
           password: '1234',
         });
 
       expect(res.statusCode).toEqual(201);
       expect(res.body.fullName).toBe('tester');
-      expect(res.body.email).toBe('abc@def.com');
+      expect(res.body.email).toBe(`${random}@def.com`);
     });
   });
 
@@ -30,10 +35,12 @@ describe('userRouter 테스트', () => {
       const res = await request(app)
         .post('/api/login')
         .set('Content-Type', 'application/json')
-        .send({ email: 'abc@def.com', password: '1234' });
+        .send({ email: `${random}@def.com`, password: '1234' });
+
+      token = res.body.token;
 
       expect(res.statusCode).toEqual(200);
-      expect(res.body.token).toBeDefined();
+      expect(token).toBeDefined();
     });
   });
 
@@ -44,7 +51,7 @@ describe('userRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           fullName: 'tester1',
-          email: 'abc1@def.com',
+          email: `${random}1@def.com`,
           password: '1234',
         });
       await request(app)
@@ -52,7 +59,7 @@ describe('userRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           fullName: 'tester2',
-          email: 'abc2@def.com',
+          email: `${random}2@def.com`,
           password: '1234',
         });
       await request(app)
@@ -60,66 +67,45 @@ describe('userRouter 테스트', () => {
         .set('Content-Type', 'application/json')
         .send({
           fullName: 'tester3',
-          email: 'abc3@def.com',
+          email: `${random}3@def.com`,
           password: '1234',
         });
 
       const res = await request(app)
-        .post('/api/login')
-        .set('Content-Type', 'application/json')
-        .send({ email: 'abc@def.com', password: '1234' });
-
-      const token = res.body.token;
-
-      const res2 = await request(app)
         .get('/api/userlist')
         .set('Authorization', `Bearer ${token}`);
 
-      expect(res2.statusCode).toEqual(200);
-      expect(res2.body.length).toBeGreaterThanOrEqual(3);
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(3);
     });
   });
 
   describe('get -> /api/user/', () => {
     it('사용자 정보를 반환한다.', async () => {
       const res = await request(app)
-        .post('/api/login')
-        .set('Content-Type', 'application/json')
-        .send({ email: 'abc@def.com', password: '1234' });
-
-      const token = res.body.token;
-
-      const res2 = await request(app)
         .get(`/api/user/`)
         .set('Authorization', `Bearer ${token}`);
 
-      expect(res2.statusCode).toEqual(200);
-      expect(res2.body.email).toBe('abc@def.com');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.email).toBe(`${random}@def.com`);
     });
   });
 
   describe('patch -> /api/user', () => {
     it('사용자 정보의 수정이 정상적으로 이루어진다.', async () => {
       const res = await request(app)
-        .post('/api/login')
-        .set('Content-Type', 'application/json')
-        .send({ email: 'abc@def.com', password: '1234' });
-
-      const token = res.body.token;
-
-      const res2 = await request(app)
         .patch(`/api/user`)
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          email: 'abc2@def.com',
+          email: `${random}999@def.com`,
           fullName: 'tester-changed',
           currentPassword: '1234',
         });
 
-      expect(res2.statusCode).toEqual(200);
-      expect(res2.body.email).toBe('abc2@def.com');
-      expect(res2.body.fullName).toBe('tester-changed');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.email).toBe(`${random}999@def.com`);
+      expect(res.body.fullName).toBe('tester-changed');
     });
   });
 });
