@@ -168,7 +168,7 @@
 
         <div class="field">
           <label class="label" for="priceInput">가격</label>
-          <div class="field mb-5">
+          <div class="field">
             <div class="control has-icons-right">
               <input
                 class="input"
@@ -181,9 +181,36 @@
             </div>
           </div>
         </div>
-        <button class="button is-primary is-fullwidth" id="submitButton">
-          제품 판매하기
-        </button>
+
+        <div class="field">
+          <label class="label" for="searchKeywordInput">검색 키워드</label>
+          <div class="field has-addons">
+            <div class="control header-search-input is-flex-grow-1">
+              <input
+                class="input"
+                id="searchKeywordInput"
+                type="text"
+                placeholder="남자옷"
+              />
+            </div>
+            <div class="control">
+              <button class="button is-primary" id="addKeywordButton">
+                추가하기
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="field is-grouped is-grouped-multiline mt-3"
+          id="keywordContainer"
+        ></div>
+
+        <div class="mt-5">
+          <button class="button is-primary is-fullwidth" id="submitButton">
+            제품 판매하기
+          </button>
+        </div>
       </form>
     </div>
   </body>
