@@ -39,7 +39,8 @@ async function handleSubmit(e) {
     const token = result.token;
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
-    sessionStorage.setItem('token', token);
+    // 단, 개발 중에는 편의상 localStorage에 저장
+    localStorage.setItem('token', token);
 
     alert(`정상적으로 로그인되었습니다.`);
 
