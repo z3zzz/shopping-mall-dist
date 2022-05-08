@@ -57,6 +57,7 @@ async function post(endpoint, data) {
   return result;
 }
 
+// patch와 delete는 현재 주어진 프로젝트 코드에서는 아직 쓰이지는 않고 있음.
 async function patch(endpoint, params = '', data) {
   const apiUrl = serverUrl + endpoint + '/' + params;
 

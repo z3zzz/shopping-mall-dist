@@ -109,10 +109,10 @@ describe('categoryRouter 테스트', () => {
     });
   });
 
-  describe('patch -> /api/categorys/:categoryId', () => {
+  describe('post -> /api/categorys/:categoryId', () => {
     it('카테고리 정보의 수정이 정상적으로 이루어진다.', async () => {
       const res = await request(app)
-        .patch(`/api/categorys/${categoryId}`)
+        .post(`/api/categorys/${categoryId}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({

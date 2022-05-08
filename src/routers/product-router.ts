@@ -74,7 +74,7 @@ productRouter.get(
   }
 );
 
-productRouter.patch(
+productRouter.post(
   '/products/:productId',
   loginRequired,
   async function (req, res, next) {

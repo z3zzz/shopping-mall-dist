@@ -64,7 +64,7 @@ categoryRouter.get(
   }
 );
 
-categoryRouter.patch(
+categoryRouter.post(
   '/categorys/:categoryId',
   adminOnly,
   async function (req, res, next) {
