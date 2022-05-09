@@ -51,7 +51,7 @@ async function addImageCardsToSlider() {
     setTimeout(() => {
       const card = document.querySelector(`#a${random}`);
       card.addEventListener('click', () => {
-        window.location.href = `#/products?category=${title}`;
+        window.location.href = `/products?category=${title}`;
       });
     }, 100);
   });

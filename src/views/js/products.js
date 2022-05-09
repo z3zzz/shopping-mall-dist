@@ -51,8 +51,9 @@ async function addProductItemsToContainer() {
             <p class="title">
               ${title}
               ${
-                isRecommended &&
-                '<span class="tag is-success is-rounded">추천</span>'
+                isRecommended
+                  ? '<span class="tag is-success is-rounded">추천</span>'
+                  : ''
               }
             </p>
             <p class="description">${shortDescription}</p>
