@@ -13,6 +13,10 @@
   width: 200px;
 }
 
+.product-item .image img {
+  height: 200px;
+}
+
 .product-item p.title {
   margin: 1rem 0;
 }

@@ -98,7 +98,7 @@ class CategoryService {
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!category) {
       throw new Error(
-        '해당 id의 카테고리는 없습니다. 다시 한 번 확인해 주세요.'
+        '해당 이름의 카테고리는 없습니다. 다시 한 번 확인해 주세요.'
       );
     }
 

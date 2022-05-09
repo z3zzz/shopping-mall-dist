@@ -25,3 +25,8 @@ export const getUrlParams = () => {
 
   return result;
 };
+
+// 숫자에 쉼표를 추가함. (10000 -> 10,000)
+export const numberWithCommas = (n) => {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};

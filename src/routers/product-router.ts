@@ -65,7 +65,15 @@ productRouter.get(
   '/productlist/category/:categoryTitle',
   loginRequired,
   async function (req, res, next) {
-    const categoryTitle = req.params.categoryTitle;
+    let categoryTitle = req.params.categoryTitle;
+
+    if (categoryTitle === 'men clothes') {
+      categoryTitle = 'Men Clothes';
+    }
+
+    if (categoryTitle === 'women clothes') {
+      categoryTitle = 'Women Clothes';
+    }
 
     try {
       // 전체 사용자 목록을 얻음
