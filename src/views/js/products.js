@@ -1,10 +1,12 @@
 import { getImageUrl } from './common/aws-s3.js';
 import * as Api from './common/api.js';
 import {
+  randomId,
   checkLogin,
   doLogout,
   getUrlParams,
   numberWithCommas,
+  navigate,
 } from './common/usefulFunctions.js';
 
 // 요소(element), input 혹은 상수
@@ -31,13 +33,15 @@ async function addProductItemsToContainer() {
 
   products.forEach(async (product) => {
     // 객체 destructuring
-    const { title, shortDescription, imageKey, isRecommended, price } = product;
+    const { _id, title, shortDescription, imageKey, isRecommended, price } =
+      product;
     const imageUrl = await getImageUrl(imageKey);
+    const random = randomId();
 
     productItemContainer.insertAdjacentHTML(
       'beforeend',
       `
-      <div class="message media product-item">
+      <div class="message media product-item" id="a${random}">
         <div class="media-left">
           <figure class="image">
             <img
@@ -63,5 +67,8 @@ async function addProductItemsToContainer() {
       </div>
       `
     );
+
+    const productItem = document.querySelector(`#a${random}`);
+    productItem.addEventListener('click', navigate(`/product?id=${_id}`));
   });
 }
