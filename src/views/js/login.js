@@ -44,8 +44,8 @@ async function handleSubmit(e) {
 
     alert(`정상적으로 로그인되었습니다.`);
 
-    // 폼 초기화
-    loginForm.reset();
+    // 로그인 성공, 개인 페이지 이동
+    window.location.href = '/user/product';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

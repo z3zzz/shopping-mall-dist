@@ -30,3 +30,18 @@ export const getUrlParams = () => {
 export const numberWithCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
+
+// 로그아웃(세션스토리지에서 토큰 제거)
+// 개발 단계에서는 편의상 로컬스토리지 사용
+export const doLogout = () => {
+  localStorage.removeItem('token');
+  window.location.href = '/';
+};
+
+// 로그인 여부(토큰 존재 여부) 확인
+export const checkLogin = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.replace('/login');
+  }
+};

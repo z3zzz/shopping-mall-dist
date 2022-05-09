@@ -1,10 +1,17 @@
 import { getImageUrl } from './common/aws-s3.js';
 import * as Api from './common/api.js';
-import { getUrlParams, numberWithCommas } from './common/usefulFunctions.js';
+import {
+  checkLogin,
+  doLogout,
+  getUrlParams,
+  numberWithCommas,
+} from './common/usefulFunctions.js';
 
 // 요소(element), input 혹은 상수
 const productItemContainer = document.querySelector('#producItemContainer');
+const logoutATag = document.querySelector('#logoutATag');
 
+checkLogin();
 addAllElements();
 addAllEvents();
 
@@ -14,7 +21,9 @@ function addAllElements() {
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {}
+function addAllEvents() {
+  logoutATag.addEventListener('click', doLogout);
+}
 
 async function addProductItemsToContainer() {
   const { category } = getUrlParams();
@@ -28,7 +37,7 @@ async function addProductItemsToContainer() {
     productItemContainer.insertAdjacentHTML(
       'beforeend',
       `
-      <div class="message media is-dark product-item">
+      <div class="message media product-item">
         <div class="media-left">
           <figure class="image">
             <img
@@ -42,9 +51,8 @@ async function addProductItemsToContainer() {
             <p class="title">
               ${title}
               ${
-                isRecommended
-                  ? '<span class="tag is-success is-rounded">추천</span>'
-                  : ''
+                isRecommended &&
+                '<span class="tag is-success is-rounded">추천</span>'
               }
             </p>
             <p class="description">${shortDescription}</p>

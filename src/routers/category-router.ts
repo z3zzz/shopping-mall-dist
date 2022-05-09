@@ -34,20 +34,16 @@ categoryRouter.post('/category', adminOnly, async (req, res, next) => {
   }
 });
 
-categoryRouter.get(
-  '/categorylist',
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      // 전체 사용자 목록을 얻음
-      const categorys = await categoryService.getCategorys();
+categoryRouter.get('/categorylist', async function (req, res, next) {
+  try {
+    // 전체 카테고리 목록을 얻음
+    const categorys = await categoryService.getCategorys();
 
-      res.status(200).json(categorys);
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json(categorys);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 categoryRouter.get(
   '/categorys/:categoryId',

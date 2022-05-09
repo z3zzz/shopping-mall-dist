@@ -1,8 +1,9 @@
 import { addImageToS3 } from './common/aws-s3.js';
 import * as Api from './common/api.js';
-import { randomId } from './common/usefulFunctions.js';
+import { checkLogin, doLogout, randomId } from './common/usefulFunctions.js';
 
 // 요소(element)들과 상수들
+const logoutATag = document.querySelector('#logoutATag');
 const titleInput = document.querySelector('#titleInput');
 const categorySelectBox = document.querySelector('#categorySelectBox');
 const manufacturerInput = document.querySelector('#manufacturerInput');
@@ -19,6 +20,7 @@ const keywordsContainer = document.querySelector('#keywordContainer');
 const submitButton = document.querySelector('#submitButton');
 const registerProductForm = document.querySelector('#registerProductForm');
 
+checkLogin();
 addAllElements();
 addAllEvents();
 
@@ -29,6 +31,7 @@ function addAllElements() {
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+  logoutATag.addEventListener('click', doLogout);
   imageInput.addEventListener('change', handleImageUpload);
   submitButton.addEventListener('click', handleSubmit);
   categorySelectBox.addEventListener('change', handleCategoryChange);
