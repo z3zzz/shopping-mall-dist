@@ -42,6 +42,19 @@ export const doLogout = () => {
 export const checkLogin = () => {
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.replace('/login');
+    // 현재 페이지의 url 주소 추출하기
+    const pathname = window.location.pathname;
+    const search = window.location.search;
+
+    // 로그인 후 다시 지금 페이지로 자동으로 돌아가도록 하기 위한 준비작업임.
+    window.location.replace(`/login?previouspage=${pathname + search}`);
   }
+};
+
+// 해당 주소로 이동하는 콜백함수를 반환함.
+// 이벤트 핸들 함수로 쓰면 유용함
+export const navigate = (pathname) => {
+  return function () {
+    window.location.href = pathname;
+  };
 };
