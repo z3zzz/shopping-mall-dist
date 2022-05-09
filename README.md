@@ -86,5 +86,9 @@ const bucketRegion = 'ap-northeast-2';
 const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
 ```
 
+5. 추가할 기능
+- 강제 로그인페이지 이동 시, 로그인 후 되돌아가게
+
+
 </p>
 </details>
