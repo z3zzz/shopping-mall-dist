@@ -1,0 +1,109 @@
+.header-search-input {
+  width: 20rem;
+}
+
+.navbar-menu .is-info:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.cart-header {
+  border-bottom: #dbdbdb solid 1px;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.cart-header .title {
+  margin-bottom: 0;
+  padding: 1rem 0 0 1rem;
+}
+
+.cart-header .subtitle {
+  padding: 3rem 1rem 0 1rem;
+  line-height: 2.5rem;
+}
+
+.cart-products-container {
+  width: 100%;
+}
+
+.cart-products-header {
+  width: 100%;
+  border-bottom: #555 solid 1px;
+  padding-top: 0.75rem;
+  display: flex;
+}
+
+.cart-products-header .help {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cart-products-header label {
+  display: inline-block;
+  line-height: 0.5rem;
+  border-radius: 100%;
+}
+
+.cart-products-header input {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.cart-products-header .seperator {
+  line-height: 0.8rem;
+}
+
+.cart-products-header .delete-part {
+  cursor: pointer;
+  line-height: 1rem;
+}
+
+.cart-product-item {
+  padding-top: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-product-item label {
+  position: absolute;
+  top: 1rem;
+}
+
+.cart-product-item input.checkbox {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.cart-product-item .image {
+  display: inline-block;
+  margin-left: 1.2rem;
+}
+
+.cart-product-item .content {
+  display: inline-block;
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
+
+.cart-product-item .quantity {
+  margin-left: 1rem;
+}
+
+.cart-product-item .quantity .button {
+  font-size: 0.6rem;
+  padding: 2px 10px;
+  border-color: #aaa;
+}
+
+.cart-product-item .quantity .input {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.order-summary {
+  width: 100%;
+}
