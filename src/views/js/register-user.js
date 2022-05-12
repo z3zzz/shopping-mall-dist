@@ -1,5 +1,5 @@
 import * as Api from './common/api.js';
-import { validateEmail } from './common/usefulFunctions.js';
+import { validateEmail } from './common/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector('#fullNameInput');

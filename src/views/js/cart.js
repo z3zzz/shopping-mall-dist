@@ -3,9 +3,8 @@ import * as Api from './common/api.js';
 import {
   checkLogin,
   doLogout,
-  getUrlParams,
   numberWithCommas,
-} from './common/usefulFunctions.js';
+} from './common/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');

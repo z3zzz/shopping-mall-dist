@@ -1,6 +1,6 @@
 import { addImageToS3 } from './common/aws-s3.js';
 import * as Api from './common/api.js';
-import { checkLogin, doLogout, randomId } from './common/usefulFunctions.js';
+import { checkLogin, doLogout, randomId } from './common/useful-functions.js';
 
 // 요소(element)들과 상수들
 const logoutATag = document.querySelector('#logoutATag');
