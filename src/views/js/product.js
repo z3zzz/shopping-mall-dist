@@ -6,6 +6,7 @@ import {
   getUrlParams,
   numberWithCommas,
 } from './common/useful-functions.js';
+import { addToDb } from './common/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');
@@ -57,4 +58,13 @@ async function injectProductData() {
       '<span class="tag is-success is-rounded">추천</span>'
     );
   }
+
+  addToCartButton.addEventListener('click', async () => {
+    try {
+      await addToDb('cart', product, id);
+      alert('장바구니에 추가되었습니다.');
+    } catch (err) {
+      alert('이미 장바구니에 추가되어 있습니다.');
+    }
+  });
 }
