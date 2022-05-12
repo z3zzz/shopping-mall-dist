@@ -23,6 +23,10 @@
   line-height: 2.5rem;
 }
 
+.cart-products {
+  height: 100%;
+}
+
 .cart-products-container {
   width: 100%;
 }
@@ -66,10 +70,13 @@
   padding-top: 0.3rem;
   padding-bottom: 2rem;
   margin-bottom: 0.5rem;
-  border-bottom: #ddd solid 1px;
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.cart-product-item:not(:last-child) {
+  border-bottom: #ddd solid 1px;
 }
 
 .cart-product-item label {
