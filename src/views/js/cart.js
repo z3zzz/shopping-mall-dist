@@ -8,11 +8,14 @@ import {
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');
-const productImageTag = document.querySelector('#productImageTag');
-const manufacturerTag = document.querySelector('#manufacturerTag');
-const titleTag = document.querySelector('#titleTag');
-const detailDescriptionTag = document.querySelector('#detailDescriptionTag');
-const addToCartButton = document.querySelector('#addToCartButton');
+const allSelectCheckbox = document.querySelector('#allSelectCheckbox');
+const partialDeleteLabel = document.querySelector('#partialDeleteLabel');
+const itemSelectCheckbox = document.querySelector('#itemSelectCheckbox');
+const itemDeleteButton = document.querySelector('#itemDeleteButton');
+const orderedProducts = document.querySelector('#orderedProducts');
+const productsTotalPrice = document.querySelector('#productsTotalPrice');
+const deliveryFee = document.querySelector('#deliveryFee');
+const orderTotalPrice = document.querySelector('#orderTotalPrice');
 const purchaseButton = document.querySelector('#purchaseButton');
 
 checkLogin();
