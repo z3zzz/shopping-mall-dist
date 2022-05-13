@@ -58,3 +58,8 @@ export const navigate = (pathname) => {
     window.location.href = pathname;
   };
 };
+
+// ms 만큼 기다리게 함.
+export const wait = (ms) => {
+  return new Promise((r) => setTimeout(r, ms));
+};

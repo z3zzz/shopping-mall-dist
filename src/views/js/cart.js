@@ -4,7 +4,9 @@ import {
   checkLogin,
   doLogout,
   numberWithCommas,
+  wait,
 } from './common/useful-functions.js';
+import { getFromDb } from './common/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');
@@ -24,7 +26,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
-  //injectProductData();
+  getProductsfromCart();
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -32,9 +34,10 @@ function addAllEvents() {
   logoutTag.addEventListener('click', doLogout);
 }
 
-async function injectProductData() {
-  const { id } = getUrlParams();
-  const product = await Api.get(`/api/products/${id}`);
+async function getProductsfromCart() {
+  await wait(100);
+  const products = await getFromDb('cart');
+  console.log(products);
 
   // 객체 destructuring
   const {
