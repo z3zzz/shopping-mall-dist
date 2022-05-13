@@ -61,7 +61,10 @@ async function insertProductData() {
 
   addToCartButton.addEventListener('click', async () => {
     try {
-      await addToDb('cart', product, id);
+      // 장바구니 추가 시, indexedDB에 제품 데이터 및
+      // 주문수량 (기본값 1)을 저장함.
+      await addToDb('cart', { ...product, quantity: 1 }, id);
+
       alert('장바구니에 추가되었습니다.');
     } catch (err) {
       alert('이미 장바구니에 추가되어 있습니다.');
