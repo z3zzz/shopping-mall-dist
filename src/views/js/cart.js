@@ -170,19 +170,19 @@ async function checkAllSelectCheckbox() {
   }
 }
 
-async function deleteItem(_id) {
-  // indexedDB의 cart 목록에서 _id를 key로 가지는 데이터를 삭제함.
-  await deleteFromDb('cart', _id);
+async function deleteItem(id) {
+  // indexedDB의 cart 목록에서 id를 key로 가지는 데이터를 삭제함.
+  await deleteFromDb('cart', id);
 
   // 결제정보를 업데이트함.
-  updateOrderSummary(_id, 'remove');
+  await updateOrderSummary(id, 'remove');
 
   // 마지막으로, 제품 요소(컴포넌트)를 페이지에서 제거함
-  document.querySelector(`#productItem-${_id}`).remove();
+  document.querySelector(`#productItem-${id}`).remove();
 }
 
 async function updateOrderSummary(id, type) {
-  // 데이터 수정에 필요한 값들을 미리 가져옴.
+  // 데이터 수정에 필요한 값들을 가져옴.
   const priceString = document.querySelector(`#total-${id}`).innerText;
   const price = getNumbers(priceString);
 
