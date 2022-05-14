@@ -122,43 +122,16 @@ async function insertProductsfromCart() {
 async function toggleAll(e) {
   // 전체 체크냐 전체 언체크냐
   const isChecked = e.target.checked;
-  const orderSummary = await getFromDb('order', 'summary');
-  const ids = orderSummary.ids;
-  const selectedIds = orderSummary.selectedIds;
+  const { ids, selectedIds } = await getFromDb('order', 'summary');
 
   ids.forEach(async (id) => {
+    console.log(id);
     // 체크박스 모두 체크 혹은 언체크 되게 함.
     document.querySelector(`#checkbox-${id}`).checked = isChecked;
 
     // 결제정보 업데이트
     if (isChecked && !selectedIds.includes(id)) {
-      // 데이터 수정에 필요한 값들을 미리 가져옴.
-      const priceString = document.querySelector(`#total-${id}`).innerText;
-      const price = getNumbers(priceString);
-
-      const currentCount = getNumbers(productsCount.innerText);
-      const currentProductsTotal = getNumbers(productsTotal.innerText);
-      const currentFee = getNumbers(deliveryFee.innerText);
-      const currentOrderTotal = getNumbers(orderTotal.innerText);
-
-      // 결제정보 업데이트
-      productsCount.innerText = `${currentCount + 1}개`;
-      productsTotal.innerText = `${numberWithCommas(
-        currentProductsTotal + price
-      )}원`;
-      if (currentFee === 0) {
-        deliveryFee.innerText = `3000원`;
-        orderTotal.innerText = `${currentOrderTotal + price + 3000}원`;
-      } else {
-        orderTotal.innerText = `${currentOrderTotal + price}원`;
-      }
-
-      // indexedDB의 order.summary 업데이트
-      await putToDb('order', 'summary', (data) => {
-        data.selectedIds.push(id);
-        data.productsCount += 1;
-        data.productsTotal += price;
-      });
+      updateOrderSummary(id, 'add');
     }
   });
 
@@ -201,38 +174,67 @@ async function deleteItem(_id) {
   // indexedDB의 cart 목록에서 _id를 key로 가지는 데이터를 삭제함.
   await deleteFromDb('cart', _id);
 
+  // 결제정보를 업데이트함.
+  updateOrderSummary(_id, 'remove');
+
+  // 마지막으로, 제품 요소(컴포넌트)를 페이지에서 제거함
+  document.querySelector(`#productItem-${_id}`).remove();
+}
+
+async function updateOrderSummary(id, type) {
   // 데이터 수정에 필요한 값들을 미리 가져옴.
-  const priceString = document.querySelector(`#total-${_id}`).innerText;
+  const priceString = document.querySelector(`#total-${id}`).innerText;
   const price = getNumbers(priceString);
+
+  const priceUpdate = type === 'add' ? +price : -price;
+  const countUpdate = type === 'add' ? +1 : -1;
 
   const currentCount = getNumbers(productsCount.innerText);
   const currentProductsTotal = getNumbers(productsTotal.innerText);
+  const currentFee = getNumbers(deliveryFee.innerText);
   const currentOrderTotal = getNumbers(orderTotal.innerText);
 
-  // indexedDB의 order.summary의 데이터를 수정 및 삭제함.
-  await putToDb('order', 'summary', (data) => {
-    data.ids = data.ids.filter((id) => id !== _id);
-    data.selectedIds = data.selectedIds.filter((id) => id !== _id);
-    data.productsCount = currentCount - 1;
-    data.productsTotal = currentProductsTotal - price;
-  });
-
   // 결제정보 업데이트
-  productsCount.innerText = `${currentCount - 1}개`;
+  productsCount.innerText = `${currentCount + countUpdate}개`;
   productsTotal.innerText = `${numberWithCommas(
-    currentProductsTotal - price
+    currentProductsTotal + priceUpdate
   )}원`;
-  orderTotal.innerText = `${currentOrderTotal - price}원`;
 
-  // 이 삭제로 인해 장바구니가 비게 되는 경우
-  if (currentCount === 1) {
+  if (type === 'add' && currentFee === 0) {
+    deliveryFee.innerText = `3000원`;
+    orderTotal.innerText = `${numberWithCommas(
+      currentOrderTotal + priceUpdate + 3000
+    )}원`;
+  } else {
+    orderTotal.innerText = `${numberWithCommas(
+      currentOrderTotal + priceUpdate
+    )}원`;
+  }
+
+  // 이 업데이트로 인해 장바구니가 비게 되는 경우
+  if (type === 'remove' && currentCount === 1) {
     deliveryFee.innerText = `0원`;
-    currentOrderTotal -= 3000;
+
+    // 다시 한 번, 현재 값을 가져와서 3000을 빼 줌
+    const currentOrderTotal = getNumbers(orderTotal.innerText);
+    orderTotal.innerText = `${numberWithCommas(currentOrderTotal - 3000)}원`;
 
     // 전체선택도 언체크되도록 함.
     checkAllSelectCheckbox();
   }
 
-  // 마지막으로, 제품 요소(컴포넌트)를 페이지에서 제거함
-  document.querySelector(`#productItem-${_id}`).remove();
+  // indexedDB의 order.summary 업데이트
+  await putToDb('order', 'summary', (data) => {
+    if (type === 'add') {
+      data.ids.push(id);
+      data.selectedIds.push(id);
+    }
+    if (type === 'remove') {
+      data.ids = data.ids.filter((_id) => _id !== id);
+      data.selectedIds = data.selectedIds.filter((_id) => _id !== id);
+    }
+
+    data.productsCount += countUpdate;
+    data.productsTotal += priceUpdate;
+  });
 }
