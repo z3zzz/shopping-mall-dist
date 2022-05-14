@@ -78,6 +78,7 @@ async function insertProductsfromCart() {
                 class="button is-rounded" 
                 id="minus-${_id}" 
                 ${quantity <= 1 ? 'disabled' : ''}
+                ${isSelected ? '' : 'disabled'}
               >
                 <span class="icon is-small">
                   <i class="fas fa-thin fa-minus"></i>
@@ -90,11 +91,13 @@ async function insertProductsfromCart() {
                 min="1"
                 max="99"
                 value="${quantity}"
+                ${isSelected ? '' : 'disabled'}
               />
               <button 
                 class="button is-rounded" 
                 id="plus-${_id}"
                 ${quantity >= 99 ? 'disabled' : ''}
+                ${isSelected ? '' : 'disabled'}
               >
                 <span class="icon">
                   <i class="fas fa-lg fa-plus"></i>
@@ -436,8 +439,10 @@ async function updateOrderSummary(id, type) {
       data.selectedIds = data.selectedIds.filter((_id) => _id !== id);
     }
 
-    data.productsCount += countUpdate;
-    data.productsTotal += priceUpdate;
+    if (!isDeleteWithoutChecked) {
+      data.productsCount += countUpdate;
+      data.productsTotal += priceUpdate;
+    }
   });
 
   // 전체선택 체크박스 업데이트
@@ -509,8 +514,16 @@ function enableChange(id) {
 async function insertOrderSummary() {
   const { productsCount, productsTotal } = await getFromDb('order', 'summary');
 
+  const hasItems = productsCount !== 0;
+
   productsCountElem.innerText = `${productsCount}개`;
   productsTotalElem.innerText = `${numberWithCommas(productsTotal)}원`;
-  deliveryFeeElem.innerText = `3,000원`;
-  orderTotalElem.innerText = `${numberWithCommas(productsTotal + 3000)}원`;
+
+  if (hasItems) {
+    deliveryFeeElem.innerText = `3,000원`;
+    orderTotalElem.innerText = `${numberWithCommas(productsTotal + 3000)}원`;
+  } else {
+    deliveryFeeElem.innerText = `0원`;
+    orderTotalElem.innerText = `0원`;
+  }
 }
