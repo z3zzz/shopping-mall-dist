@@ -5,6 +5,7 @@ import {
   doLogout,
   numberWithCommas,
   getNumbers,
+  compressString,
 } from './common/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from './common/indexed-db.js';
 
@@ -71,7 +72,7 @@ async function insertProductsfromCart() {
             />
           </figure>
           <div class="content">
-            <p>${title}</p>
+            <p>${compressString(title)}</p>
             <div class="quantity">
               <button 
                 class="button is-rounded" 
@@ -329,6 +330,8 @@ async function updateOrderSummary(id, type) {
   const isRemoveTemp = type.includes('removeTemp');
   const isRemovePermanent = type.includes('removePermanent');
   const isRemove = isRemoveTemp || isRemovePermanent;
+  const isItemChecked = document.querySelector(`#checkbox-${id}`).checked;
+  const isDeleteWithoutChecked = isDeleteButton && !isItemChecked;
 
   // 업데이트에 사용될 변수
   let price;
@@ -377,10 +380,12 @@ async function updateOrderSummary(id, type) {
   const currentOrderTotal = getNumbers(orderTotalElem.innerText);
 
   // 결제정보 관련 요소들 업데이트
-  productsCountElem.innerText = `${currentCount + countUpdate}개`;
-  productsTotalElem.innerText = `${numberWithCommas(
-    currentProductsTotal + priceUpdate
-  )}원`;
+  if (!isDeleteWithoutChecked) {
+    productsCountElem.innerText = `${currentCount + countUpdate}개`;
+    productsTotalElem.innerText = `${numberWithCommas(
+      currentProductsTotal + priceUpdate
+    )}원`;
+  }
 
   // 기존 결제정보가 비어있었어서, 배송비 또한 0인 상태였던 경우
   const isFeeAddRequired = isAdd && currentFee === 0;
@@ -390,7 +395,9 @@ async function updateOrderSummary(id, type) {
     orderTotalElem.innerText = `${numberWithCommas(
       currentOrderTotal + priceUpdate + 3000
     )}원`;
-  } else {
+  }
+
+  if (!isFeeAddRequired && !isDeleteWithoutChecked) {
     orderTotalElem.innerText = `${numberWithCommas(
       currentOrderTotal + priceUpdate
     )}원`;
@@ -399,7 +406,7 @@ async function updateOrderSummary(id, type) {
   // 이 업데이트로 인해 결제정보가 비게 되는 경우
   const isCartNowEmpty = currentCount === 1 && isRemove;
 
-  if (isCartNowEmpty) {
+  if (!isDeleteWithoutChecked && isCartNowEmpty) {
     deliveryFeeElem.innerText = `0원`;
 
     // 다시 한 번, 현재 값을 가져와서 3000을 빼 줌
@@ -463,7 +470,7 @@ async function updateProductItem(id, type) {
   }
 
   const quantityUpdate = isIncrease ? +1 : -1;
-  const priceUpdate = isIncrease ? +price : -price;
+  const priceUpdate = isIncrease ? +unitPrice : -unitPrice;
 
   quantityElem.innerText = `${currentQuantity + quantityUpdate}개`;
   totalElem.innerText = `${numberWithCommas(currentTotal + priceUpdate)}원`;
@@ -484,9 +491,19 @@ function enableChange(id) {
   const quantityInput = document.querySelector(`#quantityInput-${id}`);
   const plusButton = document.querySelector(`#plus-${id}`);
 
+  const quantity = parseInt(quantityInput.value);
+
   minusButton.removeAttribute('disabled');
-  quantityInput.removeAttribute('disabled');
   plusButton.removeAttribute('disabled');
+  quantityInput.removeAttribute('disabled');
+
+  if (quantity === 1) {
+    minusButton.setAttribute('disabled', '');
+  }
+
+  if (quantity === 99) {
+    plusButton.setAttribute('disabled', '');
+  }
 }
 
 async function insertOrderSummary() {

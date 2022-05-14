@@ -69,3 +69,11 @@ export const getNumbers = (string) => {
 export const wait = (ms) => {
   return new Promise((r) => setTimeout(r, ms));
 };
+
+// 긴 문자열에서 뒷부분을 ...으로 바꿈
+export const compressString = (string) => {
+  if (string.length > 10) {
+    return string.substring(0, 9) + '..';
+  }
+  return string;
+};
