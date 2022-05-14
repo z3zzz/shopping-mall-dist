@@ -1,25 +1,45 @@
-const onRequest = indexedDB.open('shopping', 1);
+let database;
 
-onRequest.onupgradeneeded = () => {
-  console.log('indexed-db의 업그레이드가 이루어집니다.');
-  const database = onRequest.result;
+// indexedDB에 연결하고, 연결 성공 시 데이터베이스 객체를
+// Promise로 감싸 반환함.
+const openDatabase = () => {
+  const db = new Promise((resolve, reject) => {
+    const onRequest = indexedDB.open('shopping', 1);
+    onRequest.onupgradeneeded = () => {
+      console.log('indexeddb의 업그레이드가 이루어집니다.');
+      const database = onRequest.result;
 
-  database.createObjectStore('cart', {
-    autoIncrement: true,
+      database.createObjectStore('cart', {
+        autoIncrement: true,
+      });
+    };
+
+    onRequest.onsuccess = async () => {
+      console.log('indexeddb가 정상적으로 시작되었습니다.');
+
+      resolve(onRequest.result);
+    };
+
+    onRequest.onerror = () => {
+      const err = onRequest.error;
+      console.log(
+        `indexeddb를 시작하는 과정에서 오류가 발생하였습니다: ${err}`
+      );
+
+      reject(err);
+    };
   });
+
+  return db;
 };
 
-onRequest.onsuccess = async () => {
-  console.log('indexed-db가 정상적으로 시작되었습니다.');
-};
+const getFromDb = async (storeName, key = '') => {
+  // database 변수가 아직 초기화가 되어있지 않다면,
+  // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
+  if (!database) {
+    database = await openDatabase();
+  }
 
-onRequest.onerror = () => {
-  console.log('indexed-db를 시작하는 과정에서 오류가 발생하였습니다.');
-  consolt.log(onRequest.error);
-};
-
-const getFromDb = (storeName, key = '') => {
-  const database = onRequest.result;
   const transaction = database.transaction([storeName]);
   const store = transaction.objectStore(storeName);
 
@@ -33,24 +53,30 @@ const getFromDb = (storeName, key = '') => {
     };
 
     getRequest.onerror = () => {
-      console.log('${storeName}에서 가져오는 과정에서 에러가 발생하였습니다. ');
-      console.log(getRequest.error);
+      const err = getRequest.error;
+      console.log(
+        `${storeName}에서 가져오는 과정에서 오류가 발생하였습니다: ${err}`
+      );
 
-      reject(getRequest.error);
+      reject(err);
     };
   });
 
   return data;
 };
 
-const addToDb = (storeName, entry, key = '') => {
-  const database = onRequest.result;
+const addToDb = async (storeName, entry, key = '') => {
+  // database 변수가 아직 초기화가 되어있지 않다면,
+  // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
+  if (!database) {
+    database = await openDatabase();
+  }
   const transaction = database.transaction([storeName], 'readwrite');
   const store = transaction.objectStore(storeName);
 
   const result = new Promise((resolve, reject) => {
     // key가 주어졌다면 해당 key로 db에 추가하고,
-    // key가 없다면, 기본 설정대로 auto-increment(1, 2, 3 ... 순서)로
+    // key가 없다면, 기본 설정대로 autoincrement(1, 2, 3 ... 순서)로
     // key를 설정하여 추가함.
     const addRequest = key ? store.add(entry, key) : store.add(entry);
 
@@ -60,18 +86,63 @@ const addToDb = (storeName, entry, key = '') => {
     };
 
     addRequest.onerror = () => {
-      console.log(`${storeName}에 추가하는데 에러가 발생하였습니다. `);
-      console.log(addRequest.error);
+      const err = addRequest.error;
+      console.log(`${storeName}에 추가하는데 오류가 발생하였습니다: ${err}`);
 
-      reject(addRequest.error.message);
+      reject(err);
     };
   });
 
   return result;
 };
 
-const deleteFromDb = (storeName, key = '') => {
-  const database = onRequest.result;
+const putToDb = async (storeName, key, dataModifyFunc) => {
+  // database 변수가 아직 초기화가 되어있지 않다면,
+  // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
+  if (!database) {
+    database = await openDatabase();
+  }
+
+  const transaction = database.transaction([storeName], 'readwrite');
+  const store = transaction.objectStore(storeName);
+
+  const result = new Promise((resolve, reject) => {
+    // 우선 현재 데이터를 가져옴 (데이터 없을 시, 빈 객체 할당)
+    const getRequest = store.get(key);
+
+    // 가져온 다음 수정 진행
+    getRequest.onsuccess = () => {
+      const data = getRequest.result || {};
+      // 데이터 수정
+      dataModifyFunc(data);
+
+      // 수정한 데이터 삽입
+      const putRequest = store.put(data, key);
+
+      putRequest.onsuccess = () => {
+        console.log(`${storeName}가 정상적으로 수정되었습니다.`);
+        resolve();
+      };
+
+      putRequest.onerror = () => {
+        const err = putRequest.error;
+        console.log(`${storeName}를 수정하는데 에러가 발생하였습니다: ${err} `);
+
+        reject(err);
+      };
+    };
+  });
+
+  return result;
+};
+
+const deleteFromDb = async (storeName, key = '') => {
+  // database 변수가 아직 초기화가 되어있지 않다면,
+  // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
+  if (!database) {
+    database = await openDatabase();
+  }
+
   const transaction = database.transaction([storeName], 'readwrite');
   const store = transaction.objectStore(storeName);
 
@@ -86,14 +157,14 @@ const deleteFromDb = (storeName, key = '') => {
     };
 
     deleteRequest.onerror = () => {
-      console.log(`${storeName}에서 삭제하는데 에러가 발생하였습니다. `);
-      console.log(storeAddRequest.error);
+      const err = deleteRequest.error;
+      console.log(`${storeName}에서 삭제하는데 에러가 발생하였습니다: ${err} `);
 
-      reject(storeAddRequest.error.message);
+      reject(err);
     };
   });
 
   return result;
 };
 
-export { getFromDb, addToDb, deleteFromDb };
+export { getFromDb, addToDb, putToDb, deleteFromDb };
