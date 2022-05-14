@@ -70,12 +70,20 @@ async function insertProductData() {
         // 기존 데이터를 가져옴
         const count = data.productsCount;
         const total = data.productsTotal;
+        const ids = data.ids;
+        const selectedIds = data.selectedIds;
 
         // 기존 데이터가 있다면 1을 추가하고, 없다면 초기값 1을 줌
         data.productsCount = count ? count + 1 : 1;
 
         // 기존 데이터가 있다면 가격만큼 추가하고, 없다면 초기값으로 해당 가격을 줌
         data.productsTotal = total ? total + price : price;
+
+        // 기존 데이터(배열)가 있다면 id만 추가하고, 없다면 배열 새로 만듦
+        data.ids = ids ? [...ids, id] : [id];
+
+        // 위와 마찬가지 방식
+        data.selectedIds = selectedIds ? [...selectedIds, id] : [id];
       });
 
       alert('장바구니에 추가되었습니다.');
