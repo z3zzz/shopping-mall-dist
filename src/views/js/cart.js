@@ -26,7 +26,7 @@ addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
   insertProductsfromCart();
-  checkAllSelectCheckbox();
+  updateAllSelectCheckbox();
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -40,8 +40,7 @@ function addAllEvents() {
 // 요소(컴포넌트)를 만들어 html에 삽입함.
 async function insertProductsfromCart() {
   const products = await getFromDb('cart');
-  const orderSummary = await getFromDb('order', 'summary');
-  const selectedIds = orderSummary.selectedIds;
+  const { selectedIds } = await getFromDb('order', 'summary');
 
   products.forEach(async (product) => {
     // 객체 destructuring
@@ -116,38 +115,38 @@ async function insertProductsfromCart() {
     document
       .querySelector(`#delete-${_id}`)
       .addEventListener('click', () => deleteItem(_id));
+
+    document
+      .querySelector(`#checkbox-${_id}`)
+      .addEventListener('change', () => toggleItem(_id));
   });
 }
 
 async function toggleAll(e) {
-  // 전체 체크냐 전체 체크 해제이냐를 가져옴
-  const isChecked = e.target.checked;
-  const { ids, selectedIds } = await getFromDb('order', 'summary');
+  // 전체 체크냐 전체 체크 해제이냐로 true 혹은 false
+  const isCheckAll = e.target.checked;
+  const { ids } = await getFromDb('order', 'summary');
 
   ids.forEach(async (id) => {
-    // 체크박스를 체크 혹은 언체크함.
-    document.querySelector(`#checkbox-${id}`).checked = isChecked;
+    const itemCheckbox = document.querySelector(`#checkbox-${id}`);
+    const isItemCurrentlyChecked = itemCheckbox.checked;
+
+    // 일단 아이템(제품) 체크박스에 전체 체크 혹은 언체크 여부를 반영함.
+    itemCheckbox.checked = isCheckAll;
+
+    // 결제정보 업데이트 필요 여부 확인
+    const isAddRequired = isCheckAll && !isItemCurrentlyChecked;
+    const isRemoveRequired = !isCheckAll && isItemCurrentlyChecked;
 
     // 결제정보 업데이트
-    if (isChecked && !selectedIds.includes(id)) {
+    if (isAddRequired) {
       updateOrderSummary(id, 'add');
     }
+
+    if (isRemoveRequired) {
+      updateOrderSummary(id, 'remove-temp');
+    }
   });
-
-  if (!isChecked) {
-    // 결제정보 업데이트
-    productsCount.innerText = `0개`;
-    productsTotal.innerText = `0원`;
-    deliveryFee.innerText = `0원`;
-    orderTotal.innerText = `0원`;
-
-    // indexedDB의 order.summary 업데이트
-    await putToDb('order', 'summary', (data) => {
-      data.selectedIds = [];
-      data.productsCount = 0;
-      data.productsTotal = 0;
-    });
-  }
 }
 
 async function deleteSelectedItems() {
@@ -156,13 +155,15 @@ async function deleteSelectedItems() {
   selectedIds.forEach((id) => deleteItem(id));
 }
 
-async function checkAllSelectCheckbox() {
-  const orderSummary = await getFromDb('order', 'summary');
-  const ids = orderSummary.ids;
-  const selectedIds = orderSummary.selectedIds;
+async function updateAllSelectCheckbox() {
+  const { ids, selectedIds } = await getFromDb('order', 'summary');
 
-  // 장바구니 아이템 수가 0이 아니고, 또 전체 선택이라면 체크함.
-  if (ids.length && ids.length === selectedIds.length) {
+  const isOrderEmpty = ids.length === 0;
+  const isAllItemSelected = ids.length === selectedIds.length;
+
+  // 장바구니 아이템(제품) 수가 0이 아니고,
+  // 또 전체 아이템들이 선택된 상태라면 체크함.
+  if (!isOrderEmpty && isAllItemSelected) {
     allSelectCheckbox.checked = true;
   } else {
     allSelectCheckbox.checked = false;
@@ -174,14 +175,17 @@ async function deleteItem(id) {
   await deleteFromDb('cart', id);
 
   // 결제정보를 업데이트함.
-  await updateOrderSummary(id, 'remove');
+  await updateOrderSummary(id, 'remove-permanent');
 
   // 제품 요소(컴포넌트)를 페이지에서 제거함
   document.querySelector(`#productItem-${id}`).remove();
+
+  // 전체선택 체크박스를 업데이트함
+  updateAllSelectCheckbox();
 }
 
 async function updateOrderSummary(id, type) {
-  // 데이터 수정에 필요한 값들을 가져옴.
+  // 데이터 수정에 필요한 값들을 가져오고 숫자로 바꿈.
   const priceString = document.querySelector(`#total-${id}`).innerText;
   const price = getNumbers(priceString);
 
@@ -193,13 +197,16 @@ async function updateOrderSummary(id, type) {
   const currentFee = getNumbers(deliveryFee.innerText);
   const currentOrderTotal = getNumbers(orderTotal.innerText);
 
-  // 결제정보 업데이트
+  // 결제정보 관련 요소들 업데이트
   productsCount.innerText = `${currentCount + countUpdate}개`;
   productsTotal.innerText = `${numberWithCommas(
     currentProductsTotal + priceUpdate
   )}원`;
 
-  if (type === 'add' && currentFee === 0) {
+  // 기존 결제정보가 비어있었어서, 배송비 또한 0인 상태였던 경우
+  const isFeeAddRequired = type === 'add' && currentFee === 0;
+
+  if (isFeeAddRequired) {
     deliveryFee.innerText = `3000원`;
     orderTotal.innerText = `${numberWithCommas(
       currentOrderTotal + priceUpdate + 3000
@@ -210,8 +217,10 @@ async function updateOrderSummary(id, type) {
     )}원`;
   }
 
-  // 이 업데이트로 인해 장바구니가 비게 되는 경우
-  if (type === 'remove' && currentCount === 1) {
+  // 이 업데이트로 인해 결제정보가 비게 되는 경우
+  const isCartNowEmpty = currentCount === 1 && type.startsWith('remove');
+
+  if (isCartNowEmpty) {
     deliveryFee.innerText = `0원`;
 
     // 다시 한 번, 현재 값을 가져와서 3000을 빼 줌
@@ -219,20 +228,20 @@ async function updateOrderSummary(id, type) {
     orderTotal.innerText = `${numberWithCommas(currentOrderTotal - 3000)}원`;
 
     // 전체선택도 언체크되도록 함.
-    checkAllSelectCheckbox();
+    updateAllSelectCheckbox();
   }
 
   // indexedDB의 order.summary 업데이트
   await putToDb('order', 'summary', (data) => {
-    if (type === 'add' && !data.ids.includes(id)) {
-      data.ids.push(id);
-    }
-
-    if (type === 'add' && !data.selectedIds.includes(id)) {
+    if (type === 'add') {
       data.selectedIds.push(id);
     }
 
-    if (type === 'remove') {
+    if (type === 'remove-temp') {
+      data.selectedIds = data.selectedIds.filter((_id) => _id !== id);
+    }
+
+    if (type === 'remove-permanent') {
       data.ids = data.ids.filter((_id) => _id !== id);
       data.selectedIds = data.selectedIds.filter((_id) => _id !== id);
     }
