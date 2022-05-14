@@ -80,7 +80,7 @@
       </div>
     </nav>
 
-    <!-- 제품 상세 설명 -->
+    <!-- 장바구니 -->
     <section class="section">
       <div class="container">
         <div class="cart-header">
@@ -96,7 +96,7 @@
 
         <div class="tile is-ancestor">
           <div class="tile is-8 is-parent cart-products">
-            <div class="box cart-products-container">
+            <div class="box cart-products-container" id="cartProductsContainer">
               <div class="cart-products-header">
                 <label class="checkbox">
                   <input type="checkbox" id="allSelectCheckbox" />
@@ -111,60 +111,6 @@
               </div>
 
               <!-- html 주입해야 함. -->
-              <div class="cart-product-item">
-                <label class="checkbox">
-                  <input type="checkbox" id="itemSelectCheckbox" />
-                </label>
-                <button class="delete-button" id="itemDeleteButton">
-                  <span class="icon">
-                    <i class="fas fa-x"></i>
-                  </span>
-                </button>
-                <figure class="image is-96x96">
-                  <img
-                    src="https://bulma.io/images/placeholders/128x128.png"
-                    id="productImage"
-                  />
-                </figure>
-                <div class="content">
-                  <p id="productTitle">아이보리 니트</p>
-                  <div class="quantity">
-                    <button class="button is-rounded" id="quantityMinusButton">
-                      <span class="icon is-small">
-                        <i class="fas fa-thin fa-minus"></i>
-                      </span>
-                    </button>
-                    <input
-                      class="input"
-                      id="quantityInput"
-                      type="number"
-                      min="1"
-                      max="99"
-                      value="1"
-                    />
-                    <button class="button is-rounded" id="quantityPlusButton">
-                      <span class="icon">
-                        <i class="fas fa-lg fa-plus"></i>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-                <div class="calculation">
-                  <p id="productPrice">20,000원</p>
-                  <p>
-                    <span class="icon">
-                      <i class="fas fa-thin fa-xmark"></i>
-                    </span>
-                  </p>
-                  <p id="productQuantity">3</p>
-                  <p>
-                    <span class="icon">
-                      <i class="fas fa-thin fa-equals"></i>
-                    </span>
-                  </p>
-                  <p id="productTotalPrice">60,000원</p>
-                </div>
-              </div>
               <!-- html 주입 끝 -->
             </div>
           </div>
@@ -176,11 +122,11 @@
               <div class="order-info">
                 <div class="info">
                   <p>상품수</p>
-                  <p id="orderedProducts">2개</p>
+                  <p id="productsCount">2개</p>
                 </div>
                 <div class="info">
                   <p>상품금액</p>
-                  <p id="productsTotalPrice">60,000원</p>
+                  <p id="productsTotal">60,000원</p>
                 </div>
                 <div class="info">
                   <p>배송비</p>
@@ -189,7 +135,7 @@
               </div>
               <div class="total">
                 <p class="total-label">총 결제금액</p>
-                <p class="total-price" id="orderTotalPrice">63,000원</p>
+                <p class="total-price" id="orderTotal">63,000원</p>
               </div>
               <div class="purchase">
                 <button class="button is-info" id="purchaseButton">
