@@ -6,7 +6,7 @@ import {
   getUrlParams,
   numberWithCommas,
 } from './common/useful-functions.js';
-import { addToDb } from './common/indexed-db.js';
+import { addToDb, putToDb } from './common/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');
@@ -65,9 +65,27 @@ async function insertProductData() {
       // 주문수량 (기본값 1)을 저장함.
       await addToDb('cart', { ...product, quantity: 1 }, id);
 
+      // 장바구니 요약(=전체 총합)을 업데이트함.
+      await putToDb('cart', 'order', (data) => {
+        // 기존 데이터를 가져옴
+        const count = data.productsCount;
+        const total = data.productsTotal;
+
+        // 기존 데이터가 있다면 1을 추가하고, 없다면 초기값 1을 줌
+        data.productsCount = count ? count + 1 : 1;
+
+        // 기존 데이터가 있다면 가격만큼 추가하고, 없다면 초기값으로 해당 가격을 줌
+        data.productsTotal = total ? total + price : price;
+      });
+
       alert('장바구니에 추가되었습니다.');
     } catch (err) {
-      alert('이미 장바구니에 추가되어 있습니다.');
+      // Key already exists 에러면 아래와 같이 alert함
+      if (err.message.includes('Key')) {
+        alert('이미 장바구니에 추가되어 있습니다.');
+      }
+
+      console.log(err);
     }
   });
 }
