@@ -120,13 +120,12 @@ async function insertProductsfromCart() {
 }
 
 async function toggleAll(e) {
-  // 전체 체크냐 전체 언체크냐
+  // 전체 체크냐 전체 체크 해제이냐를 가져옴
   const isChecked = e.target.checked;
   const { ids, selectedIds } = await getFromDb('order', 'summary');
 
   ids.forEach(async (id) => {
-    console.log(id);
-    // 체크박스 모두 체크 혹은 언체크 되게 함.
+    // 체크박스를 체크 혹은 언체크함.
     document.querySelector(`#checkbox-${id}`).checked = isChecked;
 
     // 결제정보 업데이트
@@ -177,7 +176,7 @@ async function deleteItem(id) {
   // 결제정보를 업데이트함.
   await updateOrderSummary(id, 'remove');
 
-  // 마지막으로, 제품 요소(컴포넌트)를 페이지에서 제거함
+  // 제품 요소(컴포넌트)를 페이지에서 제거함
   document.querySelector(`#productItem-${id}`).remove();
 }
 
@@ -225,10 +224,14 @@ async function updateOrderSummary(id, type) {
 
   // indexedDB의 order.summary 업데이트
   await putToDb('order', 'summary', (data) => {
-    if (type === 'add') {
+    if (type === 'add' && !data.ids.includes(id)) {
       data.ids.push(id);
+    }
+
+    if (type === 'add' && !data.selectedIds.includes(id)) {
       data.selectedIds.push(id);
     }
+
     if (type === 'remove') {
       data.ids = data.ids.filter((_id) => _id !== id);
       data.selectedIds = data.selectedIds.filter((_id) => _id !== id);
