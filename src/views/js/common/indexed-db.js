@@ -12,6 +12,10 @@ const openDatabase = () => {
       database.createObjectStore('cart', {
         autoIncrement: true,
       });
+
+      database.createObjectStore('order', {
+        autoIncrement: true,
+      });
     };
 
     onRequest.onsuccess = async () => {

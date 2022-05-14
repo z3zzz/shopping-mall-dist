@@ -66,7 +66,7 @@ async function insertProductData() {
       await addToDb('cart', { ...product, quantity: 1 }, id);
 
       // 장바구니 요약(=전체 총합)을 업데이트함.
-      await putToDb('cart', 'order', (data) => {
+      await putToDb('order', 'summary', (data) => {
         // 기존 데이터를 가져옴
         const count = data.productsCount;
         const total = data.productsTotal;
