@@ -54,13 +54,11 @@ async function addImageCardsToSlider() {
     card.addEventListener('click', () => {
       window.location.href = `/products?category=${title}`;
     });
-    console.log(`${title} 완료`);
   }
 }
 
 // 슬라이드 가동 (외부 bulma carousel 라이브버리 사용)
 function attachSlider() {
-  console.log('attachSlider');
   const imageSlider = bulmaCarousel.attach('#slider', {
     autoplay: true,
     autoplaySpeed: 6000,
