@@ -114,6 +114,8 @@ async function insertOrderSummary() {
 
   deliveryFeeElem.innerText = `3,000원`;
   orderTotalElem.innerText = `${numberWithCommas(productsTotal + 3000)}원`;
+
+  receiverNameInput.focus();
 }
 
 // "직접 입력" 선택 시 input칸 보이게 함
@@ -124,6 +126,7 @@ function handleRequestChange(e) {
 
   if (type === '6') {
     customRequestContainer.style.display = 'flex';
+    customRequestInput.focus();
   } else {
     customRequestContainer.style.display = 'none';
   }
