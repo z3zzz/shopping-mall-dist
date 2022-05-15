@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "title": "테스트-제품",
-    "categoryId": "6275cb97e965a15e7fe16f5f",
+    "categoryId": "6280edc1123b7b07efffec84",
     "manufacturer": "삼성전자짱",
     "shortDescription": "테스트용 제품입니다.",
     "detailDescription": "테스트용 제품의 자세한 설명입니다.",
@@ -43,3 +43,7 @@ content-type: application/json
     "imageKey": "test-product999/test.png",
     "inventory": 50
 }
+
+###
+DELETE http://localhost:5000/api/products/6280e62739e9a56a46476ba1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc3NGExZWQ1MjA0NTM3OGE1NWNlZGYiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTI2MTQxOTh9.CulE-ADJwzsuDILoLkwSL3HLosv8oCL2GcrKQW_uIQM 

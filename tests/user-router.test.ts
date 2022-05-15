@@ -91,10 +91,10 @@ describe('userRouter 테스트', () => {
     });
   });
 
-  describe('post -> /api/user', () => {
+  describe('patch -> /api/user', () => {
     it('사용자 정보의 수정이 정상적으로 이루어진다.', async () => {
       const res = await request(app)
-        .post(`/api/user`)
+        .patch(`/api/user`)
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({

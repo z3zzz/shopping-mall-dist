@@ -51,6 +51,11 @@ export class ProductModel {
     return product;
   }
 
+  async findOneByCategoryId(categoryId: string): Promise<ProductData[]> {
+    const product = await Product.findOne({ categoryId });
+    return product;
+  }
+
   async findAllByCategoryId(categoryId: string): Promise<ProductData[]> {
     const products = await Product.find({ categoryId });
     return products;

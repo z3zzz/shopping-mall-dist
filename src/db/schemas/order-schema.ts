@@ -25,10 +25,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    isPaymentCompleted: {
-      type: Boolean,
+    status: {
+      type: String,
       required: false,
-      default: false,
+      default: 'payment-pending',
     },
   },
   {

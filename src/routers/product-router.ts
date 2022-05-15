@@ -103,7 +103,7 @@ productRouter.get(
   }
 );
 
-productRouter.post(
+productRouter.patch(
   '/products/:productId',
   loginRequired,
   async function (req, res, next) {

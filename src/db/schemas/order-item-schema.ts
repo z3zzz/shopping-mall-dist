@@ -20,10 +20,10 @@ const OrderItemSchema = new Schema(
       type: Number,
       required: true,
     },
-    deliveryStatus: {
+    status: {
       type: String,
       required: false,
-      default: false,
+      default: 'pending',
     },
   },
   {

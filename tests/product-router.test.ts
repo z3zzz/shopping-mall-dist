@@ -165,10 +165,10 @@ describe('productRouter 테스트', () => {
     });
   });
 
-  describe('post -> /api/products/:productId', () => {
+  describe('patch -> /api/products/:productId', () => {
     it('제품 정보의 수정이 정상적으로 이루어진다.', async () => {
       const res = await request(app)
-        .post(`/api/products/${productId}`)
+        .patch(`/api/products/${productId}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({

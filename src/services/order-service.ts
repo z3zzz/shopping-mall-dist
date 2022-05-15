@@ -1,32 +1,21 @@
 import {
-  productModel,
-  ProductModel,
-  ProductInfo,
-  ProductData,
-  categoryModel,
-  CategoryModel,
+  orderModel,
+  OrderAddress,
+  OrderModel,
+  OrderInfo,
+  OrderData,
 } from '../db';
 
-export interface ProductUpdateInfo {
-  title?: string;
-  categoryId?: string;
-  shortDescription?: string;
-  detailDescription?: string;
-  imageKey?: string;
-  inventory?: number;
-  price?: number;
-  searchKeywords?: string[];
-  discountPercent?: number;
-  isRecommended?: boolean;
+export interface OrderUpdateInfo {
+  address?: OrderAddress;
+  request?: string;
+  status?: string;
 }
 
 class ProductService {
-  constructor(
-    private productModel: ProductModel,
-    private categoryModel: CategoryModel
-  ) {}
+  constructor(private productModel: OrderModel) {}
 
-  async addProduct(productInfo: ProductInfo): Promise<ProductData> {
+  async addProduct(productInfo: OrderInfo): Promise<OrderData> {
     // 객체 destructuring
     const { title } = productInfo;
 
@@ -44,7 +33,7 @@ class ProductService {
     return createdNewProduct;
   }
 
-  async getProducts(): Promise<ProductData[]> {
+  async getProducts(): Promise<OrderData[]> {
     const products = await this.productModel.findAll();
 
     return products;
@@ -52,8 +41,10 @@ class ProductService {
 
   async getProductsByCategoryTitle(
     categoryTitle: string
-  ): Promise<ProductData[]> {
-    const category = await this.categoryModel.findByTitle(categoryTitle);
+  ): Promise<OrderData[]> {
+    const category = await categoryService.getCategoryDataByTitle(
+      categoryTitle
+    );
     const products = await this.productModel.findAllByCategoryId(category._id);
 
     return products;
@@ -61,8 +52,8 @@ class ProductService {
 
   async setProduct(
     productId: string,
-    toUpdate: Partial<ProductUpdateInfo>
-  ): Promise<ProductData> {
+    toUpdate: Partial<OrderUpdateInfo>
+  ): Promise<OrderData> {
     // 객체 destructuring
     const {
       title,
@@ -158,7 +149,7 @@ class ProductService {
     return product;
   }
 
-  async getProductData(productId: string): Promise<ProductData> {
+  async getProductData(productId: string): Promise<OrderData> {
     const product = await this.productModel.findById(productId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
@@ -168,19 +159,8 @@ class ProductService {
 
     return product;
   }
-
-  async deleteProductData(productId: string): Promise<{ result: string }> {
-    const { deletedCount } = await this.productModel.deleteById(productId);
-
-    // 삭제에 실패한 경우, 에러 메시지 반환
-    if (deletedCount === 0) {
-      throw new Error(`${productId} 제품의 삭제에 실패하였습니다`);
-    }
-
-    return { result: 'success' };
-  }
 }
 
-const productService = new ProductService(productModel, categoryModel);
+const productService = new ProductService(orderModel);
 
 export { productService };
