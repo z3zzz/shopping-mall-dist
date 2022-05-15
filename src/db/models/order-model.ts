@@ -13,7 +13,7 @@ export interface OrderAddress {
 
 export interface OrderInfo {
   userId: string;
-  totalPrice: string;
+  totalPrice: number;
   address: OrderAddress;
   request: string;
   status?: string;
@@ -62,6 +62,11 @@ export class OrderModel {
 
     const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
     return updatedOrder;
+  }
+
+  async deleteById(orderId: string): Promise<{ deletedCount: number }> {
+    const result = await Order.deleteOne({ _id: orderId });
+    return result;
   }
 }
 

@@ -28,7 +28,7 @@ const OrderSchema = new Schema(
     status: {
       type: String,
       required: false,
-      default: 'payment-pending',
+      default: 'pending',
     },
   },
   {
