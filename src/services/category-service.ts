@@ -3,10 +3,17 @@ import {
   CategoryModel,
   CategoryInfo,
   CategoryData,
+  productModel,
+  ProductModel,
 } from '../db';
 
+import { productService } from './product-service';
+
 class CategoryService {
-  constructor(private categoryModel: CategoryModel) {}
+  constructor(
+    private categoryModel: CategoryModel,
+    private productModel: ProductModel
+  ) {}
 
   async addCategory(categoryInfo: CategoryInfo): Promise<CategoryData> {
     // 객체 destructuring
@@ -104,8 +111,28 @@ class CategoryService {
 
     return category;
   }
+
+  async deleteCategoryData(categoryId: string): Promise<{ result: string }> {
+    // 만약 해당 카테고리의 제품이 1개라도 있다면, 삭제 불가함.
+    const product = await this.productModel.findOneByCategoryId(categoryId);
+
+    if (product) {
+      throw new Error(
+        `${categoryId} 카테고리에 등록된 제품이 있습니다. 등록된 제품이 없어야 카테고리 삭제가 가능합니다. `
+      );
+    }
+
+    const { deletedCount } = await this.categoryModel.deleteById(categoryId);
+
+    // 삭제에 실패한 경우, 에러 메시지 반환
+    if (deletedCount === 0) {
+      throw new Error(`${categoryId} 카테고리의 삭제에 실패하였습니다`);
+    }
+
+    return { result: 'success' };
+  }
 }
 
-const categoryService = new CategoryService(categoryModel);
+const categoryService = new CategoryService(categoryModel, productModel);
 
 export { categoryService };

@@ -62,7 +62,7 @@ categoryRouter.get(
   }
 );
 
-categoryRouter.post(
+categoryRouter.patch(
   '/categorys/:categoryId',
   adminOnly,
   async function (req, res, next) {
@@ -90,6 +90,21 @@ categoryRouter.post(
       );
 
       res.status(200).json(updatedCategory);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+categoryRouter.delete(
+  '/categorys/:categoryId',
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      const categoryId = req.params.categoryId;
+      const deleteResult = await categoryService.deleteCategoryData(categoryId);
+
+      res.status(200).json(deleteResult);
     } catch (error) {
       next(error);
     }

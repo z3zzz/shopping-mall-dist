@@ -57,6 +57,11 @@ export class CategoryModel {
     );
     return updatedCategory;
   }
+
+  async deleteById(categoryId: string): Promise<{ deletedCount: number }> {
+    const result = await Category.deleteOne({ _id: categoryId });
+    return result;
+  }
 }
 
 const categoryModel = new CategoryModel();
