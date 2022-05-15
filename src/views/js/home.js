@@ -23,14 +23,16 @@ async function addAllElements() {
 async function addImageCardsToSlider() {
   const categorys = await Api.get('/api/categorylist');
 
-  categorys.forEach(async (category) => {
+  for (const category of categorys) {
     // 객체 destructuring
     const { title, description, themeClass, imageKey } = category;
     const imageUrl = await getImageUrl(imageKey);
 
     const random = randomId();
 
-    sliderDiv.innerHTML += `
+    sliderDiv.insertAdjacentHTML(
+      'beforeend',
+      `
       <div class="card" id="a${random}">
         <div class="notification ${themeClass}">
           <p class="title is-3 is-spaced">${title}</p>
@@ -45,36 +47,34 @@ async function addImageCardsToSlider() {
           </figure>
         </div>
       </div>
-    `;
+    `
+    );
 
-    // 카드 클릭 시 해당 카테고리 페이지로 이동 (timeout 약간 줌, 아래와 동일 이유)
-    setTimeout(() => {
-      const card = document.querySelector(`#a${random}`);
-      card.addEventListener('click', () => {
-        window.location.href = `/products?category=${title}`;
-      });
-    }, 100);
-  });
+    const card = document.querySelector(`#a${random}`);
+    card.addEventListener('click', () => {
+      window.location.href = `/products?category=${title}`;
+    });
+    console.log(`${title} 완료`);
+  }
 }
 
-// 슬라이드 가동 (위 카드가 html에 삽입된 이후에 실행되도록, timeout 약간 줌)
+// 슬라이드 가동 (외부 bulma carousel 라이브버리 사용)
 function attachSlider() {
-  setTimeout(() => {
-    const imageSlider = bulmaCarousel.attach('#slider', {
-      //autoplay: true,
-      autoplaySpeed: 5000,
-      infinite: true,
-      duration: 600,
-      pauseOnHover: false,
-      navigation: false,
-    });
+  console.log('attachSlider');
+  const imageSlider = bulmaCarousel.attach('#slider', {
+    autoplay: true,
+    autoplaySpeed: 6000,
+    infinite: true,
+    duration: 500,
+    pauseOnHover: false,
+    navigation: false,
+  });
 
-    sliderArrowLeft.addEventListener('click', () => {
-      imageSlider[0].previous();
-    });
+  sliderArrowLeft.addEventListener('click', () => {
+    imageSlider[0].previous();
+  });
 
-    sliderArrowRight.addEventListener('click', () => {
-      imageSlider[0].next();
-    });
-  }, 200);
+  sliderArrowRight.addEventListener('click', () => {
+    imageSlider[0].next();
+  });
 }

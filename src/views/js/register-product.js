@@ -121,8 +121,11 @@ async function addOptionsToSelectBox() {
     // 객체 destructuring
     const { _id, title, themeClass } = category;
 
-    categorySelectBox.innerHTML += `
-      <option value=${_id} class="notification ${themeClass}"> ${title} </option>`;
+    categorySelectBox.insertAdjacentHTML(
+      'beforeend',
+      `
+      <option value=${_id} class="notification ${themeClass}"> ${title} </option>`
+    );
   });
 }
 
