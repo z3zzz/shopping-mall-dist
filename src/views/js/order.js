@@ -86,6 +86,7 @@ function searchAddress() {
 
       postalCodeInput.value = data.zonecode;
       address1Input.value = `${addr} ${extraAddr}`;
+      address2Input.placeholder = '상세 주소를 입력해 주세요.';
       address2Input.focus();
     },
   }).open();
