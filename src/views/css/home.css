@@ -20,6 +20,9 @@
   cursor: pointer;
   z-index: 1;
 }
+.slider-arrow:hover {
+  opacity: 0.6;
+}
 .slider-arrow-left {
   left: 0;
 }
@@ -37,6 +40,7 @@
   outline: none;
   border: white 1px solid;
   box-shadow: none;
+  cursor: pointer;
 }
 #slider .title:not(:last-child) {
   margin-bottom: 0.5rem;
