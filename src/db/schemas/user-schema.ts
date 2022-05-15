@@ -14,16 +14,19 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    telephone: {
+    profileImage: {
+      type: String,
+      required: false,
+    },
+    phoneNumber: {
       type: Number,
       required: false,
     },
     address: {
       type: new Schema({
-        road: String,
-        building: String,
-        detail: String,
         postalCode: String,
+        address1: String,
+        address2: String,
       }),
       required: false,
     },

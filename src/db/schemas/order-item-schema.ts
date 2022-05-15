@@ -16,12 +16,12 @@ const OrderItemSchema = new Schema(
       type: Number,
       required: true,
     },
-    purchasePrice: {
+    totalPrice: {
       type: Number,
       required: true,
     },
-    isDeliveryCompleted: {
-      type: Boolean,
+    deliveryStatus: {
+      type: String,
       required: false,
       default: false,
     },
