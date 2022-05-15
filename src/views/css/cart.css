@@ -95,14 +95,15 @@
   cursor: pointer;
 }
 
-.cart-product-item input {
-  width: 0.9rem;
-  height: 0.9rem;
-}
-
 .cart-product-item .image {
   display: inline-block;
   margin-left: 1.2rem;
+  cursor: pointer;
+}
+
+.cart-product-item input {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .cart-product-item .content {
@@ -117,6 +118,11 @@
 .cart-product-item .content p {
   font-size: 1.4rem;
   margin-bottom: 0.5em;
+  cursor: pointer;
+}
+
+.cart-product-item .content p:hover {
+  opacity: 0.8;
 }
 
 .cart-product-item .quantity .button {
@@ -239,12 +245,19 @@ input[type='number']::-webkit-outer-spin-button {
     left: 0;
   }
 
-  .cart-product-item .content p {
-    margin-top: 0.5rem;
+  .cart-product-item .image {
+    height: 150px;
+    width: 150px;
+    margin-top: 1rem;
   }
 
-  .cart-product-item .quantity {
-    margin-right: 0;
+  .cart-product-item .content {
+    flex-basis: 2rem;
+    margin-top: 2rem;
+  }
+
+  .cart-product-item .content p {
+    margin-top: 0.5rem;
   }
 
   .calculation {
