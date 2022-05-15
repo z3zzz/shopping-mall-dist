@@ -154,4 +154,19 @@ productRouter.post(
   }
 );
 
+productRouter.delete(
+  '/products/:productId',
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      const productId = req.params.productId;
+      const deleteResult = await productService.deleteProductData(productId);
+
+      res.status(200).json(deleteResult);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export { productRouter };

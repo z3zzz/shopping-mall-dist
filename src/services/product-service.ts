@@ -161,6 +161,17 @@ class ProductService {
 
     return product;
   }
+
+  async deleteProductData(productId: string): Promise<{ result: string }> {
+    const { deletedCount } = await this.productModel.deleteById(productId);
+
+    // 삭제에 실패한 경우, 에러 메시지 반환
+    if (deletedCount === 0) {
+      throw new Error(`${productId} 제품의 삭제에 실패하였습니다`);
+    }
+
+    return { result: 'success' };
+  }
 }
 
 const productService = new ProductService(productModel);

@@ -77,6 +77,11 @@ export class ProductModel {
     );
     return updatedProduct;
   }
+
+  async deleteById(productId: string): Promise<{ deletedCount: number }> {
+    const result = await Product.deleteOne({ _id: productId });
+    return result;
+  }
 }
 
 const productModel = new ProductModel();
