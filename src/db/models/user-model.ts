@@ -5,10 +5,20 @@ const User = model('users', UserSchema);
 
 export type Role = 'basic-user' | 'admin';
 
+export interface UserAddress {
+  postalCode: string;
+  address1: string;
+  address2: string;
+}
+
 export interface UserInfo {
   email: string;
   fullName: string;
   password: string;
+  profileImage?: string;
+  phoneNumber?: number;
+  address?: UserAddress;
+  role?: Role;
 }
 
 export interface UserData {
@@ -17,12 +27,15 @@ export interface UserData {
   fullName: string;
   password: string;
   role: Role;
+  profileImage?: string;
+  phoneNumber?: number;
+  address?: UserAddress;
 }
 
 interface ToUpdate {
   userId: string;
   update: {
-    [key: string]: string;
+    [key: string]: string | number | UserAddress;
   };
 }
 
