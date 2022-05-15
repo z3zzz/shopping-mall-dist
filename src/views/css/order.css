@@ -31,10 +31,16 @@
 
 .cart-products {
   height: 100%;
+  flex: none;
+  width: 60%;
 }
 
 .delivery-info {
   width: 100%;
+}
+
+.delivery-info .subtitle {
+  padding-left: 0.4rem;
 }
 
 .delivery-info .field-label {
@@ -43,6 +49,7 @@
   text-align: left;
   height: 3rem;
   line-height: 2rem;
+  padding-left: 0.5rem;
 }
 
 .delivery-info .field-body,
