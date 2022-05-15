@@ -36,6 +36,7 @@ function addAllEvents() {
   logoutTag.addEventListener('click', doLogout);
   allSelectCheckbox.addEventListener('change', toggleAll);
   partialDeleteLabel.addEventListener('click', deleteSelectedItems);
+  purchaseButton.addEventListener('click', navigate('/order'));
 }
 
 // indexedDB의 cart와 order에서 필요한 정보를 가져온 후

@@ -96,4 +96,39 @@ async function insertProductData() {
       console.log(err);
     }
   });
+
+  purchaseButton.addEventListener('click', async () => {
+    try {
+      // 장바구니 추가 시, indexedDB에 제품 데이터 및
+      // 주문수량 (기본값 1)을 저장함.
+      await addToDb('cart', { ...product, quantity: 1 }, id);
+
+      // 장바구니 요약(=전체 총합)을 업데이트함.
+      await putToDb('order', 'summary', (data) => {
+        // 기존 데이터를 가져옴
+        const count = data.productsCount;
+        const total = data.productsTotal;
+        const ids = data.ids;
+        const selectedIds = data.selectedIds;
+
+        // 기존 데이터가 있다면 1을 추가하고, 없다면 초기값 1을 줌
+        data.productsCount = count ? count + 1 : 1;
+
+        // 기존 데이터가 있다면 가격만큼 추가하고, 없다면 초기값으로 해당 가격을 줌
+        data.productsTotal = total ? total + price : price;
+
+        // 기존 데이터(배열)가 있다면 id만 추가하고, 없다면 배열 새로 만듦
+        data.ids = ids ? [...ids, id] : [id];
+
+        // 위와 마찬가지 방식
+        data.selectedIds = selectedIds ? [...selectedIds, id] : [id];
+      });
+
+      window.location.href = '/order';
+    } catch (err) {
+      console.log(err);
+
+      window.location.href = '/order';
+    }
+  });
 }
