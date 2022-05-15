@@ -8,7 +8,7 @@ export interface OrderAddress {
   address1: string;
   address2: string;
   receiverName: string;
-  receiverPhoneNumber: number;
+  receiverPhoneNumber: String;
 }
 
 export interface OrderInfo {

@@ -12,13 +12,18 @@ const OrderSchema = new Schema(
       required: true,
     },
     address: {
-      type: new Schema({
-        postalCode: String,
-        address1: String,
-        address2: String,
-        receiverName: String,
-        receiverPhoneNumber: Number,
-      }),
+      type: new Schema(
+        {
+          postalCode: String,
+          address1: String,
+          address2: String,
+          receiverName: String,
+          receiverPhoneNumber: String,
+        },
+        {
+          _id: false,
+        }
+      ),
       required: true,
     },
     request: {
