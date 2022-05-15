@@ -78,7 +78,7 @@ userRouter.get('/user', loginRequired, async function (req, res, next) {
 });
 
 // 사용자 정보 수정
-userRouter.post('/user', loginRequired, async function (req, res, next) {
+userRouter.patch('/user', loginRequired, async function (req, res, next) {
   try {
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
@@ -114,6 +114,17 @@ userRouter.post('/user', loginRequired, async function (req, res, next) {
     );
 
     res.status(200).json(updatedUserInfo);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.delete('/user', loginRequired, async function (req, res, next) {
+  try {
+    const userId = req.currentUserId;
+    const deleteResult = await userService.deleteUserData(userId);
+
+    res.status(200).json(deleteResult);
   } catch (error) {
     next(error);
   }
