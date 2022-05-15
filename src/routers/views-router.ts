@@ -35,4 +35,8 @@ viewsRouter.get('/product', function (req, res) {
   res.sendFile(path.join(__dirname, '../views/product.html'));
 });
 
+viewsRouter.get('/cart', function (req, res) {
+  res.sendFile(path.join(__dirname, '../views/cart.html'));
+});
+
 export { viewsRouter };
