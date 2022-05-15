@@ -1,10 +1,10 @@
 import { getImageUrl } from './common/aws-s3.js';
-import * as Api from './common/api.js';
 import {
   checkLogin,
   doLogout,
   numberWithCommas,
   getNumbers,
+  navigate,
   compressString,
 } from './common/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from './common/indexed-db.js';
@@ -67,12 +67,13 @@ async function insertProductsfromCart() {
           </button>
           <figure class="image is-96x96">
             <img
-              src="#temp"
+              id="image-${_id}"
+              src="${imageUrl}"
               alt="product-image"
             />
           </figure>
           <div class="content">
-            <p>${compressString(title)}</p>
+            <p id="title-${_id}">${compressString(title)}</p>
             <div class="quantity">
               <button 
                 class="button is-rounded" 
@@ -134,16 +135,24 @@ async function insertProductsfromCart() {
       .addEventListener('change', () => toggleItem(_id));
 
     document
+      .querySelector(`#image-${_id}`)
+      .addEventListener('click', navigate(`/product?id=${_id}`));
+
+    document
+      .querySelector(`#title-${_id}`)
+      .addEventListener('click', navigate(`/product?id=${_id}`));
+
+    document
       .querySelector(`#plus-${_id}`)
-      .addEventListener('click', () => increaseItem(_id));
+      .addEventListener('click', () => increaseItemQuantity(_id));
 
     document
       .querySelector(`#minus-${_id}`)
-      .addEventListener('click', () => decreaseItem(_id));
+      .addEventListener('click', () => decreaseItemQuantity(_id));
 
     document
       .querySelector(`#quantityInput-${_id}`)
-      .addEventListener('change', () => inputItem(_id));
+      .addEventListener('change', () => handleQuantityInput(_id));
   });
 }
 
@@ -151,13 +160,13 @@ async function toggleItem(id) {
   const itemCheckbox = document.querySelector(`#checkbox-${id}`);
   const isChecked = itemCheckbox.checked;
 
-  // 결제정보 업데이트 및, 체크 상태에서는 수정 가능 (언체크는 불가능)으로 함
+  // 결제정보 업데이트 및, 체크 상태에서는 수량을 수정 가능 (언체크는 불가능)으로 함
   if (isChecked) {
     await updateOrderSummary(id, 'add-checkbox');
-    enableChange(id);
+    setQuantityBox(id, 'able');
   } else {
     await updateOrderSummary(id, 'removeTemp-checkbox');
-    disableChange(id);
+    setQuantityBox(id, 'disable');
   }
 }
 
@@ -180,18 +189,18 @@ async function toggleAll(e) {
     // 결제정보 업데이트 및, 체크 상태에서는 수정 가능으로 함
     if (isAddRequired) {
       updateOrderSummary(id, 'add-checkbox');
-      enableChange(id);
+      setQuantityBox(id, 'able');
     }
 
     // 결제정보 업데이트 및, 언체크 상태에서는 수정 불가능으로 함
     if (isRemoveRequired) {
       updateOrderSummary(id, 'removeTemp-checkbox');
-      disableChange(id);
+      setQuantityBox(id, 'disable');
     }
   });
 }
 
-async function increaseItem(id) {
+async function increaseItemQuantity(id) {
   // 결제정보카드 업데이트
   await updateOrderSummary(id, 'add-plusButton');
 
@@ -203,23 +212,11 @@ async function increaseItem(id) {
     data.quantity = data.quantity + 1;
   });
 
-  // input 박스 숫자 업데이트
-  const quantityInput = document.querySelector(`#quantityInput-${id}`);
-  const currentQuantity = parseInt(quantityInput.value);
-  quantityInput.value = currentQuantity + 1;
-
-  // 숫자가 98이었다면, 이제 99이므로, + 버튼 못누르게 함.
-  if (currentQuantity === 98) {
-    const plusButton = document.querySelector(`#plus-${id}`);
-    plusButton.setAttribute('disabled', '');
-  }
-
-  // + 버튼 누를 시, -버튼은 최소 1번은 누를 수 있는 상황이 됨.
-  const minusButton = document.querySelector(`#minus-${id}`);
-  minusButton.removeAttribute('disabled');
+  // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
+  setQuantityBox(id, 'plus');
 }
 
-async function decreaseItem(id) {
+async function decreaseItemQuantity(id) {
   // 결제정보카드 업데이트
   await updateOrderSummary(id, 'minusButton');
 
@@ -231,23 +228,11 @@ async function decreaseItem(id) {
     data.quantity = data.quantity - 1;
   });
 
-  // input 박스 숫자 업데이트
-  const quantityInput = document.querySelector(`#quantityInput-${id}`);
-  const currentQuantity = parseInt(quantityInput.value);
-  quantityInput.value = currentQuantity - 1;
-
-  // 숫자가 2였다면, 이제 1이므로, - 버튼 못누르게 함.
-  if (currentQuantity === 2) {
-    const minusButton = document.querySelector(`#minus-${id}`);
-    minusButton.setAttribute('disabled', '');
-  }
-
-  // - 버튼 누를 시, +버튼은 최소 1번은 누를 수 있는 상황이 됨.
-  const plusButton = document.querySelector(`#plus-${id}`);
-  plusButton.removeAttribute('disabled');
+  // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
+  setQuantityBox(id, 'minus');
 }
 
-async function inputItem(id) {
+async function handleQuantityInput(id) {
   // 우선 입력값이 범위 1~99 인지 확인
   const inputElem = document.querySelector(`#quantityInput-${id}`);
   const quantity = parseInt(inputElem.value);
@@ -267,24 +252,64 @@ async function inputItem(id) {
     data.quantity = quantity;
   });
 
+  // 수량 변경박스(-버튼, 입력칸, +버튼) 상태 업데이트
+  setQuantityBox(id, 'input');
+}
+
+// -버튼, 숫자입력칸, +버튼 활성화 여부 및 값을 세팅함.
+function setQuantityBox(id, type) {
+  // 세팅 방식 결정을 위한 변수들
+  const isPlus = type.includes('plus');
+  const isMinus = type.includes('minus');
+  const isInput = type.includes('input');
+  const isDisableAll = type.includes('disable');
+
+  // 세팅을 위한 요소들
   const minusButton = document.querySelector(`#minus-${id}`);
+  const quantityInput = document.querySelector(`#quantityInput-${id}`);
   const plusButton = document.querySelector(`#plus-${id}`);
 
-  // 숫자가 1이라면, - 버튼 못누르게 함.
-  if (quantity === 1) {
-    minusButton.setAttribute('disabled', '');
-    return;
-  }
+  // 우선 기본적으로 활성화시킴
+  minusButton.removeAttribute('disabled');
+  quantityInput.removeAttribute('disabled');
+  plusButton.removeAttribute('disabled');
 
-  // 숫자가 99라면, + 버튼 못누르게 함.
-  if (quantity === 99) {
+  // 전체 비활성화 시키는 타입일 경우 (제품 체크를 해제했을 때 등)
+  if (isDisableAll) {
+    minusButton.setAttribute('disabled', '');
+    quantityInput.setAttribute('disabled', '');
     plusButton.setAttribute('disabled', '');
     return;
   }
 
-  // 이제 숫자가 2~98 사이이므로, -, + 버튼을 누를 수 있음.
-  minusButton.removeAttribute('disabled');
-  plusButton.removeAttribute('disabled');
+  // input칸 값을 업데이트하기 위한 변수 설정
+  let quantityUpdate;
+  if (isPlus) {
+    quantityUpdate = +1;
+  } else if (isMinus) {
+    quantityUpdate = -1;
+  } else if (isInput) {
+    quantityUpdate = 0;
+  } else {
+    quantityUpdate = 0;
+  }
+
+  // input칸 값 업데이트
+  const currentQuantity = parseInt(quantityInput.value);
+  const newQuantity = currentQuantity + quantityUpdate;
+  quantityInput.value = newQuantity;
+
+  // 숫자는 1~99만 가능
+  const isMin = newQuantity === 1;
+  const isMax = newQuantity === 99;
+
+  if (isMin) {
+    minusButton.setAttribute('disabled', '');
+  }
+
+  if (isMax) {
+    plusButton.setAttribute('disabled', '');
+  }
 }
 
 async function deleteSelectedItems() {
@@ -293,6 +318,8 @@ async function deleteSelectedItems() {
   selectedIds.forEach((id) => deleteItem(id));
 }
 
+// 전체선택 체크박스를, 현재 상황에 맞추어
+// 체크 또는 언체크 상태로 만듦
 async function updateAllSelectCheckbox() {
   const { ids, selectedIds } = await getFromDb('order', 'summary');
 
@@ -322,6 +349,7 @@ async function deleteItem(id) {
   updateAllSelectCheckbox();
 }
 
+// 결제정보 카드 업데이트 및, indexedDB 업데이트를 진행함.
 async function updateOrderSummary(id, type) {
   // 업데이트 방식 결정을 위한 변수들
   const isCheckbox = type.includes('checkbox');
@@ -449,6 +477,7 @@ async function updateOrderSummary(id, type) {
   updateAllSelectCheckbox();
 }
 
+// 아이템(제품)카드의 수량, 금액 등을 업데이트함
 async function updateProductItem(id, type) {
   // 업데이트 방식을 결정하는 변수들
   const isInput = type.includes('input');
@@ -481,36 +510,7 @@ async function updateProductItem(id, type) {
   totalElem.innerText = `${numberWithCommas(currentTotal + priceUpdate)}원`;
 }
 
-function disableChange(id) {
-  const minusButton = document.querySelector(`#minus-${id}`);
-  const quantityInput = document.querySelector(`#quantityInput-${id}`);
-  const plusButton = document.querySelector(`#plus-${id}`);
-
-  minusButton.setAttribute('disabled', '');
-  quantityInput.setAttribute('disabled', '');
-  plusButton.setAttribute('disabled', '');
-}
-
-function enableChange(id) {
-  const minusButton = document.querySelector(`#minus-${id}`);
-  const quantityInput = document.querySelector(`#quantityInput-${id}`);
-  const plusButton = document.querySelector(`#plus-${id}`);
-
-  const quantity = parseInt(quantityInput.value);
-
-  minusButton.removeAttribute('disabled');
-  plusButton.removeAttribute('disabled');
-  quantityInput.removeAttribute('disabled');
-
-  if (quantity === 1) {
-    minusButton.setAttribute('disabled', '');
-  }
-
-  if (quantity === 99) {
-    plusButton.setAttribute('disabled', '');
-  }
-}
-
+// 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
 async function insertOrderSummary() {
   const { productsCount, productsTotal } = await getFromDb('order', 'summary');
 
