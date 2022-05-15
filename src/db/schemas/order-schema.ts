@@ -33,7 +33,7 @@ const OrderSchema = new Schema(
     status: {
       type: String,
       required: false,
-      default: 'pending',
+      default: '준비중',
     },
   },
   {
