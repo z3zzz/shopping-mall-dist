@@ -3,7 +3,7 @@ import request from 'supertest';
 import jwt from 'jsonwebtoken';
 import { app } from '../src/app';
 
-describe('orderRouter 테스트', () => {
+describe('order 관련 테스트', () => {
   // 임시 랜덤 문자열 제작용
   const random = Math.random().toString(36).substring(2, 7);
 

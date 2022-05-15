@@ -13,7 +13,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1Y
 content-type: application/json
 
 {
-    "title": "테스트-제품",
+    "title": "테스트-제품A",
     "categoryId": "6280edc1123b7b07efffec84",
     "manufacturer": "삼성전자짱",
     "shortDescription": "테스트용 제품입니다.",

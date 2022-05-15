@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../src/app';
 
-describe('userRouter 테스트', () => {
+describe('user 관련 테스트', () => {
   // 임시 랜덤 문자열 제작용
   const random = Math.random().toString(36).substring(2, 7);
 

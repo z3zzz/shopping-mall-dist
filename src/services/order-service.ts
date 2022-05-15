@@ -57,12 +57,12 @@ class OrderService {
     return order;
   }
 
-  async deleteOrderData(orderID: string): Promise<{ result: string }> {
-    const { deletedCount } = await this.orderModel.deleteById(orderID);
+  async deleteOrderData(orderId: string): Promise<{ result: string }> {
+    const { deletedCount } = await this.orderModel.deleteById(orderId);
 
     // 삭제에 실패한 경우, 에러 메시지 반환
     if (deletedCount === 0) {
-      throw new Error(`${orderID} 주문의 삭제에 실패하였습니다`);
+      throw new Error(`${orderId} 주문의 삭제에 실패하였습니다`);
     }
 
     return { result: 'success' };
