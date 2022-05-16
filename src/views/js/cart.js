@@ -63,7 +63,7 @@ async function insertProductsfromCart() {
           </label>
           <button class="delete-button" id="delete-${_id}">
             <span class="icon">
-              <i class="fas fa-x"></i>
+              <i class="fas fa-trash-can"></i>
             </span>
           </button>
           <figure class="image is-96x96">
