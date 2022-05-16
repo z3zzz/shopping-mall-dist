@@ -77,3 +77,12 @@ export const compressString = (string) => {
   }
   return string;
 };
+
+// 주소에 특정 params가 없다면, 잘못된 접근임.
+export const checkUrlParams = (key) => {
+  const { key } = getUrlParams();
+
+  if (!key) {
+    window.location.href = '/page-not-found';
+  }
+};

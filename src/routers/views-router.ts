@@ -47,4 +47,8 @@ viewsRouter.get('/order/complete', function (req, res) {
   res.sendFile(path.join(__dirname, '../views/order-complete.html'));
 });
 
+viewsRouter.get('/page-not-found', function (req, res) {
+  res.sendFile(path.join(__dirname, '../views/page-not-found.html'));
+});
+
 export { viewsRouter };
