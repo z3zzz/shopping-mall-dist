@@ -27,7 +27,7 @@ export const getUrlParams = () => {
 };
 
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)
-export const numberWithCommas = (n) => {
+export const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
@@ -61,7 +61,7 @@ export const navigate = (pathname) => {
 
 // 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
 // 예시: 13,000원 -> 13000, 20,000개 -> 20000
-export const getNumbers = (string) => {
+export const convertToNumber = (string) => {
   return parseInt(string.replace(/(,|개|원)/g, ''));
 };
 
@@ -70,7 +70,7 @@ export const wait = (ms) => {
   return new Promise((r) => setTimeout(r, ms));
 };
 
-// 긴 문자열에서 뒷부분을 ...으로 바꿈
+// 긴 문자열에서 뒷부분을 ..으로 바꿈
 export const compressString = (string) => {
   if (string.length > 10) {
     return string.substring(0, 9) + '..';
@@ -78,7 +78,7 @@ export const compressString = (string) => {
   return string;
 };
 
-// 주소에 특정 params가 없다면, 잘못된 접근임.
+// 주소에 특정 params가 없다면 잘못된 접근으로 하고 싶은 경우 사용.
 export const checkUrlParams = (key) => {
   const { key } = getUrlParams();
 
