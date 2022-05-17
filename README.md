@@ -89,6 +89,7 @@ const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
 5. 추가할 기능
 - 강제 로그인페이지 이동 시, 로그인 후 되돌아가게
 - 페이지 이동 시 자동 input칸 포커스
+- 목록으로 돌아가기 버튼
 
 
 </p>
