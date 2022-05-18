@@ -80,9 +80,9 @@ export const compressString = (string) => {
 
 // 주소에 특정 params가 없다면 잘못된 접근으로 하고 싶은 경우 사용.
 export const checkUrlParams = (key) => {
-  const { key } = getUrlParams();
+  const { [key]: params } = getUrlParams();
 
-  if (!key) {
+  if (!params) {
     window.location.href = '/page-not-found';
   }
 };

@@ -2,8 +2,8 @@ import * as Api from './common/api.js';
 import {
   checkLogin,
   doLogout,
-  numberWithCommas,
-  getNumbers,
+  addCommas,
+  convertToNumber,
   navigate,
   compressString,
 } from './common/useful-functions.js';
@@ -113,11 +113,11 @@ async function insertOrderSummary() {
   }
 
   productsTitleElem.innerText = productsTitle;
-  productsTotalElem.innerText = `${numberWithCommas(productsTotal)}원`;
+  productsTotalElem.innerText = `${addCommas(productsTotal)}원`;
 
   if (hasItemToCheckout) {
     deliveryFeeElem.innerText = `3,000원`;
-    orderTotalElem.innerText = `${numberWithCommas(productsTotal + 3000)}원`;
+    orderTotalElem.innerText = `${addCommas(productsTotal + 3000)}원`;
   } else {
     deliveryFeeElem.innerText = `0원`;
     orderTotalElem.innerText = `0원`;
@@ -154,7 +154,7 @@ async function doCheckout() {
   const address2 = address2Input.value;
   const requestType = requestSelectBox.value;
   const customRequest = customRequestInput.value;
-  const totalPrice = getNumbers(orderTotalElem.innerText);
+  const totalPrice = convertToNumber(orderTotalElem.innerText);
   const { selectedIds } = await getFromDb('order', 'summary');
 
   if (!receiverName || !receiverPhoneNumber || !postalCode || !address2) {
@@ -212,6 +212,7 @@ async function doCheckout() {
     }
 
     alert('결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.');
+    window.location.href = '/order/complete';
   } catch (err) {
     console.log(err);
     alert(`결제 중 문제가 발생하였습니다: ${err.message}`);

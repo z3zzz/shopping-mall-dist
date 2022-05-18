@@ -5,7 +5,7 @@ import {
   checkLogin,
   doLogout,
   getUrlParams,
-  numberWithCommas,
+  addCommas,
   navigate,
 } from './common/useful-functions.js';
 
@@ -61,7 +61,7 @@ async function addProductItemsToContainer() {
               }
             </p>
             <p class="description">${shortDescription}</p>
-            <p class="price">${numberWithCommas(price)}원</p>
+            <p class="price">${addCommas(price)}원</p>
           </div>
         </div>
       </div>

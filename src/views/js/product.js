@@ -4,7 +4,7 @@ import {
   checkLogin,
   doLogout,
   getUrlParams,
-  numberWithCommas,
+  addCommas,
 } from './common/useful-functions.js';
 import { addToDb, putToDb } from './common/indexed-db.js';
 
@@ -50,7 +50,7 @@ async function insertProductData() {
   titleTag.innerText = title;
   detailDescriptionTag.innerText = detailDescription;
   manufacturerTag.innerText = manufacturer;
-  priceTag.innerText = `${numberWithCommas(price)}원`;
+  priceTag.innerText = `${addCommas(price)}원`;
 
   if (isRecommended) {
     titleTag.insertAdjacentHTML(

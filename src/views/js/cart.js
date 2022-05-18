@@ -2,8 +2,8 @@ import { getImageUrl } from './common/aws-s3.js';
 import {
   checkLogin,
   doLogout,
-  numberWithCommas,
-  getNumbers,
+  addCommas,
+  convertToNumber,
   navigate,
   compressString,
 } from './common/useful-functions.js';
@@ -108,7 +108,7 @@ async function insertProductsfromCart() {
             </div>
           </div>
           <div class="calculation">
-            <p id="unitPrice-${_id}">${numberWithCommas(price)}원</p>
+            <p id="unitPrice-${_id}">${addCommas(price)}원</p>
             <p>
               <span class="icon">
                 <i class="fas fa-thin fa-xmark"></i>
@@ -120,7 +120,7 @@ async function insertProductsfromCart() {
                 <i class="fas fa-thin fa-equals"></i>
               </span>
             </p>
-            <p id="total-${_id}">${numberWithCommas(quantity * price)}원</p>
+            <p id="total-${_id}">${addCommas(quantity * price)}원</p>
           </div>
         </div>
       `
@@ -372,7 +372,7 @@ async function updateOrderSummary(id, type) {
   // 체크박스 혹은 삭제 버튼 클릭으로 인한 업데이트임.
   if (isCheckbox || isDeleteButton) {
     const priceElem = document.querySelector(`#total-${id}`);
-    price = getNumbers(priceElem.innerText);
+    price = convertToNumber(priceElem.innerText);
 
     quantity = 1;
   }
@@ -380,7 +380,7 @@ async function updateOrderSummary(id, type) {
   // - + 버튼 클릭으로 인한 업데이트임.
   if (isMinusButton || isPlusButton) {
     const unitPriceElem = document.querySelector(`#unitPrice-${id}`);
-    price = getNumbers(unitPriceElem.innerText);
+    price = convertToNumber(unitPriceElem.innerText);
 
     quantity = 0;
   }
@@ -388,13 +388,13 @@ async function updateOrderSummary(id, type) {
   // input 박스 입력으로 인한 업데이트임
   if (isInput) {
     const unitPriceElem = document.querySelector(`#unitPrice-${id}`);
-    const unitPrice = getNumbers(unitPriceElem.innerText);
+    const unitPrice = convertToNumber(unitPriceElem.innerText);
 
     const inputElem = document.querySelector(`#quantityInput-${id}`);
-    const inputQuantity = getNumbers(inputElem.value);
+    const inputQuantity = convertToNumber(inputElem.value);
 
     const quantityElem = document.querySelector(`#quantity-${id}`);
-    const currentQuantity = getNumbers(quantityElem.innerText);
+    const currentQuantity = convertToNumber(quantityElem.innerText);
 
     price = unitPrice * (inputQuantity - currentQuantity);
 
@@ -406,15 +406,15 @@ async function updateOrderSummary(id, type) {
   const countUpdate = isAdd ? +quantity : -quantity;
 
   // 현재 결제정보의 값들을 가져오고 숫자로 바꿈.
-  const currentCount = getNumbers(productsCountElem.innerText);
-  const currentProductsTotal = getNumbers(productsTotalElem.innerText);
-  const currentFee = getNumbers(deliveryFeeElem.innerText);
-  const currentOrderTotal = getNumbers(orderTotalElem.innerText);
+  const currentCount = convertToNumber(productsCountElem.innerText);
+  const currentProductsTotal = convertToNumber(productsTotalElem.innerText);
+  const currentFee = convertToNumber(deliveryFeeElem.innerText);
+  const currentOrderTotal = convertToNumber(orderTotalElem.innerText);
 
   // 결제정보 관련 요소들 업데이트
   if (!isDeleteWithoutChecked) {
     productsCountElem.innerText = `${currentCount + countUpdate}개`;
-    productsTotalElem.innerText = `${numberWithCommas(
+    productsTotalElem.innerText = `${addCommas(
       currentProductsTotal + priceUpdate
     )}원`;
   }
@@ -424,13 +424,13 @@ async function updateOrderSummary(id, type) {
 
   if (isFeeAddRequired) {
     deliveryFeeElem.innerText = `3000원`;
-    orderTotalElem.innerText = `${numberWithCommas(
+    orderTotalElem.innerText = `${addCommas(
       currentOrderTotal + priceUpdate + 3000
     )}원`;
   }
 
   if (!isFeeAddRequired && !isDeleteWithoutChecked) {
-    orderTotalElem.innerText = `${numberWithCommas(
+    orderTotalElem.innerText = `${addCommas(
       currentOrderTotal + priceUpdate
     )}원`;
   }
@@ -442,10 +442,8 @@ async function updateOrderSummary(id, type) {
     deliveryFeeElem.innerText = `0원`;
 
     // 다시 한 번, 현재 값을 가져와서 3000을 빼 줌
-    const currentOrderTotal = getNumbers(orderTotalElem.innerText);
-    orderTotalElem.innerText = `${numberWithCommas(
-      currentOrderTotal - 3000
-    )}원`;
+    const currentOrderTotal = convertToNumber(orderTotalElem.innerText);
+    orderTotalElem.innerText = `${addCommas(currentOrderTotal - 3000)}원`;
 
     // 전체선택도 언체크되도록 함.
     updateAllSelectCheckbox();
@@ -486,21 +484,21 @@ async function updateProductItem(id, type) {
 
   // 업데이트에 필요한 요소 및 값들을 가져오고 숫자로 바꿈.
   const unitPriceElem = document.querySelector(`#unitPrice-${id}`);
-  const unitPrice = getNumbers(unitPriceElem.innerText);
+  const unitPrice = convertToNumber(unitPriceElem.innerText);
 
   const quantityElem = document.querySelector(`#quantity-${id}`);
-  const currentQuantity = getNumbers(quantityElem.innerText);
+  const currentQuantity = convertToNumber(quantityElem.innerText);
 
   const totalElem = document.querySelector(`#total-${id}`);
-  const currentTotal = getNumbers(totalElem.innerText);
+  const currentTotal = convertToNumber(totalElem.innerText);
 
   const inputElem = document.querySelector(`#quantityInput-${id}`);
-  const inputQuantity = getNumbers(inputElem.value);
+  const inputQuantity = convertToNumber(inputElem.value);
 
   // 업데이트 진행
   if (isInput) {
     quantityElem.innerText = `${inputQuantity}개`;
-    totalElem.innerText = `${numberWithCommas(unitPrice * inputQuantity)}원`;
+    totalElem.innerText = `${addCommas(unitPrice * inputQuantity)}원`;
     return;
   }
 
@@ -508,7 +506,7 @@ async function updateProductItem(id, type) {
   const priceUpdate = isIncrease ? +unitPrice : -unitPrice;
 
   quantityElem.innerText = `${currentQuantity + quantityUpdate}개`;
-  totalElem.innerText = `${numberWithCommas(currentTotal + priceUpdate)}원`;
+  totalElem.innerText = `${addCommas(currentTotal + priceUpdate)}원`;
 }
 
 // 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
@@ -518,11 +516,11 @@ async function insertOrderSummary() {
   const hasItems = productsCount !== 0;
 
   productsCountElem.innerText = `${productsCount}개`;
-  productsTotalElem.innerText = `${numberWithCommas(productsTotal)}원`;
+  productsTotalElem.innerText = `${addCommas(productsTotal)}원`;
 
   if (hasItems) {
     deliveryFeeElem.innerText = `3,000원`;
-    orderTotalElem.innerText = `${numberWithCommas(productsTotal + 3000)}원`;
+    orderTotalElem.innerText = `${addCommas(productsTotal + 3000)}원`;
   } else {
     deliveryFeeElem.innerText = `0원`;
     orderTotalElem.innerText = `0원`;
