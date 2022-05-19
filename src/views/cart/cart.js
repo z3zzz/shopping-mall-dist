@@ -1,4 +1,4 @@
-import { getImageUrl } from './common/aws-s3.js';
+import { getImageUrl } from '/aws-s3.js';
 import {
   checkLogin,
   doLogout,
@@ -6,8 +6,8 @@ import {
   convertToNumber,
   navigate,
   compressString,
-} from './common/useful-functions.js';
-import { deleteFromDb, getFromDb, putToDb } from './common/indexed-db.js';
+} from '/useful-functions.js';
+import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');

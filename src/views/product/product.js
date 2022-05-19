@@ -1,12 +1,12 @@
-import { getImageUrl } from './common/aws-s3.js';
-import * as Api from './common/api.js';
+import { getImageUrl } from '/aws-s3.js';
+import * as Api from '/api.js';
 import {
   checkLogin,
   doLogout,
   getUrlParams,
   addCommas,
-} from './common/useful-functions.js';
-import { addToDb, putToDb } from './common/indexed-db.js';
+} from '/useful-functions.js';
+import { addToDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');

@@ -1,4 +1,4 @@
-import * as Api from './common/api.js';
+import * as Api from '/api.js';
 import {
   checkLogin,
   doLogout,
@@ -6,8 +6,8 @@ import {
   convertToNumber,
   navigate,
   compressString,
-} from './common/useful-functions.js';
-import { deleteFromDb, getFromDb, putToDb } from './common/indexed-db.js';
+} from '/useful-functions.js';
+import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');

@@ -1,5 +1,5 @@
-import { getImageUrl } from './common/aws-s3.js';
-import * as Api from './common/api.js';
+import { getImageUrl } from '/aws-s3.js';
+import * as Api from '/api.js';
 import {
   randomId,
   checkLogin,
@@ -7,7 +7,7 @@ import {
   getUrlParams,
   addCommas,
   navigate,
-} from './common/useful-functions.js';
+} from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const productItemContainer = document.querySelector('#producItemContainer');

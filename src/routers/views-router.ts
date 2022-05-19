@@ -3,52 +3,30 @@ import path from 'path';
 
 const viewsRouter = express.Router();
 
-// views 폴더의 css, js 라우팅
-viewsRouter.use(express.static(path.join(__dirname, '../views')));
+// 페이지별로 html, css, js 파일들 라우팅
+viewsRouter.use('/', serveStatic('home'));
+viewsRouter.use('/order/complete', serveStatic('order-complete'));
+viewsRouter.use('/register/user', serveStatic('register-user'));
+viewsRouter.use('/login', serveStatic('login'));
+viewsRouter.use('/register/category', serveStatic('register-category'));
+viewsRouter.use('/register/product', serveStatic('register-product'));
+viewsRouter.use('/product/list', serveStatic('product-list'));
+viewsRouter.use('/product', serveStatic('product'));
+viewsRouter.use('/cart', serveStatic('cart'));
+viewsRouter.use('/order', serveStatic('order'));
+viewsRouter.use('/order/complete', serveStatic('order-complete'));
+viewsRouter.use('/page-not-found', serveStatic('page-not-found'));
 
-// html 파일들 라우팅
-viewsRouter.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/home.html'));
-});
+// views 폴더의 rabbit.png, indexed-db.js 등 라우팅
+viewsRouter.use('/', serveStatic(''));
 
-viewsRouter.get('/register', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/register-user.html'));
-});
+// views폴더 내의 ${fileName} 폴더 내의 모든 파일을 웹에 띄우며,
+// 이 때 ${fileName}.html 을 기본 파일로 설정함.
+function serveStatic(resource: string) {
+  const resourcePath = path.join(__dirname, `../views/${resource}`);
+  const option = { index: `${resource}.html` };
 
-viewsRouter.get('/login', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/login.html'));
-});
-
-viewsRouter.get('/admin/category', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/register-category.html'));
-});
-
-viewsRouter.get('/user/product', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/register-product.html'));
-});
-
-viewsRouter.get('/products', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/products.html'));
-});
-
-viewsRouter.get('/product', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/product.html'));
-});
-
-viewsRouter.get('/cart', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/cart.html'));
-});
-
-viewsRouter.get('/order', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/order.html'));
-});
-
-viewsRouter.get('/order/complete', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/order-complete.html'));
-});
-
-viewsRouter.get('/page-not-found', function (req, res) {
-  res.sendFile(path.join(__dirname, '../views/page-not-found.html'));
-});
+  return express.static(resourcePath, option);
+}
 
 export { viewsRouter };

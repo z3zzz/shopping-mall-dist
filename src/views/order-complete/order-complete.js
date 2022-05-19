@@ -1,5 +1,5 @@
-import * as Api from './common/api.js';
-import { checkLogin, doLogout, navigate } from './common/useful-functions.js';
+import * as Api from '/api.js';
+import { checkLogin, doLogout, navigate } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');

@@ -1,6 +1,6 @@
-import * as Api from './common/api.js';
-import { getImageUrl } from './common/aws-s3.js';
-import { randomId } from './common/useful-functions.js';
+import * as Api from '/api.js';
+import { getImageUrl } from '/aws-s3.js';
+import { randomId } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const sliderDiv = document.querySelector('#slider');
