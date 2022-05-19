@@ -92,6 +92,11 @@ const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
 - 목록으로 돌아가기 버튼
 - 주문페이지 -> 장바구니 자동 이동 시, 장바구니도 비어 있으면 다른 페이지로 이동시키기
 - form validation 별도 함수로 로직 추출하기
+- 주문결제 페이지 등에서, 장바구니 뒤로가기 등 링크 추가
+- 장바구니 추가 시 alert에 장바구니 바로가기 추가
+- page-not-found redirec 는 replace 로 하기
+- input validator 만들기 
+- s3 설명 추가 (폴더에)
 
 
 </p>
