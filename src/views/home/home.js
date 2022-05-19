@@ -1,6 +1,6 @@
 import * as Api from '/api.js';
 import { getImageUrl } from '/aws-s3.js';
-import { randomId } from '/useful-functions.js';
+import { navigate } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const sliderDiv = document.querySelector('#slider');
@@ -25,15 +25,13 @@ async function addImageCardsToSlider() {
 
   for (const category of categorys) {
     // 객체 destructuring
-    const { title, description, themeClass, imageKey } = category;
+    const { _id, title, description, themeClass, imageKey } = category;
     const imageUrl = await getImageUrl(imageKey);
-
-    const random = randomId();
 
     sliderDiv.insertAdjacentHTML(
       'beforeend',
       `
-      <div class="card" id="a${random}">
+      <div class="card" id="category-${_id}">
         <div class="notification ${themeClass}">
           <p class="title is-3 is-spaced">${title}</p>
           <p class="subtitle is-6">${description}</p>
@@ -50,10 +48,9 @@ async function addImageCardsToSlider() {
     `
     );
 
-    const card = document.querySelector(`#a${random}`);
-    card.addEventListener('click', () => {
-      window.location.href = `/products?category=${title}`;
-    });
+    const card = document.querySelector(`#category-${_id}`);
+
+    card.addEventListener('click', navigate(`/product/list?category=${title}`));
   }
 }
 

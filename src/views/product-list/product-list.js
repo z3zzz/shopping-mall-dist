@@ -69,6 +69,9 @@ async function addProductItemsToContainer() {
     );
 
     const productItem = document.querySelector(`#a${random}`);
-    productItem.addEventListener('click', navigate(`/product?id=${_id}`));
+    productItem.addEventListener(
+      'click',
+      navigate(`/product/detail?id=${_id}`)
+    );
   });
 }

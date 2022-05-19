@@ -5,7 +5,6 @@ import { getUrlParams, validateEmail } from '/useful-functions.js';
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const submitButton = document.querySelector('#submitButton');
-const loginForm = document.querySelector('#loginForm');
 
 addAllEvents();
 
@@ -48,7 +47,7 @@ async function handleSubmit(e) {
 
     // 기존 다른 페이지에서 이 로그인 페이지로 온 경우, 다시 돌아가도록 해 줌.
     const { previouspage } = getUrlParams();
-    console.log({ previouspage });
+
     if (previouspage) {
       window.location.href = previouspage;
 

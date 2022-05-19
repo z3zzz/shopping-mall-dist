@@ -137,11 +137,11 @@ async function insertProductsfromCart() {
 
     document
       .querySelector(`#image-${_id}`)
-      .addEventListener('click', navigate(`/product?id=${_id}`));
+      .addEventListener('click', navigate(`/product/detail?id=${_id}`));
 
     document
       .querySelector(`#title-${_id}`)
-      .addEventListener('click', navigate(`/product?id=${_id}`));
+      .addEventListener('click', navigate(`/product/detail?id=${_id}`));
 
     document
       .querySelector(`#plus-${_id}`)
