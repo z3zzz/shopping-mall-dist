@@ -103,9 +103,12 @@ class UserService {
       );
     }
 
+    // 비밀번호도 변경하는 경우
     const { password } = toUpdate;
-    const newPasswordHash = await bcrypt.hash(password!, 10);
-    toUpdate.password = newPasswordHash;
+    if (password) {
+      const newPasswordHash = await bcrypt.hash(password!, 10);
+      toUpdate.password = newPasswordHash;
+    }
 
     user = await this.userModel.update({
       userId,

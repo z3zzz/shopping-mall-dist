@@ -112,6 +112,9 @@ let userData;
 async function insertUserData() {
   userData = await Api.get('/api/user');
 
+  // 서버에서 온 비밀번호는 해쉬 문자열인데, 이를 빈 문자열로 바꿈
+  userData.password = '';
+
   // 객체 destructuring
   const { fullName, address, phoneNumber } = userData;
 
@@ -129,18 +132,25 @@ async function insertUserData() {
     phoneNumberInput.value = phoneNumber;
   }
 
+  // 크롬 자동완성 삭제함.
+  passwordInput.value = '';
+
   // 기본적으로 disabled 상태로 만듦
   disableForm();
 }
 
 function disableForm() {
   fullNameInput.setAttribute('disabled', '');
+  fullNameToggle.checked = false;
   passwordInput.setAttribute('disabled', '');
+  passwordToggle.checked = false;
   passwordConfirmInput.setAttribute('disabled', '');
   postalCodeInput.setAttribute('disabled', '');
+  addressToggle.checked = false;
   searchAddressButton.setAttribute('disabled', '');
   address1Input.setAttribute('disabled', '');
   address2Input.setAttribute('disabled', '');
+  phoneNumberToggle.checked = false;
   phoneNumberInput.setAttribute('disabled', '');
 }
 
@@ -200,12 +210,12 @@ async function saveUserData(e) {
   const isAddress2Changed = address2 !== userData.address?.address2;
   const isAddressChanged = isPostalCodeChanged || isAddress2Changed;
 
-  if (isPasswordLong) {
+  // 비밀번호를 새로 작성한 경우
+  if (password && !isPasswordLong) {
     closeModal();
     return alert('비밀번호는 4글자 이상이어야 합니다.');
   }
-
-  if (!isPasswordSame) {
+  if (password && !isPasswordSame) {
     closeModal();
     return alert('비밀번호와 비밀번호확인이 일치하지 않습니다.');
   }
@@ -216,18 +226,31 @@ async function saveUserData(e) {
   if (fullName !== userData.fullName) {
     data.fullName = fullName;
   }
-  if (password) {
+  if (password !== userData.password) {
     data.password = password;
   }
   if (isAddressChanged) {
+    if (!postalCode || !address2) {
+      closeModal();
+      return alert('주소를 모두 입력해 주세요.');
+    }
+
     data.address = {
       postalCode,
       address1,
       address2,
     };
   }
-  if (phoneNumber !== userData.phoneNumber) {
+  if (phoneNumber && phoneNumber !== userData.phoneNumber) {
     data.phoneNumber = phoneNumber;
+  }
+
+  // 만약 업데이트할 것이 없다면 (디폴트인 currentPassword만 있어서 1개라면), 종료함
+  const toUpdate = Object.keys(data);
+  if (toUpdate.length === 1) {
+    disableForm();
+    closeModal();
+    return alert('업데이트된 정보가 없습니다');
   }
 
   try {
