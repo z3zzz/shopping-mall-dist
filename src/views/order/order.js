@@ -186,7 +186,7 @@ async function doCheckout() {
   // 요청사항의 종류에 따라 request 문구가 달라짐
   let request;
   if (requestType === 0) {
-    request = '';
+    request = '요청사항 없음.';
   } else if (requestType === 6) {
     request = customRequest;
   } else {
