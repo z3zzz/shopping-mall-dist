@@ -185,9 +185,12 @@ async function doCheckout() {
 
   // 요청사항의 종류에 따라 request 문구가 달라짐
   let request;
-  if (requestType === 0) {
+  if (requestType === '0') {
     request = '요청사항 없음.';
-  } else if (requestType === 6) {
+  } else if (requestType === '6') {
+    if (!customRequest) {
+      return alert('요청사항을 작성해 주세요.');
+    }
     request = customRequest;
   } else {
     request = requestOption[requestType];
