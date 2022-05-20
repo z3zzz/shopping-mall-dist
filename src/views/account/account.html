@@ -16,29 +16,18 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
-    <!-- 슬라이드 이미지용 css, js -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css"
-    />
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"
-    ></script>
     <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
-    <!-- AWS S3 사진 업로드용 -->
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.410.0.min.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <link rel="stylesheet" href="account.css" />
+    <script src="account.js" type="module" defer></script>
   </head>
   <body>
-    <!-- 헤더 (로고, 검색창, 계정관리, 회원가입, 로그인, 카트 ) -->
+    <!-- 헤더 (로고, 검색창, 로그아웃, 카트 ) -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container mt-3">
         <div class="navbar-brand">
@@ -81,9 +70,7 @@
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
             <ul>
               <!-- class를 is-active로 하면 클릭 불가해짐. -->
-              <li><a href="/account">계정관리</a></li>
-              <li><a href="/register">회원가입</a></li>
-              <li><a href="/login">로그인</a></li>
+              <li><a href="#" id="logoutTag">로그아웃</a></li>
               <li>
                 <a href="/cart" aria-current="page">
                   <span class="icon">
@@ -98,28 +85,42 @@
       </div>
     </nav>
 
-    <!-- 슬라이드 이미지 -->
+    <!-- 계정관리 관련 목록 -->
     <section class="section">
-      <div class="container is-clipped">
-        <div class="slider-arrow-container">
-          <button class="slider-arrow slider-arrow-left" id="sliderArrowLeft">
-            <span class="icon is-large">
-              <i class="fas fa-chevron-left fa-2x"></i>
-            </span>
-          </button>
-          <button class="slider-arrow slider-arrow-right" id="sliderArrowRight">
-            <span class="icon is-large">
-              <i class="fas fa-chevron-right fa-2x"></i>
-            </span>
-          </button>
+      <div class="container">
+        <div class="block account-header">
+          <h1 class="title">계정관리</h1>
         </div>
+        <div class="menu-container">
+          <!-- 주문조회 -->
+          <a class="menu-card" href="/account/order">
+            <div class="menu-icon">
+              <span class="icon has-text-info">
+                <i class="fa-solid fa-credit-card"></i>
+              </span>
+            </div>
+            <div class="menu-body">
+              <p class="title is-3">주문조회</p>
+              <p class="subtitle is-5">
+                지난 주문 내역을 확인, 취소할 수 있습니다.
+              </p>
+            </div>
+          </a>
 
-        <div id="slider"></div>
+          <!-- 회원정보 관리 -->
+          <a class="menu-card" href="/account/security">
+            <div class="menu-icon">
+              <span class="icon has-text-info">
+                <i class="fa-solid fa-user-gear"></i>
+              </span>
+            </div>
+            <div class="menu-body">
+              <p class="title is-3">회원정보 관리</p>
+              <p class="subtitle is-5">회원 정보를 확인, 수정할 수 있습니다.</p>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
-
-    <!-- 제품 카드 모음 -->
-
-    <!-- Footer -->
   </body>
 </html>

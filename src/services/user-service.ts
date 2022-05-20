@@ -81,7 +81,7 @@ class UserService {
   ): Promise<UserData> {
     // 객체 destructuring
     const { userId, currentPassword } = userInfoRequired;
-    const { fullName, email, password } = toUpdate;
+
     // 우선 해당 id의 유저가 db에 있는지 확인
     let user = await this.userModel.findById(userId);
 
@@ -99,33 +99,18 @@ class UserService {
 
     if (!isPasswordCorrect) {
       throw new Error(
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+        '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
       );
     }
 
-    // toUpdate 객체에 fullName 프로퍼티가 있었다면, db에 업데이트함.
-    if (fullName) {
-      user = await this.userModel.update({
-        userId,
-        update: { fullName },
-      });
-    }
+    const { password } = toUpdate;
+    const newPasswordHash = await bcrypt.hash(password!, 10);
+    toUpdate.password = newPasswordHash;
 
-    if (email) {
-      user = await this.userModel.update({
-        userId,
-        update: { email },
-      });
-    }
-
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      user = await this.userModel.update({
-        userId,
-        update: { password: hashedPassword },
-      });
-    }
+    user = await this.userModel.update({
+      userId,
+      update: toUpdate,
+    });
 
     return user;
   }
