@@ -2,7 +2,6 @@ import { getImageUrl } from '/aws-s3.js';
 import * as Api from '/api.js';
 import {
   randomId,
-  checkLogin,
   doLogout,
   getUrlParams,
   addCommas,
@@ -13,7 +12,6 @@ import {
 const productItemContainer = document.querySelector('#producItemContainer');
 const logoutATag = document.querySelector('#logoutATag');
 
-checkLogin();
 addAllElements();
 addAllEvents();
 

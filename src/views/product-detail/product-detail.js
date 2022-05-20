@@ -1,11 +1,6 @@
 import { getImageUrl } from '/aws-s3.js';
 import * as Api from '/api.js';
-import {
-  checkLogin,
-  doLogout,
-  getUrlParams,
-  addCommas,
-} from '/useful-functions.js';
+import { doLogout, getUrlParams, addCommas } from '/useful-functions.js';
 import { addToDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
@@ -17,7 +12,6 @@ const detailDescriptionTag = document.querySelector('#detailDescriptionTag');
 const addToCartButton = document.querySelector('#addToCartButton');
 const purchaseButton = document.querySelector('#purchaseButton');
 
-checkLogin();
 addAllElements();
 addAllEvents();
 

@@ -63,7 +63,6 @@ productRouter.get(
 
 productRouter.get(
   '/productlist/category/:categoryTitle',
-  loginRequired,
   async function (req, res, next) {
     let categoryTitle = req.params.categoryTitle;
 
@@ -88,20 +87,16 @@ productRouter.get(
   }
 );
 
-productRouter.get(
-  '/products/:productId',
-  loginRequired,
-  async function (req, res, next) {
-    try {
-      const productId = req.params.productId;
-      const productData = await productService.getProductData(productId);
+productRouter.get('/products/:productId', async function (req, res, next) {
+  try {
+    const productId = req.params.productId;
+    const productData = await productService.getProductData(productId);
 
-      res.status(200).json(productData);
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json(productData);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 productRouter.patch(
   '/products/:productId',

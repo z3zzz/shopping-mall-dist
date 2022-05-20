@@ -44,6 +44,7 @@ addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
   insertOrderSummary();
+  insertUserData();
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -124,6 +125,26 @@ async function insertOrderSummary() {
   }
 
   receiverNameInput.focus();
+}
+
+async function insertUserData() {
+  const userData = await Api.get('/api/user');
+  const { fullName, phoneNumber, address } = userData;
+
+  // 만약 db에 데이터 값이 있었다면, 배송지정보에 삽입
+  if (fullName) {
+    receiverNameInput.value = fullName;
+  }
+
+  if (phoneNumber) {
+    receiverPhoneNumberInput.value = phoneNumber;
+  }
+
+  if (address) {
+    postalCode.value = address.postalCode;
+    address1Input.value = address.address1;
+    address2Input.value = address.address2;
+  }
 }
 
 // "직접 입력" 선택 시 input칸 보이게 함
