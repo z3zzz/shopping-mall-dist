@@ -34,3 +34,10 @@
 .orders-item:not(:last-child) {
   border-bottom: #bbb 1px solid;
 }
+
+.modal .box {
+  text-align: center;
+}
+.modal .buttons {
+  justify-content: center;
+}

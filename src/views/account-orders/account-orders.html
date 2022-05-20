@@ -91,7 +91,7 @@
     <section class="section">
       <div class="container">
         <div class="block account-header">
-          <h1 class="subtitle is-4" id="securityTitle">주문조회</h1>
+          <h1 class="subtitle is-4">주문조회</h1>
         </div>
         <div class="container orders-container" id="ordersContainer">
           <div
@@ -102,23 +102,42 @@
             <div class="column is-2">상태</div>
             <div class="column is-2">신청</div>
           </div>
-          <div class="columns orders-item">
-            <div class="column is-2">2022.05.23</div>
-            <div class="column is-6">아이보리 셔츠 / 1개</div>
-            <div class="column is-2">준비중</div>
-            <div class="column is-2">
-              <button class="button">주문 취소</button>
-            </div>
-          </div>
-          <div class="columns orders-item">
-            <div class="column is-2">2022.05.23</div>
-            <div class="column is-6">아이보리 셔츠 / 1개</div>
-            <div class="column is-2">준비중</div>
-            <div class="column is-2">
-              <button class="button">주문 취소</button>
-            </div>
-        </div>
       </div>
     </section>
+
+<!-- 정보 수정을 완료하기 위해, 현재 비밀번호를 입력할 Modal 창 -->
+              <div id="modal" class="modal">
+                <div class="modal-background" id="modalBackground"></div>
+
+                <div class="modal-content">
+                  <div class="box">
+                    <p class="mb-3">주문 취소 시 복구할 수 없습니다. 정말로 취소하시겠습니까?</p>
+
+                    <div class="buttons">
+                    <button
+                      class="button mt-5"
+                      id="deleteCompleteButton"
+                      aria-label="close"
+                    >
+                      네
+                    </button>
+                    <button
+                      class="button is-primary mt-5"
+                      id="deleteCancelButton"
+                      aria-label="close"
+                    >
+                      아니오
+                    </button>
+
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  class="modal-close is-large"
+                  id="modalCloseButton"
+                  aria-label="close"
+                ></button>
+              </div>
   </body>
 </html>
