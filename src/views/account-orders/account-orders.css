@@ -35,6 +35,10 @@
   border-bottom: #bbb 1px solid;
 }
 
+.order-summary {
+  white-space: pre-line;
+}
+
 .modal .box {
   text-align: center;
 }

@@ -43,7 +43,7 @@ async function insertOrders() {
       `
         <div class="columns orders-item" id="order-${_id}">
           <div class="column is-2">${date}</div>
-          <div class="column is-6">${summaryTitle}</div>
+          <div class="column is-6 order-summary">${summaryTitle}</div>
           <div class="column is-2">${status}</div>
           <div class="column is-2">
             <button class="button" id="deleteButton-${_id}" >주문 취소</button>
