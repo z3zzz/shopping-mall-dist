@@ -17,6 +17,7 @@ orderRouter.post('/order', loginRequired, async (req, res, next) => {
 
     // req (request) 에서 데이터 가져오기
     const userId: string = req.currentUserId;
+    const summaryTitle: string = req.body.summaryTitle;
     const totalPrice: number = req.body.totalPrice;
     const address: OrderAddress = req.body.address;
     const request: string = req.body.request;
@@ -24,6 +25,7 @@ orderRouter.post('/order', loginRequired, async (req, res, next) => {
     // 위 데이터를 제품 db에 추가하기
     const newOrder = await orderService.addOrder({
       userId,
+      summaryTitle,
       totalPrice,
       address,
       request,

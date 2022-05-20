@@ -3,6 +3,7 @@ import * as Api from '/api.js';
 
 // 요소(element), input 혹은 상수
 const logoutATag = document.querySelector('#logoutATag');
+const securityTitle = document.querySelector('#securityTitle');
 const fullNameInput = document.querySelector('#fullNameInput');
 const fullNameToggle = document.querySelector('#fullNameToggle');
 const passwordInput = document.querySelector('#passwordInput');
@@ -116,8 +117,9 @@ async function insertUserData() {
   userData.password = '';
 
   // 객체 destructuring
-  const { fullName, address, phoneNumber } = userData;
+  const { fullName, email, address, phoneNumber } = userData;
 
+  securityTitle.innerText = `회원정보 관리 (${email})`;
   fullNameInput.value = fullName;
 
   if (address) {

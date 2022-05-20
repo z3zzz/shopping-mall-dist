@@ -13,6 +13,7 @@ export interface OrderAddress {
 
 export interface OrderInfo {
   userId: string;
+  summaryTitle: string;
   totalPrice: number;
   address: OrderAddress;
   request: string;
@@ -22,6 +23,7 @@ export interface OrderInfo {
 export interface OrderData {
   _id: string;
   userId: string;
+  summaryTitle: string;
   totalPrice: string;
   address: OrderAddress;
   request: string;

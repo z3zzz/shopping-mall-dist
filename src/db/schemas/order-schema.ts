@@ -7,6 +7,10 @@ const OrderSchema = new Schema(
       ref: 'users',
       required: true,
     },
+    summaryTitle: {
+      type: String,
+      required: true,
+    },
     totalPrice: {
       type: Number,
       required: true,

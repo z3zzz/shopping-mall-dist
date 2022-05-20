@@ -154,6 +154,7 @@ async function doCheckout() {
   const address2 = address2Input.value;
   const requestType = requestSelectBox.value;
   const customRequest = customRequestInput.value;
+  const summaryTitle = productsTitleElem.innerText;
   const totalPrice = convertToNumber(orderTotalElem.innerText);
   const { selectedIds } = await getFromDb('order', 'summary');
 
@@ -182,6 +183,7 @@ async function doCheckout() {
   try {
     // 전체 주문을 등록함
     const orderData = await Api.post('/api/order', {
+      summaryTitle,
       totalPrice,
       address,
       request,
