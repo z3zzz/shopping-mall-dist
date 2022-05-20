@@ -2,6 +2,7 @@ import { Router } from 'express';
 import is from '@sindresorhus/is';
 import { loginRequired } from '../middlewares';
 import { userService } from '../services';
+import { UserAddress } from '../db';
 
 const userRouter = Router();
 
@@ -93,8 +94,9 @@ userRouter.patch('/user', loginRequired, async function (req, res, next) {
 
     // body data 로부터 업데이트할 사용자 정보를 추출함.
     const fullName: string = req.body.fullName;
-    const email: string = req.body.email;
     const password: string = req.body.password;
+    const address: UserAddress = req.body.address;
+    const phoneNumber: string = req.body.phoneNumber;
 
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.currentPassword;
@@ -105,7 +107,14 @@ userRouter.patch('/user', loginRequired, async function (req, res, next) {
     }
 
     const userInfoRequired = { userId, currentPassword };
-    const toUpdate = { fullName, email, password };
+
+    // 위 데이터가 undefined가 아니라면, 업데이트용 객체에 삽입함.
+    const toUpdate = {
+      ...(fullName && { fullName }),
+      ...(password && { password }),
+      ...(address && { address }),
+      ...(phoneNumber && { phoneNumber }),
+    };
 
     // 사용자 정보를 업데이트함.
     const updatedUserInfo = await userService.setUser(

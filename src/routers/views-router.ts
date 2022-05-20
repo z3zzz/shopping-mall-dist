@@ -8,6 +8,8 @@ viewsRouter.use('/', serveStatic('home'));
 viewsRouter.use('/order/complete', serveStatic('order-complete'));
 viewsRouter.use('/register', serveStatic('register'));
 viewsRouter.use('/login', serveStatic('login'));
+viewsRouter.use('/account', serveStatic('account'));
+viewsRouter.use('/account/security', serveStatic('account-security'));
 viewsRouter.use('/category/add', serveStatic('category-add'));
 viewsRouter.use('/product/add', serveStatic('product-add'));
 viewsRouter.use('/product/list', serveStatic('product-list'));

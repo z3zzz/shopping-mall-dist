@@ -1,7 +1,7 @@
 import { checkLogin, doLogout } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
-const logoutATag = document.querySelector('#logoutATag');
+const logoutATag = document.querySelector('#logoutTag');
 
 checkLogin();
 addAllEvents();

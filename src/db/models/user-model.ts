@@ -16,7 +16,7 @@ export interface UserInfo {
   fullName: string;
   password: string;
   profileImage?: string;
-  phoneNumber?: number;
+  phoneNumber?: string;
   address?: UserAddress;
   role?: Role;
 }
@@ -28,7 +28,7 @@ export interface UserData {
   password: string;
   role: Role;
   profileImage?: string;
-  phoneNumber?: number;
+  phoneNumber?: string;
   address?: UserAddress;
 }
 
