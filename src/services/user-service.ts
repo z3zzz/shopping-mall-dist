@@ -1,10 +1,14 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { userModel, UserModel, UserInfo, UserData } from '../db';
+import { userModel, UserModel, UserInfo, UserAddress, UserData } from '../db';
 
 interface LoginInfo {
   email: string;
   password: string;
+}
+
+interface DeliveryInfo {
+  phoneNumber: string;
 }
 
 interface UserInfoRequired {
@@ -116,6 +120,16 @@ class UserService {
     });
 
     return user;
+  }
+
+  // 위 setUser과 달리, 현재 비밀번호 없이도, 주소 혹은 번호를 수정할 수 있음.
+  async saveDeliveryInfo(userId: string, deliveryInfo: Partial<DeliveryInfo>) {
+    const updatedUser = await this.userModel.update({
+      userId,
+      update: deliveryInfo,
+    });
+
+    return updatedUser;
   }
 
   async getUserData(userId: string): Promise<UserData> {

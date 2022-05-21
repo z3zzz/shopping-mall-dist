@@ -128,6 +128,46 @@ userRouter.patch('/user', loginRequired, async function (req, res, next) {
   }
 });
 
+// 주문 시 사용한 주소 및 연락처를 유저 데이터로 저장함.
+userRouter.post(
+  '/user/deliveryinfo',
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      // content-type 을 application/json 로 프론트에서
+      // 설정 안 하고 요청하면, body가 비어 있게 됨.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          'headers의 Content-Type을 application/json으로 설정해주세요'
+        );
+      }
+
+      // 토큰으로부터 추출됐던 id를 가져옴
+      const userId = req.currentUserId;
+
+      // body data 로부터 업데이트할 사용자 정보를 추출함.
+      const address: UserAddress = req.body.address;
+      const phoneNumber: string = req.body.phoneNumber;
+
+      // 위 데이터가 undefined가 아니라면, 업데이트용 객체에 삽입함.
+      const deliveryinfo = {
+        ...(address && { address }),
+        ...(phoneNumber && { phoneNumber }),
+      };
+
+      // 사용자 정보를 업데이트함.
+      const updatedUserInfo = await userService.saveDeliveryInfo(
+        userId,
+        deliveryinfo
+      );
+
+      res.status(200).json(updatedUserInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 userRouter.delete('/user', loginRequired, async function (req, res, next) {
   try {
     const userId = req.currentUserId;

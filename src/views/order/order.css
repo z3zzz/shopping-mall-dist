@@ -25,6 +25,11 @@
   margin-bottom: 0;
   line-height: 1.7;
 }
+
+.subtitle-cart {
+  cursor: pointer;
+}
+
 .title:not(.is-spaced) + .subtitle {
   margin-top: 0;
 }

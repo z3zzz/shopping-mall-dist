@@ -72,7 +72,7 @@ function getImageUrl(imageKey) {
     });
   });
 
-  return Promise.resolve(imageUrl);
+  return imageUrl;
 }
 
 export { addImageToS3, getImageUrl };

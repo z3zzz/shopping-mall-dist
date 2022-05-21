@@ -1,3 +1,9 @@
+.account-header {
+  display: block;
+  border-bottom: #ddd 1px solid;
+  padding-bottom: 0.7rem;
+}
+
 .register-product-form-container {
   display: flex;
   justify-content: center;

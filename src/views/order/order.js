@@ -5,12 +5,12 @@ import {
   addCommas,
   convertToNumber,
   navigate,
-  compressString,
 } from '/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
 const logoutTag = document.querySelector('#logoutTag');
+const subtitleCart = document.querySelector('#subtitleCart');
 const receiverNameInput = document.querySelector('#receiverName');
 const receiverPhoneNumberInput = document.querySelector('#receiverPhoneNumber');
 const postalCodeInput = document.querySelector('#postalCode');
@@ -50,6 +50,7 @@ function addAllElements() {
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   logoutTag.addEventListener('click', doLogout);
+  subtitleCart.addEventListener('click', navigate('/cart'));
   searchAddressButton.addEventListener('click', searchAddress);
   requestSelectBox.addEventListener('change', handleRequestChange);
   checkoutButton.addEventListener('click', doCheckout);
@@ -236,6 +237,17 @@ async function doCheckout() {
         data.productsTotal -= totalPrice;
       });
     }
+
+    // 입력된 배송지정보를 유저db에 등록함
+    const data = {
+      phoneNumber: receiverPhoneNumber,
+      address: {
+        postalCode,
+        address1,
+        address2,
+      },
+    };
+    await Api.patch('/api/user/deliveryinfo', '', data);
 
     alert('결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.');
     window.location.href = '/order/complete';

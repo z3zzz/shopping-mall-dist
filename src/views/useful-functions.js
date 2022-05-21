@@ -83,6 +83,6 @@ export const checkUrlParams = (key) => {
   const { [key]: params } = getUrlParams();
 
   if (!params) {
-    window.location.href = '/page-not-found';
+    window.location.replace('/page-not-found');
   }
 };
