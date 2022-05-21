@@ -44,6 +44,16 @@ export const checkLogin = () => {
   }
 };
 
+// 로그인 상태일 때에는 접근 불가한 페이지로 만듦. (회원가입 페이지 등)
+export const blockIfLogin = () => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    alert('로그인 상태에서는 접근할 수 없는 페이지입니다.');
+    window.location.replace('/');
+  }
+};
+
 // 해당 주소로 이동하는 콜백함수를 반환함.
 // 이벤트 핸들 함수로 쓰면 유용함
 export const navigate = (pathname) => {

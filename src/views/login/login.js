@@ -1,5 +1,6 @@
 import * as Api from '/api.js';
 import {
+  blockIfLogin,
   getUrlParams,
   validateEmail,
   createNavbar,
@@ -10,6 +11,7 @@ const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const submitButton = document.querySelector('#submitButton');
 
+blockIfLogin();
 addAllElements();
 addAllEvents();
 
