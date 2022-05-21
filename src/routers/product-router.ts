@@ -66,16 +66,8 @@ productRouter.get(
   async function (req, res, next) {
     let categoryTitle = req.params.categoryTitle;
 
-    if (categoryTitle === 'men clothes') {
-      categoryTitle = 'Men Clothes';
-    }
-
-    if (categoryTitle === 'women clothes') {
-      categoryTitle = 'Women Clothes';
-    }
-
     try {
-      // 전체 사용자 목록을 얻음
+      // 전체 제품 목록을 얻음
       const products = await productService.getProductsByCategoryTitle(
         categoryTitle
       );
@@ -113,7 +105,6 @@ productRouter.patch(
       // req (request) 에서 데이터 가져오기
       const productId = req.params.productId;
       const title: string = req.body.title;
-      const categoryId: string = req.body.categoryId;
       const shortDescription: string = req.body.shortDescription;
       const detailDescription: string = req.body.detailDescription;
       const imageKey: string = req.body.imageKey;
@@ -123,17 +114,18 @@ productRouter.patch(
       const isRecommended: boolean = req.body.isRecommended;
       const discountPercent: number = req.body.discountPercent;
 
+      // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
+      // 보내주었다면, 업데이트용 객체에 삽입함.
       const toUpdate = {
-        title,
-        categoryId,
-        shortDescription,
-        detailDescription,
-        imageKey,
-        inventory,
-        price,
-        searchKeywords,
-        isRecommended,
-        discountPercent,
+        ...(title && { title }),
+        ...(shortDescription && { shortDescription }),
+        ...(detailDescription && { detailDescription }),
+        ...(imageKey && { imageKey }),
+        ...(inventory && { inventory }),
+        ...(price && { price }),
+        ...(searchKeywords && { searchKeywords }),
+        ...(isRecommended && { isRecommended }),
+        ...(discountPercent && { discountPercent }),
       };
 
       // 제품 정보를 업데이트함.

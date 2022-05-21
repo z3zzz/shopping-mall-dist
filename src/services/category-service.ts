@@ -7,8 +7,6 @@ import {
   ProductModel,
 } from '../db';
 
-import { productService } from './product-service';
-
 class CategoryService {
   constructor(
     private categoryModel: CategoryModel,
@@ -42,48 +40,13 @@ class CategoryService {
     categoryId: string,
     toUpdate: Partial<CategoryInfo>
   ): Promise<CategoryData> {
-    // 객체 destructuring
-    const { title, description, themeClass, imageKey } = toUpdate;
-    // 우선 해당 id의 카테고리가 db에 있는지 확인
-    let category = await this.categoryModel.findById(categoryId);
+    // 업데이트 진행
+    const updatedCategory = await this.categoryModel.update({
+      categoryId,
+      update: toUpdate,
+    });
 
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!category) {
-      throw new Error(
-        '해당 id의 카테고리는 없습니다. 다시 한 번 확인해 주세요.'
-      );
-    }
-
-    // toUpdate 객체에 title 프로퍼티가 있었다면, db에 업데이트함.
-    if (title) {
-      category = await this.categoryModel.update({
-        categoryId,
-        update: { title },
-      });
-    }
-
-    if (description) {
-      category = await this.categoryModel.update({
-        categoryId,
-        update: { description },
-      });
-    }
-
-    if (themeClass) {
-      category = await this.categoryModel.update({
-        categoryId,
-        update: { themeClass },
-      });
-    }
-
-    if (imageKey) {
-      category = await this.categoryModel.update({
-        categoryId,
-        update: { imageKey },
-      });
-    }
-
-    return category;
+    return updatedCategory;
   }
 
   async getCategoryDataById(categoryId: string): Promise<CategoryData> {

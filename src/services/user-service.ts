@@ -79,6 +79,7 @@ class UserService {
     return users;
   }
 
+  // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
   async setUser(
     userInfoRequired: UserInfoRequired,
     toUpdate: Partial<UserInfo>
@@ -107,13 +108,17 @@ class UserService {
       );
     }
 
-    // 비밀번호도 변경하는 경우
+    // 이제 업데이트 시작
+
+    // 비밀번호도 변경하는 경우에는 해쉬화 해주어야 함.
     const { password } = toUpdate;
+
     if (password) {
       const newPasswordHash = await bcrypt.hash(password!, 10);
       toUpdate.password = newPasswordHash;
     }
 
+    // 업데이트 진행
     user = await this.userModel.update({
       userId,
       update: toUpdate,

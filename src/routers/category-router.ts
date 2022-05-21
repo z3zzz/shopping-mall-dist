@@ -81,7 +81,14 @@ categoryRouter.patch(
       const themeClass: string = req.body.themeClass;
       const imageKey: string = req.body.imageKey;
 
-      const toUpdate = { title, description, imageKey, themeClass };
+      // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
+      // 보내주었다면, 업데이트용 객체에 삽입함.
+      const toUpdate = {
+        ...(title && { title }),
+        ...(description && { description }),
+        ...(imageKey && { imageKey }),
+        ...(themeClass && { themeClass }),
+      };
 
       // 카테고리 정보를 업데이트함.
       const updatedCategory = await categoryService.setCategory(
