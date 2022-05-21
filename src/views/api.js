@@ -1,3 +1,4 @@
+// api 로 GET 요청 (/endpoint/params 형태로 요청함)
 async function get(endpoint, params = '') {
   const apiUrl = `${endpoint}/${params}`;
   console.log(`%cGET 요청: ${apiUrl} `, 'color: #a25cd1;');
@@ -22,6 +23,7 @@ async function get(endpoint, params = '') {
   return result;
 }
 
+// api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
 async function post(endpoint, data) {
   const apiUrl = endpoint;
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
@@ -52,6 +54,7 @@ async function post(endpoint, data) {
   return result;
 }
 
+// api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
 async function patch(endpoint, params = '', data) {
   const apiUrl = `${endpoint}/${params}`;
 

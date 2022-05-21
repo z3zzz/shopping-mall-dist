@@ -37,6 +37,7 @@ const openDatabase = () => {
   return db;
 };
 
+// indexedDB에 저장된 값을 가져옴
 const getFromDb = async (storeName, key = '') => {
   // database 변수가 아직 초기화가 되어있지 않다면,
   // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
@@ -69,6 +70,7 @@ const getFromDb = async (storeName, key = '') => {
   return data;
 };
 
+// indexedDB에 저장함
 const addToDb = async (storeName, entry, key = '') => {
   // database 변수가 아직 초기화가 되어있지 않다면,
   // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
@@ -100,6 +102,7 @@ const addToDb = async (storeName, entry, key = '') => {
   return result;
 };
 
+// indexedDB의 데이터를 수정함
 const putToDb = async (storeName, key, dataModifyFunc) => {
   // database 변수가 아직 초기화가 되어있지 않다면,
   // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.
@@ -140,6 +143,7 @@ const putToDb = async (storeName, key, dataModifyFunc) => {
   return result;
 };
 
+// indexedDB의 데이터를 삭제함
 const deleteFromDb = async (storeName, key = '') => {
   // database 변수가 아직 초기화가 되어있지 않다면,
   // openDatabase 함수를 실행하여 데이터베이스 객체를 할당함.

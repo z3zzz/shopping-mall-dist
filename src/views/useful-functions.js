@@ -106,11 +106,13 @@ export const createNavbar = (keyString) => {
   const container = document.querySelector('#navbar');
   const isLogin = localStorage.getItem('token') ? true : false;
 
+  // 로그인 안 된 상태에서만 보이게 될 navbar 요소들
   const itemsBeforeLogin = {
     register: '<li><a href="/register">회원가입</a></li>',
     login: '<li><a href="/login">로그인</a></li>',
   };
 
+  // 로그인 완료된 상태에서만 보이게 될 navbar 요소들
   const itemsAfterLogin = {
     account: '<li><a href="/account">계정관리</a></li>',
     logout: '<li><a href="#" id="logout">로그아웃</a></li>',
@@ -118,6 +120,7 @@ export const createNavbar = (keyString) => {
     categoryAdd: '<li><a href="/category/add">카테고리 추가</a></li>',
   };
 
+  // 로그아웃 요소만 유일하게, 클릭 이벤트를 필요로 함 (나머지는 href로 충분함)
   const logoutScript = document.createElement('script');
   logoutScript.innerText = `
       const logoutElem = document.querySelector('#logout'); 
@@ -139,6 +142,7 @@ export const createNavbar = (keyString) => {
     }
   }
 
+  // items에 쌓은 navbar 요소들 문자열을 html에 삽입함.
   container.insertAdjacentHTML('afterbegin', items);
 
   // insertAdjacentHTML 은 문자열 형태 script를 실행하지는 않음.
