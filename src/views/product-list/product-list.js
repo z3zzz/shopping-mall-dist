@@ -5,12 +5,14 @@ import {
   getUrlParams,
   addCommas,
   navigate,
+  checkUrlParams,
   createNavbar,
 } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const productItemContainer = document.querySelector('#producItemContainer');
 
+checkUrlParams('category');
 addAllElements();
 addAllEvents();
 
