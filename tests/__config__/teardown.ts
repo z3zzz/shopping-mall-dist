@@ -6,6 +6,8 @@ export default async function () {
   await connection.dropCollection('users');
   await connection.dropCollection('categorys');
   await connection.dropCollection('products');
+  await connection.dropCollection('orders');
+  await connection.dropCollection('order-items');
 
   await connection.close();
 }
