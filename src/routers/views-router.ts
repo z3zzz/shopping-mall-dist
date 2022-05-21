@@ -5,7 +5,6 @@ const viewsRouter = express.Router();
 
 // 페이지별로 html, css, js 파일들 라우팅
 viewsRouter.use('/', serveStatic('home'));
-viewsRouter.use('/order/complete', serveStatic('order-complete'));
 viewsRouter.use('/register', serveStatic('register'));
 viewsRouter.use('/login', serveStatic('login'));
 viewsRouter.use('/account', serveStatic('account'));
