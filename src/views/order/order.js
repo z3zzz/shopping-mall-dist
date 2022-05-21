@@ -5,6 +5,7 @@ import {
   addCommas,
   convertToNumber,
   navigate,
+  randomPick,
 } from '/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
@@ -93,12 +94,28 @@ function searchAddress() {
 
 // 페이지 로드 시 실행되며, 결제정보 카드에 값을 삽입함.
 async function insertOrderSummary() {
-  const { selectedIds, productsTotal } = await getFromDb('order', 'summary');
+  const { ids, selectedIds, productsTotal } = await getFromDb(
+    'order',
+    'summary'
+  );
 
+  // 구매할 아이템이 없다면 다른 페이지로 이동시킴
+  const hasItemInCart = ids.length !== 0;
   const hasItemToCheckout = selectedIds.length !== 0;
+
+  if (!hasItemInCart) {
+    const categorys = await Api.get('/api/categorylist');
+    const categoryTitle = randomPick(categorys).title;
+
+    alert(`구매할 제품이 없습니다. 제품을 선택해 주세요.`);
+
+    return window.location.replace(`/product/list?category=${categoryTitle}`);
+  }
+
   if (!hasItemToCheckout) {
     alert('구매할 제품이 없습니다. 장바구니에서 선택해 주세요.');
-    window.location.href = '/cart';
+
+    return window.location.replace('/cart');
   }
 
   // 화면에 보일 상품명

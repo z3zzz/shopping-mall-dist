@@ -86,3 +86,22 @@ export const checkUrlParams = (key) => {
     window.location.replace('/page-not-found');
   }
 };
+
+// 배열 혹은 객체에서 랜덤으로 1개 고름
+export const randomPick = (items) => {
+  const isArray = Array.isArray(items);
+
+  // 배열인 경우
+  if (isArray) {
+    const randomIndex = [Math.floor(Math.random() * items.length)];
+
+    return items[randomIndex];
+  }
+
+  // 객체인 경우
+  const keys = Object.keys(items);
+  const randomIndex = [Math.floor(Math.random() * keys.length)];
+  const randomKey = keys[randomIndex];
+
+  return items[randomKey];
+};
