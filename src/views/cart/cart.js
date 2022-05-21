@@ -20,7 +20,6 @@ const deliveryFeeElem = document.querySelector('#deliveryFee');
 const orderTotalElem = document.querySelector('#orderTotal');
 const purchaseButton = document.querySelector('#purchaseButton');
 
-checkLogin();
 addAllElements();
 addAllEvents();
 
