@@ -1,5 +1,5 @@
 import * as Api from '/api.js';
-import { validateEmail } from '/useful-functions.js';
+import { validateEmail, createNavbar } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector('#fullNameInput');
@@ -7,9 +7,14 @@ const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const submitButton = document.querySelector('#submitButton');
-const registerUserForm = document.querySelector('#registerUserForm');
 
+addAllElements();
 addAllEvents();
+
+// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+async function addAllElements() {
+  createNavbar('login');
+}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {

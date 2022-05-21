@@ -2,28 +2,26 @@ import { getImageUrl } from '/aws-s3.js';
 import * as Api from '/api.js';
 import {
   randomId,
-  doLogout,
   getUrlParams,
   addCommas,
   navigate,
+  createNavbar,
 } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const productItemContainer = document.querySelector('#producItemContainer');
-const logoutATag = document.querySelector('#logoutATag');
 
 addAllElements();
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
+  createNavbar('register login account logout');
   addProductItemsToContainer();
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
-  logoutATag.addEventListener('click', doLogout);
-}
+function addAllEvents() {}
 
 async function addProductItemsToContainer() {
   const { category } = getUrlParams();

@@ -1,9 +1,8 @@
 import { addImageToS3 } from '/aws-s3.js';
 import * as Api from '/api.js';
-import { checkLogin, doLogout } from '/useful-functions.js';
+import { checkLogin, createNavbar } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
-const logoutATag = document.querySelector('#logoutATag');
 const titleInput = document.querySelector('#titleInput');
 const descriptionInput = document.querySelector('#descriptionInput');
 const themeSelectBox = document.querySelector('#themeSelectBox');
@@ -13,11 +12,16 @@ const submitButton = document.querySelector('#addCategoryButton');
 const registerCategoryForm = document.querySelector('#registerCategoryForm');
 
 checkLogin();
+addAllElements();
 addAllEvents();
+
+// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+async function addAllElements() {
+  createNavbar('productAdd account logout');
+}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  logoutATag.addEventListener('click', doLogout);
   submitButton.addEventListener('click', handleSubmit);
   themeSelectBox.addEventListener('change', handleColorChange);
   imageInput.addEventListener('change', handleImageUpload);

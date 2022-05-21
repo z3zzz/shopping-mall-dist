@@ -1,16 +1,14 @@
 import { getImageUrl } from '/aws-s3.js';
 import {
-  checkLogin,
-  doLogout,
   addCommas,
   convertToNumber,
   navigate,
   compressString,
+  createNavbar,
 } from '/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
-const logoutTag = document.querySelector('#logoutTag');
 const cartProductsContainer = document.querySelector('#cartProductsContainer');
 const allSelectCheckbox = document.querySelector('#allSelectCheckbox');
 const partialDeleteLabel = document.querySelector('#partialDeleteLabel');
@@ -25,6 +23,7 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
+  createNavbar('register login account logout');
   insertProductsfromCart();
   insertOrderSummary();
   updateAllSelectCheckbox();
@@ -32,7 +31,6 @@ function addAllElements() {
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  logoutTag.addEventListener('click', doLogout);
   allSelectCheckbox.addEventListener('change', toggleAll);
   partialDeleteLabel.addEventListener('click', deleteSelectedItems);
   purchaseButton.addEventListener('click', navigate('/order'));

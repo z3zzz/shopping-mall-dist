@@ -1,23 +1,24 @@
 import * as Api from '/api.js';
 import { getImageUrl } from '/aws-s3.js';
-import { navigate } from '/useful-functions.js';
+import { navigate, createNavbar } from '/useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const sliderDiv = document.querySelector('#slider');
 const sliderArrowLeft = document.querySelector('#sliderArrowLeft');
 const sliderArrowRight = document.querySelector('#sliderArrowRight');
 
-addAllEvents();
 addAllElements();
-
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {}
+addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
+  createNavbar('register login account logout');
   await addImageCardsToSlider();
   attachSlider();
 }
+
+// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+function addAllEvents() {}
 
 // api에서 카테고리 정보 및 사진 가져와서 슬라이드 카드로 사용
 async function addImageCardsToSlider() {

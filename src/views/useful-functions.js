@@ -31,13 +31,6 @@ export const addCommas = (n) => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-// 로그아웃(세션스토리지에서 토큰 제거)
-// 개발 단계에서는 편의상 로컬스토리지 사용
-export const doLogout = () => {
-  localStorage.removeItem('token');
-  window.location.href = '/';
-};
-
 // 로그인 여부(토큰 존재 여부) 확인
 export const checkLogin = () => {
   const token = localStorage.getItem('token');
@@ -104,4 +97,51 @@ export const randomPick = (items) => {
   const randomKey = keys[randomIndex];
 
   return items[randomKey];
+};
+
+// navbar 생성(ul 태그 내에 li 태그들을 삽입함)
+export const createNavbar = (keyString) => {
+  const keys = keyString.split(' ');
+
+  const container = document.querySelector('#navbar');
+  const isLogin = localStorage.getItem('token') ? true : false;
+
+  const itemsBeforeLogin = {
+    register: '<li><a href="/register">회원가입</a></li>',
+    login: '<li><a href="/login">로그인</a></li>',
+  };
+
+  const itemsAfterLogin = {
+    account: '<li><a href="/account">계정관리</a></li>',
+    logout: '<li><a href="#" id="logout">로그아웃</a></li>',
+    productAdd: '<li><a href="/product/add">제품 추가</a></li>',
+    categoryAdd: '<li><a href="/category/add">카테고리 추가</a></li>',
+  };
+
+  const logoutScript = document.createElement('script');
+  logoutScript.innerText = `
+      const logoutElem = document.querySelector('#logout'); 
+      
+      if (logoutElem) {
+        logoutElem.addEventListener('click', () => {
+          localStorage.removeItem('token');
+          window.location.href = '/';
+        });
+      }
+  `;
+
+  let items = '';
+  for (const key of keys) {
+    if (isLogin) {
+      items += itemsAfterLogin[key] ?? '';
+    } else {
+      items += itemsBeforeLogin[key] ?? '';
+    }
+  }
+
+  container.insertAdjacentHTML('afterbegin', items);
+
+  // insertAdjacentHTML 은 문자열 형태 script를 실행하지는 않음.
+  // append, after 등의 함수로 script 객체 요소를 삽입해 주어야 실행함.
+  container.after(logoutScript);
 };

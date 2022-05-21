@@ -29,7 +29,7 @@
     <script src="product-detail.js" type="module" defer></script>
   </head>
   <body>
-    <!-- 헤더 (로고, 계정관리, 로그아웃, 카트 ) -->
+    <!-- 헤더 -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container mt-3">
         <div class="navbar-brand">
@@ -51,28 +51,8 @@
           </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="field has-addons my-auto is-flex-grow-1">
-            <div class="control header-search-input">
-              <input
-                class="input is-info"
-                type="text"
-                placeholder="원하시는 제품을 검색해 보세요."
-              />
-            </div>
-            <div class="control">
-              <button class="button is-info">
-                <span class="icon">
-                  <i class="fas fa-magnifying-glass"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-
           <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-            <ul>
-              <li><a href="/account">계정 관리</a></li>
-              <li><a href="#" id="logoutTag">로그아웃</a></li>
+            <ul id="navbar">
               <li>
                 <a href="/cart" aria-current="page">
                   <span class="icon">

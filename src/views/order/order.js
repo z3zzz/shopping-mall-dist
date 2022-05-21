@@ -1,16 +1,15 @@
 import * as Api from '/api.js';
 import {
   checkLogin,
-  doLogout,
   addCommas,
   convertToNumber,
   navigate,
   randomPick,
+  createNavbar,
 } from '/useful-functions.js';
 import { deleteFromDb, getFromDb, putToDb } from '/indexed-db.js';
 
 // 요소(element), input 혹은 상수
-const logoutTag = document.querySelector('#logoutTag');
 const subtitleCart = document.querySelector('#subtitleCart');
 const receiverNameInput = document.querySelector('#receiverName');
 const receiverPhoneNumberInput = document.querySelector('#receiverPhoneNumber');
@@ -44,13 +43,13 @@ addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
+  createNavbar('account logout');
   insertOrderSummary();
   insertUserData();
 }
 
 // addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  logoutTag.addEventListener('click', doLogout);
   subtitleCart.addEventListener('click', navigate('/cart'));
   searchAddressButton.addEventListener('click', searchAddress);
   requestSelectBox.addEventListener('change', handleRequestChange);

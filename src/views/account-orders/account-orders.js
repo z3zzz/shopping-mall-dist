@@ -1,8 +1,7 @@
-import { checkLogin, doLogout } from '/useful-functions.js';
+import { checkLogin, createNavbar } from '/useful-functions.js';
 import * as Api from '/api.js';
 
 // 요소(element), input 혹은 상수
-const logoutATag = document.querySelector('#logoutATag');
 const ordersContainer = document.querySelector('#ordersContainer');
 const modal = document.querySelector('#modal');
 const modalBackground = document.querySelector('#modalBackground');
@@ -16,12 +15,12 @@ addAllEvents();
 
 // 요소 삽입 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
+  createNavbar('account logout');
   insertOrders();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  logoutATag.addEventListener('click', doLogout);
   modalBackground.addEventListener('click', closeModal);
   modalCloseButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', keyDownCloseModal);
