@@ -47,7 +47,6 @@ describe('order-item 관련 테스트', () => {
       .send({
         title: `${random}-product`,
         categoryId,
-        sellerId: userId,
         manufacturer: '삼성',
         shortDescription: '테스트 제품입니다.',
         detailDescription: '테스트 제품의 자세한 설명입니다.',
@@ -64,6 +63,7 @@ describe('order-item 관련 테스트', () => {
       .set('Authorization', `Bearer ${token}`)
       .set('Content-Type', 'application/json')
       .send({
+        summaryTitle: '테스트 제품 / 1개',
         totalPrice: 13000,
         address: {},
         request: '경비실에 맡겨 주세요.',
@@ -147,44 +147,9 @@ describe('order-item 관련 테스트', () => {
 
   describe('get -> /api/orderitemlist/order/:orderId', () => {
     it('(orderId) 최소 3개의 주문아이템 리스트 배열을 반환한다.', async () => {
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
       const res = await request(app)
         .get(`/api/orderitemlist/order/${orderId}`)
         .set('Authorization', `Bearer ${token}`);
-
-      console.log(`/api/orderitemlist/order/${orderId}`);
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(3);
@@ -193,39 +158,6 @@ describe('order-item 관련 테스트', () => {
 
   describe('get -> /api/orderitemlist/product/:productId', () => {
     it('(productId) 최소 3개의 주문아이템 리스트 배열을 반환한다.', async () => {
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
-      await request(app)
-        .post('/api/orderitem')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          orderId,
-          productId,
-          quantity: 2,
-          totalPrice: 40000,
-        });
-
       const res = await request(app)
         .get(`/api/orderitemlist/product/${productId}`)
         .set('Authorization', `Bearer ${token}`);
@@ -264,6 +196,17 @@ describe('order-item 관련 테스트', () => {
       expect(res.body.quantity).toBe(100);
       expect(res.body.totalPrice).toBe(8888);
       expect(res.body.status).toBe('complete');
+    });
+  });
+
+  describe('delete -> /api/orderitems/:orderItemId', () => {
+    it('주문아이템 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/orderitems/${orderItemId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
     });
   });
 });

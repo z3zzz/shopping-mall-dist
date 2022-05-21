@@ -8,6 +8,11 @@ describe('user 관련 테스트', () => {
 
   // 여러 테스트에서 공통으로 쓸 토큰
   let token: string;
+  const address = {
+    postalCode: '12345',
+    address1: '서울시 oo로 00빌딩',
+    address2: '3층 991호',
+  };
 
   afterAll(async () => {
     await mongoose.connection.close();
@@ -98,14 +103,27 @@ describe('user 관련 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
-          email: `${random}999@def.com`,
           fullName: 'tester-changed',
+          address,
+          phoneNumber: '01012345678',
           currentPassword: '1234',
         });
 
       expect(res.statusCode).toEqual(200);
-      expect(res.body.email).toBe(`${random}999@def.com`);
       expect(res.body.fullName).toBe('tester-changed');
+      expect(res.body.address).toEqual(address);
+      expect(res.body.phoneNumber).toBe('01012345678');
+    });
+  });
+
+  describe('delete -> /api/user', () => {
+    it('사용자 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/user`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
     });
   });
 });

@@ -127,4 +127,15 @@ describe('category 관련 테스트', () => {
       expect(res.body.imageKey).toBe('test-category/test-change.png');
     });
   });
+
+  describe('delete -> /api/categorys/:categoryId', () => {
+    it('카테고리 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/categorys/${categoryId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
+    });
+  });
 });

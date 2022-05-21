@@ -51,6 +51,7 @@ describe('order 관련 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
+          summaryTitle: '봄, 가을 니트 / 1개',
           totalPrice: 13000,
           address,
           request: '경비실에 맡겨 주세요.',
@@ -74,6 +75,7 @@ describe('order 관련 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
+          summaryTitle: '봄, 가을 니트 / 1개',
           totalPrice: 13000,
           address,
           request: '경비실에 맡겨 주세요.',
@@ -84,6 +86,7 @@ describe('order 관련 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
+          summaryTitle: '봄, 가을 니트 / 1개',
           totalPrice: 13000,
           address,
           request: '경비실에 맡겨 주세요.',
@@ -94,6 +97,7 @@ describe('order 관련 테스트', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
+          summaryTitle: '봄, 가을 니트 / 1개',
           totalPrice: 13000,
           address,
           request: '경비실에 맡겨 주세요.',
@@ -110,36 +114,6 @@ describe('order 관련 테스트', () => {
 
   describe('get -> /api/orderlist/user', () => {
     it('최소 3개의 주문 리스트 배열을 반환한다.', async () => {
-      await request(app)
-        .post('/api/order')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          totalPrice: 13000,
-          address,
-          request: '경비실에 맡겨 주세요.',
-        });
-
-      await request(app)
-        .post('/api/order')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          totalPrice: 13000,
-          address,
-          request: '경비실에 맡겨 주세요.',
-        });
-
-      await request(app)
-        .post('/api/order')
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json')
-        .send({
-          totalPrice: 13000,
-          address,
-          request: '경비실에 맡겨 주세요.',
-        });
-
       const res = await request(app)
         .get('/api/orderlist/user')
         .set('Authorization', `Bearer ${token}`);
@@ -178,6 +152,17 @@ describe('order 관련 테스트', () => {
       expect(res.body.address).toEqual(address2);
       expect(res.body.request).toMatch(/직접/);
       expect(res.body.status).toBe('pending222');
+    });
+  });
+
+  describe('delete -> /api/orders/:orderId', () => {
+    it('주문 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/orders/${orderId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
     });
   });
 });

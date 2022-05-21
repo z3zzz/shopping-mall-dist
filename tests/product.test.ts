@@ -57,7 +57,6 @@ describe('product 관련 테스트', () => {
         .send({
           title: `${random}-product`,
           categoryId,
-          sellerId,
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
@@ -88,7 +87,6 @@ describe('product 관련 테스트', () => {
         .send({
           title: `${random}-product1`,
           categoryId,
-          sellerId,
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
@@ -105,7 +103,6 @@ describe('product 관련 테스트', () => {
         .send({
           title: `${random}-product2`,
           categoryId,
-          sellerId,
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
@@ -122,7 +119,6 @@ describe('product 관련 테스트', () => {
         .send({
           title: `${random}-product3`,
           categoryId,
-          sellerId,
           manufacturer: '삼성',
           shortDescription: '테스트 제품입니다.',
           detailDescription: '테스트 제품의 자세한 설명입니다.',
@@ -187,6 +183,17 @@ describe('product 관련 테스트', () => {
       expect(res.body.isRecommended).toBe(true);
       expect(res.body.searchKeywords).toEqual(['미국', '나이키']);
       expect(res.body.discountPercent).toBe(20);
+    });
+  });
+
+  describe('delete -> /api/products/:productId', () => {
+    it('제품 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/products/${productId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
     });
   });
 });
