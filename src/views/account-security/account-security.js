@@ -128,6 +128,9 @@ async function insertUserData() {
     postalCodeInput.value = postalCode;
     address1Input.value = address1;
     address2Input.value = address2;
+  } else {
+    // 나중에 입력 여부를 확인하기 위해 설정함
+    userData.address = { postalCode: '', address1: '', address2: '' };
   }
 
   if (phoneNumber) {
@@ -208,8 +211,9 @@ async function saveUserData(e) {
 
   const isPasswordLong = password.length >= 4;
   const isPasswordSame = password === passwordConfirm;
-  const isPostalCodeChanged = postalCode !== userData.address?.postalCode;
-  const isAddress2Changed = address2 !== userData.address?.address2;
+  const isPostalCodeChanged =
+    postalCode !== (userData.address?.postalCode || '');
+  const isAddress2Changed = address2 !== (userData.address?.address2 || '');
   const isAddressChanged = isPostalCodeChanged || isAddress2Changed;
 
   // 비밀번호를 새로 작성한 경우
@@ -224,25 +228,29 @@ async function saveUserData(e) {
 
   const data = { currentPassword };
 
-  // 초기값과 다를 경우 (비밀번호는 입력한 경우), api 요청에 사용할 data 객체에 넣어줌
+  // 초기값과 다를 경우 api 요청에 사용할 data 객체에 넣어줌
   if (fullName !== userData.fullName) {
     data.fullName = fullName;
   }
+
   if (password !== userData.password) {
     data.password = password;
   }
-  if (isAddressChanged) {
-    if (!postalCode || !address2) {
-      closeModal();
-      return alert('주소를 모두 입력해 주세요.');
-    }
 
+  // 주소를 변경했는데, 덜 입력한 경우
+  if (isAddressChanged && !address2) {
+    closeModal();
+    return alert('주소를 모두 입력해 주세요.');
+  }
+
+  if (isAddressChanged) {
     data.address = {
       postalCode,
       address1,
       address2,
     };
   }
+
   if (phoneNumber && phoneNumber !== userData.phoneNumber) {
     data.phoneNumber = phoneNumber;
   }
@@ -275,7 +283,11 @@ function openModal(e) {
 }
 
 // Modal 창 닫기
-function closeModal() {
+function closeModal(e) {
+  if (e) {
+    e.preventDefault();
+  }
+
   modal.classList.remove('is-active');
 }
 

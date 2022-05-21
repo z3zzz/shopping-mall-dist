@@ -104,3 +104,16 @@ input[type='number']::-webkit-outer-spin-button {
 .button-submit {
   margin-top: 2rem;
 }
+
+/* 모달(Modal) 창 관련 */
+.modal-content button.delete {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  background: transparent;
+}
+
+.modal-content button.delete::before,
+.modal-content button.delete::after {
+  background-color: black;
+}
