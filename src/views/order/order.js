@@ -264,7 +264,7 @@ async function doCheckout() {
         address2,
       },
     };
-    await Api.patch('/api/user/deliveryinfo', '', data);
+    await Api.post('/api/user/deliveryinfo', data);
 
     alert('결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.');
     window.location.href = '/order/complete';
