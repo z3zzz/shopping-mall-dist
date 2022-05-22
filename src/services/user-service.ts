@@ -93,6 +93,31 @@ class UserService {
     return createdNewUser;
   }
 
+  // 카카오 Oauth 회원가입
+  async addUserWithKakao(email: string, nickname: string): Promise<UserData> {
+    if (!email || !nickname) {
+      throw new Error('회원가입을 위해서는 이메일과 이름이 필요합니다');
+    }
+
+    // 이메일 중복 확인
+    const user = await this.userModel.findByEmail(email);
+    if (user) {
+      throw new Error(
+        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
+      );
+    }
+
+    // 비밀번호는 임시로 설정
+    const password = 'kakao-oauth';
+
+    const newUserInfo = { fullName: nickname, email, password };
+
+    // db에 저장
+    const createdNewUser = await this.userModel.create(newUserInfo);
+
+    return createdNewUser;
+  }
+
   // 일반 로그인
   async getUserToken(loginInfo: LoginInfo): Promise<{ token: string }> {
     // 객체 destructuring
@@ -151,6 +176,27 @@ class UserService {
 
     if (!email) {
       throw new Error('로그인을 위해서는 이메일이 필요합니다');
+    }
+
+    // 이메일 db에 존재 여부 확인
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    // 로그인 성공 -> JWT 웹 토큰 생성
+    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+
+    return { token };
+  }
+
+  // 카카오 Oauth 로그인
+  async getUserTokenWithKakao(email: string): Promise<{ token: string }> {
+    if (!email) {
+      throw new Error('로그인을 위해서는 이메일 필요합니다');
     }
 
     // 이메일 db에 존재 여부 확인

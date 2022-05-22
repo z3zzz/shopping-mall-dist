@@ -46,6 +46,20 @@ userRouter.post('/register/google', async (req, res, next) => {
   }
 });
 
+// 카카오 OAuth 용
+userRouter.post('/register/kakao', async (req, res, next) => {
+  try {
+    const email: string = req.body.email;
+    const nickname: string = req.body.nickname;
+
+    const newUser = await userService.addUserWithKakao(email, nickname);
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.post('/login', async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -74,6 +88,18 @@ userRouter.post('/login/google', async function (req, res, next) {
     const googleToken: string = req.body.googleToken;
 
     const userToken = await userService.getUserTokenWithGoogle(googleToken);
+
+    res.status(200).json(userToken);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.post('/login/kakao', async function (req, res, next) {
+  try {
+    const email: string = req.body.email;
+
+    const userToken = await userService.getUserTokenWithKakao(email);
 
     res.status(200).json(userToken);
   } catch (error) {
