@@ -44,6 +44,43 @@ export const checkLogin = () => {
   }
 };
 
+// 관리자 여부 확인
+export const checkAdmin = async () => {
+  // 우선 화면을 가리고 시작함
+  window.document.body.style.display = 'none';
+
+  const token = localStorage.getItem('token');
+
+  // 우선 토큰 존재 여부 확인
+  if (!token) {
+    // 현재 페이지의 url 주소 추출하기
+    const pathname = window.location.pathname;
+    const search = window.location.search;
+
+    // 로그인 후 다시 지금 페이지로 자동으로 돌아가도록 하기 위한 준비작업임.
+    window.location.replace(`/login?previouspage=${pathname + search}`);
+  }
+
+  // 관리자 토큰 여부 확인
+  const res = await fetch('/api/admin/check', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const { result } = await res.json();
+
+  if (result === 'success') {
+    window.document.body.style.display = 'block';
+
+    return;
+  } else {
+    alert('관리자 전용 페이지입니다.');
+
+    window.location.replace('/');
+  }
+};
+
 // 로그인 상태일 때에는 접근 불가한 페이지로 만듦. (회원가입 페이지 등)
 export const blockIfLogin = () => {
   const token = localStorage.getItem('token');
