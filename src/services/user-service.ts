@@ -1,7 +1,14 @@
 import bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
 import jwt, { JwtPayload, Algorithm } from 'jsonwebtoken';
-import { userModel, UserModel, UserInfo, UserAddress, UserData } from '../db';
+import {
+  userModel,
+  UserModel,
+  UserInfo,
+  UserAddress,
+  UserData,
+  Role,
+} from '../db';
 
 interface LoginInfo {
   email: string;
@@ -265,6 +272,16 @@ class UserService {
     });
 
     return user;
+  }
+
+  // 위 setUser과 달리, 현재 비밀번호 없이도, 권한을 수정할 수 있음.
+  async setRole(userId: string, role: Role) {
+    const updatedUser = await this.userModel.update({
+      userId,
+      update: { role },
+    });
+
+    return updatedUser;
   }
 
   // 위 setUser과 달리, 현재 비밀번호 없이도, 주소 혹은 번호를 수정할 수 있음.

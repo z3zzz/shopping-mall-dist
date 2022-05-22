@@ -18,9 +18,11 @@ viewsRouter.use('/cart', serveStatic('cart'));
 viewsRouter.use('/order', serveStatic('order'));
 viewsRouter.use('/order/complete', serveStatic('order-complete'));
 viewsRouter.use('/admin', serveStatic('admin'));
+viewsRouter.use('/admin/orders', serveStatic('admin-orders'));
+viewsRouter.use('/admin/users', serveStatic('admin-users'));
 viewsRouter.use('/page-not-found', serveStatic('page-not-found'));
 
-// views 폴더의 rabbit.png, indexed-db.js 등 라우팅
+// views 폴더의 최상단 파일인 rabbit.png, indexed-db.js 등 라우팅
 viewsRouter.use('/', serveStatic(''));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
