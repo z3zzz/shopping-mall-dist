@@ -37,7 +37,7 @@ const OrderSchema = new Schema(
     status: {
       type: String,
       required: false,
-      default: '준비중',
+      default: '상품 준비중',
     },
   },
   {
