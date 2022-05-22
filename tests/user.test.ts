@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 import request from 'supertest';
 import { app } from '../src/app';
 
@@ -8,6 +9,8 @@ describe('user 관련 테스트', () => {
 
   // 여러 테스트에서 공통으로 쓸 토큰
   let token: string;
+  let userId: string;
+
   const address = {
     postalCode: '12345',
     address1: '서울시 oo로 00빌딩',
@@ -28,6 +31,8 @@ describe('user 관련 테스트', () => {
           email: `${random}@def.com`,
           password: '1234',
         });
+
+      userId = res.body._id;
 
       expect(res.statusCode).toEqual(201);
       expect(res.body.fullName).toBe('tester');
@@ -121,6 +126,29 @@ describe('user 관련 테스트', () => {
       const res = await request(app)
         .delete(`/api/user`)
         .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
+    });
+  });
+
+  describe('get -> /api/admin/check', () => {
+    it('관리자 토큰이 아니라면 403 status code를 반환한다.', async () => {
+      const res = await request(app)
+        .get(`/api/admin/check`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.statusCode).toEqual(403);
+      expect(res.body.reason).toMatch(/관리자/);
+    });
+
+    it('관리자 토큰이라면 200 status code를 반환한다.', async () => {
+      const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+
+      const adminToken = jwt.sign({ userId, role: 'admin' }, secretKey);
+      const res = await request(app)
+        .get(`/api/admin/check`)
+        .set('Authorization', `Bearer ${adminToken}`);
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.result).toBe('success');

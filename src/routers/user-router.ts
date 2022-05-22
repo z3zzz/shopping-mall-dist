@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import is from '@sindresorhus/is';
-import { loginRequired } from '../middlewares';
+import { adminOnly, loginRequired } from '../middlewares';
 import { userService } from '../services';
 import { UserAddress } from '../db';
 
@@ -227,6 +227,16 @@ userRouter.delete('/user', loginRequired, async function (req, res, next) {
     const deleteResult = await userService.deleteUserData(userId);
 
     res.status(200).json(deleteResult);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 관리자 토큰을 가졌는지 여부를 확인함.
+userRouter.get('/admin/check', adminOnly, async function (req, res, next) {
+  try {
+    // 미들웨어 adminOnly 를 통과했다는 것은, 관리자 토큰을 가진 것을 의미함.
+    res.status(200).json({ result: 'success' });
   } catch (error) {
     next(error);
   }

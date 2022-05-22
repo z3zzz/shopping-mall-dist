@@ -17,6 +17,7 @@ viewsRouter.use('/product/detail', serveStatic('product-detail'));
 viewsRouter.use('/cart', serveStatic('cart'));
 viewsRouter.use('/order', serveStatic('order'));
 viewsRouter.use('/order/complete', serveStatic('order-complete'));
+viewsRouter.use('/admin', serveStatic('admin'));
 viewsRouter.use('/page-not-found', serveStatic('page-not-found'));
 
 // views 폴더의 rabbit.png, indexed-db.js 등 라우팅
