@@ -1,4 +1,4 @@
-import { addCommas, checkAdmin, createNavbar } from '/useful-functions.js';
+import { checkAdmin, createNavbar } from '/useful-functions.js';
 import * as Api from '/api.js';
 
 // 요소(element), input 혹은 상수
@@ -24,7 +24,7 @@ function addAllEvents() {
   modalBackground.addEventListener('click', closeModal);
   modalCloseButton.addEventListener('click', closeModal);
   document.addEventListener('keydown', keyDownCloseModal);
-  deleteCompleteButton.addEventListener('click', deleteOrderData);
+  deleteCompleteButton.addEventListener('click', deleteUserData);
   deleteCancelButton.addEventListener('click', cancelDelete);
 }
 
@@ -99,7 +99,7 @@ async function insertUsers() {
 }
 
 // db에서 회원정보 삭제
-async function deleteOrderData(e) {
+async function deleteUserData(e) {
   e.preventDefault();
 
   try {

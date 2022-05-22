@@ -158,6 +158,28 @@ class UserService {
     return { token };
   }
 
+  // 비밀번호 맞는지 여부만 확인
+  async checkUserPassword(userId: string, password: string): Promise<UserData> {
+    // 이메일 db에 존재 여부 확인
+    const user = await this.userModel.findById(userId);
+
+    // 비밀번호 일치 여부 확인
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      correctPasswordHash
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error(
+        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    // 비밀번호 일치함. 유저 정보 반환
+    return user;
+  }
+
   // 구글 OAuth 로그인 (구글 토큰을 받고, 몽구스 id와 role이 담긴 토큰을 반환함)
   async getUserTokenWithGoogle(
     googleToken: string

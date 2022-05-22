@@ -83,6 +83,32 @@ userRouter.post('/login', async function (req, res, next) {
   }
 });
 
+userRouter.post(
+  '/user/password/check',
+  loginRequired,
+  async function (req, res, next) {
+    try {
+      // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
+      if (is.emptyObject(req.body)) {
+        throw new Error(
+          'headers의 Content-Type을 application/json으로 설정해주세요'
+        );
+      }
+
+      // req (request) 에서 데이터 가져오기
+      const userId = req.currentUserId;
+      const password: string = req.body.password;
+
+      // 비밀번호가 알맞는지 여부를 체크함
+      const checkResult = await userService.checkUserPassword(userId, password);
+
+      res.status(200).json(checkResult);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 userRouter.post('/login/google', async function (req, res, next) {
   try {
     const googleToken: string = req.body.googleToken;

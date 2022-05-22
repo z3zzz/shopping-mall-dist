@@ -81,9 +81,12 @@ describe('user 관련 테스트', () => {
           password: '1234',
         });
 
+      const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+      const adminToken = jwt.sign({ userId, role: 'admin' }, secretKey);
+
       const res = await request(app)
         .get('/api/userlist')
-        .set('Authorization', `Bearer ${token}`);
+        .set('Authorization', `Bearer ${adminToken}`);
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(3);
@@ -101,10 +104,10 @@ describe('user 관련 테스트', () => {
     });
   });
 
-  describe('patch -> /api/user', () => {
+  describe('patch -> /api/users/:userId', () => {
     it('사용자 정보의 수정이 정상적으로 이루어진다.', async () => {
       const res = await request(app)
-        .patch(`/api/user`)
+        .patch(`/api/users/${userId}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
         .send({
@@ -118,17 +121,6 @@ describe('user 관련 테스트', () => {
       expect(res.body.fullName).toBe('tester-changed');
       expect(res.body.address).toEqual(address);
       expect(res.body.phoneNumber).toBe('01012345678');
-    });
-  });
-
-  describe('delete -> /api/user', () => {
-    it('사용자 정보의 삭제가 정상적으로 이루어진다.', async () => {
-      const res = await request(app)
-        .delete(`/api/user`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(res.statusCode).toEqual(200);
-      expect(res.body.result).toBe('success');
     });
   });
 
@@ -149,6 +141,32 @@ describe('user 관련 테스트', () => {
       const res = await request(app)
         .get(`/api/admin/check`)
         .set('Authorization', `Bearer ${adminToken}`);
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.result).toBe('success');
+    });
+  });
+
+  describe('post -> /api/user/password/check', () => {
+    it('비밀번호가 일치한다면 사용자 정보를 반환한다.', async () => {
+      const res = await request(app)
+        .post(`/api/user/password/check`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          password: '1234',
+        });
+
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.fullName).toBe('tester-changed');
+    });
+  });
+
+  describe('delete -> /api/users/:userId', () => {
+    it('사용자 정보의 삭제가 정상적으로 이루어진다.', async () => {
+      const res = await request(app)
+        .delete(`/api/users/${userId}`)
+        .set('Authorization', `Bearer ${token}`);
 
       expect(res.statusCode).toEqual(200);
       expect(res.body.result).toBe('success');
