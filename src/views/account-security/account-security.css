@@ -83,6 +83,32 @@ input:checked + .slider:before {
   transform: translateX(32px);
 }
 
+/* 소셜 로그인인 경우 */
+input.disabled + .slider {
+  background-color: #666;
+}
+
+/* 소셜 로그인 관련 문구 */
+input.disabled ~ .info-text {
+  position: absolute;
+  left: 5rem;
+  top: -1rem;
+  min-width: 12rem;
+  /*border: 1px #aaaaaa solid;*/
+  border-radius: 10px;
+  background-color: #333;
+  padding: 12px;
+  color: #fff;
+  font-size: 0.8rem;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.1s linear 0.2s;
+}
+
+input.disabled + .slider:hover + .info-text {
+  opacity: 1 !important;
+}
+
 /* 폼 관련 */
 .label-address {
   text-align: left;

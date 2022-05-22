@@ -72,8 +72,10 @@ function toggleTargets(e) {
     targets = [phoneNumberInput];
   }
 
-  // 토글 진행 (닫힘 토글일 시에는, 값이 비어있지 않은지 확인)
+  // 여러 개의 타겟이 있을 때, 첫 타겟만 focus 시키기 위한 flag
   let isFocused;
+
+  // 토글 진행
   for (const target of targets) {
     if (isChecked) {
       target.removeAttribute('disabled');
@@ -83,24 +85,14 @@ function toggleTargets(e) {
 
       continue;
     }
-
-    //const isEmpty = !target.value;
-    //const isButton = target.tagName === 'button';
-    //const shouldFillIn = isEmpty && !isButton;
-
-    //if (shouldFillIn) {
-    //e.target.checked = true;
-    //target.focus();
-    //return alert('입력 칸이 비어 있습니다. 작성해 주세요.');
-    //}
   }
 
-  // disabled 해제하는 것은 위에서 했으므로, 바로 return하면 됨.
+  // 열림 토글인 경우는 여기서 끝
   if (isChecked) {
     return;
   }
 
-  // disabled 처리를 위해 다시 한번 for 루프 씀.
+  // 닫힘 토글인 경우임. disabled 처리를 위해 다시 한번 for 루프 씀.
   for (const target of targets) {
     target.setAttribute('disabled', '');
   }
@@ -112,11 +104,12 @@ let userData;
 async function insertUserData() {
   userData = await Api.get('/api/user');
 
-  // 서버에서 온 비밀번호는 해쉬 문자열인데, 이를 빈 문자열로 바꿈
-  userData.password = '';
-
   // 객체 destructuring
-  const { fullName, email, address, phoneNumber } = userData;
+  const { fullName, email, password, address, phoneNumber } = userData;
+
+  // 서버에서 온 비밀번호는 해쉬 문자열 혹은 '~oauth' 문자열인데, 이를 빈 문자열로 바꿈
+  // 나중에 사용자가 비밀번호 변경을 위해 입력했는지 확인하기 위함임.
+  userData.password = '';
 
   securityTitle.innerText = `회원정보 관리 (${email})`;
   fullNameInput.value = fullName;
@@ -141,6 +134,12 @@ async function insertUserData() {
 
   // 기본적으로 disabled 상태로 만듦
   disableForm();
+
+  // OAuth 회원가입이었을 경우, 비밀번호 수정은 불필요함.
+  if (password.includes('oauth')) {
+    passwordToggle.setAttribute('disabled', '');
+    passwordToggle.classList.add('disabled');
+  }
 }
 
 function disableForm() {
