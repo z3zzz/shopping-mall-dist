@@ -73,18 +73,23 @@
         - (추가 점수) 배포/테스트 환경 퀄리티: 유닛 테스트/UI 기능 테스트의 자동화, continuous build/continuous test 설치
         - (추가 점수) 상품 구매시, 오픈 API를 통해서 구매버튼 생성
 
-2. 주소 API
-https://www.juso.go.kr/addrlink/addrLinkUrl.do?confmKey=devU01TX0FVVEgyMDIyMDUwMjIzNDU1OTExMjUyNjk=&returnUrl=http://localhost:1234/
-
-3. fontawesome kit code
+2. fontawesome kit code
 <script src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
 
-4. aws s3 access (temp)
+3. aws s3 access (temp)
 ```jsx
 const albumBucketName = 'kwang-shopping';
 const bucketRegion = 'ap-northeast-2';
 const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
 ```
+
+4. Google OAuth
+```bash
+Client ID: 781560730462-8jb80an9eu02nalbk5a2u27p7tvfvl94.apps.googleusercontent.com
+Client Secret: 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
+
+```
+
 
 5. 추가할 기능
 - 강제 로그인페이지 이동 시, 로그인 후 되돌아가게

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
+import jwt, { JwtPayload, Algorithm } from 'jsonwebtoken';
 import { userModel, UserModel, UserInfo, UserAddress, UserData } from '../db';
 
 interface LoginInfo {
@@ -8,6 +9,7 @@ interface LoginInfo {
 }
 
 interface DeliveryInfo {
+  address: UserAddress;
   phoneNumber: string;
 }
 
@@ -19,6 +21,7 @@ interface UserInfoRequired {
 class UserService {
   constructor(private userModel: UserModel) {}
 
+  // 일반 회원가입
   async addUser(userInfo: UserInfo): Promise<UserData> {
     // 객체 destructuring
     const { email, fullName, password } = userInfo;
@@ -42,6 +45,55 @@ class UserService {
     return createdNewUser;
   }
 
+  // Google Oauth 회원가입
+  async addUserWithGoogle(googleToken: string): Promise<UserData> {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const client = new OAuth2Client(clientId);
+
+    // 공식 문서 코드 그대로 사용
+    // https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=en
+    const ticket = await client.verifyIdToken({
+      idToken: googleToken,
+      audience: clientId,
+    });
+
+    // 구글 계정 정보가 담긴 객체 (email, name 등)
+    // https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en#credential
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      throw new Error(
+        '구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다.'
+      );
+    }
+
+    // 필요한 정보 추출
+    const { email, name } = payload;
+
+    if (!email || !name) {
+      throw new Error('회원가입을 위해서는 이메일과 이름이 필요합니다');
+    }
+
+    // 이메일 중복 확인
+    const user = await this.userModel.findByEmail(email);
+    if (user) {
+      throw new Error(
+        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
+      );
+    }
+
+    // 비밀번호는 임시로 설정
+    const password = 'google-oauth';
+
+    const newUserInfo = { fullName: name, email, password };
+
+    // db에 저장
+    const createdNewUser = await this.userModel.create(newUserInfo);
+
+    return createdNewUser;
+  }
+
+  // 일반 로그인
   async getUserToken(loginInfo: LoginInfo): Promise<{ token: string }> {
     // 객체 destructuring
     const { email, password } = loginInfo;
@@ -64,6 +116,48 @@ class UserService {
     if (!isPasswordCorrect) {
       throw new Error(
         '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    // 로그인 성공 -> JWT 웹 토큰 생성
+    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+
+    return { token };
+  }
+
+  // 구글 OAuth 로그인 (구글 토큰을 받고, 몽구스 id와 role이 담긴 토큰을 반환함)
+  async getUserTokenWithGoogle(
+    googleToken: string
+  ): Promise<{ token: string }> {
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const client = new OAuth2Client(clientId);
+
+    // 위 구글 OAuth 회원가입 코드의 주석 참고
+    const ticket = await client.verifyIdToken({
+      idToken: googleToken,
+      audience: clientId,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      throw new Error(
+        '구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다.'
+      );
+    }
+
+    const { email } = payload;
+
+    if (!email) {
+      throw new Error('로그인을 위해서는 이메일이 필요합니다');
+    }
+
+    // 이메일 db에 존재 여부 확인
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
       );
     }
 

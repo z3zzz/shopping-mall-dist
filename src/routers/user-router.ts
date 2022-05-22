@@ -33,6 +33,19 @@ userRouter.post('/register', async (req, res, next) => {
   }
 });
 
+// 구글 OAuth 용
+userRouter.post('/register/google', async (req, res, next) => {
+  try {
+    const googleToken: string = req.body.googleToken;
+
+    const newUser = await userService.addUserWithGoogle(googleToken);
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.post('/login', async function (req, res, next) {
   try {
     // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
@@ -49,6 +62,18 @@ userRouter.post('/login', async function (req, res, next) {
     // 위 데이터가 db에 있는지 확인하고,
     // db 있을 시 로그인 성공 및, 토큰 받아오기
     const userToken = await userService.getUserToken({ email, password });
+
+    res.status(200).json(userToken);
+  } catch (error) {
+    next(error);
+  }
+});
+
+userRouter.post('/login/google', async function (req, res, next) {
+  try {
+    const googleToken: string = req.body.googleToken;
+
+    const userToken = await userService.getUserTokenWithGoogle(googleToken);
 
     res.status(200).json(userToken);
   } catch (error) {
