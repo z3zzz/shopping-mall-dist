@@ -262,7 +262,9 @@ async function saveUserData(e) {
   }
 
   try {
-    await Api.patch('/api/user', '', data);
+    const { _id } = userData;
+    // db에 수정된 정보 저장
+    await Api.patch('/api/users', _id, data);
 
     alert('회원정보가 안전하게 저장되었습니다.');
     disableForm();

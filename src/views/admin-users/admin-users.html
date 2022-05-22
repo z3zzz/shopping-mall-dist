@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="admin-orders.css" />
-    <script src="admin-orders.js" type="module" defer></script>
+    <link rel="stylesheet" href="admin-users.css" />
+    <script src="admin-users.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -64,33 +64,33 @@
       </div>
     </nav>
 
-    <!-- 주문관리 -->
+    <!-- 회원관리 -->
     <section class="section">
       <div class="container">
         <div class="block account-header">
-          <h1 class="subtitle is-4">주문관리</h1>
+          <h1 class="subtitle is-4">회원관리</h1>
         </div>
-        <div class="container orders-container" id="ordersContainer">
+        <div class="container orders-container" id="usersContainer">
           <div
             class="columns notification is-info is-light is-mobile orders-top"
           >
-            <div class="column is-2">날짜</div>
-            <div class="column is-4">주문정보</div>
-            <div class="column is-2">주문총액</div>
-            <div class="column is-2">상태관리</div>
-            <div class="column is-2">취소</div>
+            <div class="column is-2">가입날짜</div>
+            <div class="column is-4">이메일</div>
+            <div class="column is-2">이름</div>
+            <div class="column is-2">권한</div>
+            <div class="column is-2">관리</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 주문을 정말 취소할 지 묻는 Modal 창 -->
+    <!-- 회원정보를 정말 삭제할 지 묻는 Modal 창 -->
     <div id="modal" class="modal">
       <div class="modal-background" id="modalBackground"></div>
       <div class="modal-content">
         <div class="box">
           <p class="mb-3">
-            주문 삭제 시 복구할 수 없습니다. 정말로 취소하시겠습니까?
+            회원정보 삭제 시 복구할 수 없습니다. 정말로 삭제하시겠습니까?
           </p>
 
           <div class="buttons">
