@@ -40,6 +40,11 @@ const UserSchema = new Schema(
       required: false,
       default: 'basic-user',
     },
+    isOAuth: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     collection: 'users',

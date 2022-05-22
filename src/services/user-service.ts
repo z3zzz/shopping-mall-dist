@@ -90,9 +90,15 @@ class UserService {
     }
 
     // 비밀번호는 임시로 설정
-    const password = 'google-oauth';
+    const password = 'google';
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { fullName: name, email, password };
+    const newUserInfo = {
+      fullName: name,
+      email,
+      password: hashedPassword,
+      isOAuth: true,
+    };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -115,9 +121,15 @@ class UserService {
     }
 
     // 비밀번호는 임시로 설정
-    const password = 'kakao-oauth';
+    const password = 'kakao';
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { fullName: nickname, email, password };
+    const newUserInfo = {
+      fullName: nickname,
+      email,
+      password: hashedPassword,
+      isOAuth: true,
+    };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);

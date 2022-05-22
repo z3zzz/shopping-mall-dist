@@ -105,7 +105,7 @@ async function insertUserData() {
   userData = await Api.get('/api/user');
 
   // 객체 destructuring
-  const { fullName, email, password, address, phoneNumber } = userData;
+  const { fullName, email, address, phoneNumber, isOAuth } = userData;
 
   // 서버에서 온 비밀번호는 해쉬 문자열 혹은 '~oauth' 문자열인데, 이를 빈 문자열로 바꿈
   // 나중에 사용자가 비밀번호 변경을 위해 입력했는지 확인하기 위함임.
@@ -135,8 +135,9 @@ async function insertUserData() {
   // 기본적으로 disabled 상태로 만듦
   disableForm();
 
+  console.log({ isOAuth });
   // OAuth 회원가입이었을 경우, 비밀번호 수정은 불필요함.
-  if (password.includes('oauth')) {
+  if (isOAuth) {
     passwordToggle.setAttribute('disabled', '');
     passwordToggle.classList.add('disabled');
   }
