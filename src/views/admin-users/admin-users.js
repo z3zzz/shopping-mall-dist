@@ -1,7 +1,10 @@
-import { checkAdmin, createNavbar } from '/useful-functions.js';
+import { addCommas, checkAdmin, createNavbar } from '/useful-functions.js';
 import * as Api from '/api.js';
 
 // 요소(element), input 혹은 상수
+const usersCount = document.querySelector('#usersCount');
+const adminCount = document.querySelector('#adminCount');
+const OAuthCount = document.querySelector('#OAuthCount');
 const usersContainer = document.querySelector('#usersContainer');
 const modal = document.querySelector('#modal');
 const modalBackground = document.querySelector('#modalBackground');
@@ -33,16 +36,40 @@ let userIdToDelete;
 async function insertUsers() {
   const users = await Api.get('/api/userlist');
 
+  // 총 요약에 활용
+  const summary = {
+    usersCount: 0,
+    adminCount: 0,
+    OAuthCount: 0,
+  };
+
   for (const user of users) {
-    const { _id, email, fullName, role, createdAt } = user;
+    const { _id, email, fullName, role, isOAuth, createdAt } = user;
     const date = createdAt.split('T')[0];
+
+    summary.usersCount += 1;
+
+    if (role === 'admin') {
+      summary.adminCount += 1;
+    }
+
+    if (isOAuth) {
+      summary.OAuthCount += 1;
+    }
 
     usersContainer.insertAdjacentHTML(
       'beforeend',
       `
         <div class="columns orders-item" id="user-${_id}">
           <div class="column is-2">${date}</div>
-          <div class="column is-4 order-summary">${email}</div>
+          <div class="column is-2">${email}</div>
+          <div class="column is-2">
+            ${
+              isOAuth
+                ? '<span class="tag is-success">소셜</span>'
+                : '<span class="tag">일반</span>'
+            }
+          </div>
           <div class="column is-2">${fullName}</div>
           <div class="column is-2">
             <div class="select" >
@@ -96,6 +123,11 @@ async function insertUsers() {
       openModal();
     });
   }
+
+  // 총 요약에 값 삽입
+  usersCount.innerText = addCommas(summary.usersCount);
+  adminCount.innerText = addCommas(summary.adminCount);
+  OAuthCount.innerText = addCommas(summary.OAuthCount);
 }
 
 // db에서 회원정보 삭제
