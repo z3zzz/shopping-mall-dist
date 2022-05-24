@@ -152,6 +152,7 @@ export const createNavbar = (keyString) => {
 
   const container = document.querySelector('#navbar');
   const isLogin = localStorage.getItem('token') ? true : false;
+  const isAdmin = localStorage.getItem('admin') ? true : false;
 
   // 로그인 안 된 상태에서만 보이게 될 navbar 요소들
   const itemsBeforeLogin = {
@@ -162,10 +163,13 @@ export const createNavbar = (keyString) => {
   // 로그인 완료된 상태에서만 보이게 될 navbar 요소들
   const itemsAfterLogin = {
     account: '<li><a href="/account">계정관리</a></li>',
-    admin: '<li><a href="/admin">페이지관리</a></li>',
     logout: '<li><a href="#" id="logout">로그아웃</a></li>',
     productAdd: '<li><a href="/product/add">제품 추가</a></li>',
     categoryAdd: '<li><a href="/category/add">카테고리 추가</a></li>',
+  };
+
+  const itemsForAdmin = {
+    admin: '<li><a href="/admin">페이지관리</a></li>',
   };
 
   // 로그아웃 요소만 유일하게, 클릭 이벤트를 필요로 함 (나머지는 href로 충분함)
@@ -176,6 +180,8 @@ export const createNavbar = (keyString) => {
       if (logoutElem) {
         logoutElem.addEventListener('click', () => {
           localStorage.removeItem('token');
+          localStorage.removeItem('admin');
+
           window.location.href = '/';
         });
       }
@@ -183,6 +189,9 @@ export const createNavbar = (keyString) => {
 
   let items = '';
   for (const key of keys) {
+    if (isAdmin) {
+      items += itemsForAdmin[key] ?? '';
+    }
     if (isLogin) {
       items += itemsAfterLogin[key] ?? '';
     } else {

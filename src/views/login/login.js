@@ -51,7 +51,7 @@ async function handleSubmit(e) {
     const data = { email, password };
 
     const result = await Api.post('/api/login', data);
-    const token = result.token;
+    const { token, isAdmin } = result;
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
@@ -60,6 +60,11 @@ async function handleSubmit(e) {
     alert(`정상적으로 로그인되었습니다.`);
 
     // 로그인 성공
+
+    // admin(관리자) 일 경우, localStorage에 기록함
+    if (isAdmin) {
+      localStorage.setItem('admin', 'admin');
+    }
 
     // 기존 다른 페이지에서 이 로그인 페이지로 온 경우, 다시 돌아가도록 해 줌.
     const { previouspage } = getUrlParams();

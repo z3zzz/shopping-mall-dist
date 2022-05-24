@@ -15,6 +15,11 @@ interface LoginInfo {
   password: string;
 }
 
+interface LoginResult {
+  token: string;
+  isAdmin: boolean;
+}
+
 interface DeliveryInfo {
   address: UserAddress;
   phoneNumber: string;
@@ -138,7 +143,7 @@ class UserService {
   }
 
   // 일반 로그인
-  async getUserToken(loginInfo: LoginInfo): Promise<{ token: string }> {
+  async getUserToken(loginInfo: LoginInfo): Promise<LoginResult> {
     // 객체 destructuring
     const { email, password } = loginInfo;
 
@@ -167,7 +172,9 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    return { token };
+    const isAdmin = user.role === 'admin';
+
+    return { token, isAdmin };
   }
 
   // 비밀번호 맞는지 여부만 확인
@@ -193,9 +200,7 @@ class UserService {
   }
 
   // 구글 OAuth 로그인 (구글 토큰을 받고, 몽구스 id와 role이 담긴 토큰을 반환함)
-  async getUserTokenWithGoogle(
-    googleToken: string
-  ): Promise<{ token: string }> {
+  async getUserTokenWithGoogle(googleToken: string): Promise<LoginResult> {
     const clientId = process.env.GOOGLE_CLIENT_ID;
     const client = new OAuth2Client(clientId);
 
@@ -231,11 +236,13 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    return { token };
+    const isAdmin = user.role === 'admin';
+
+    return { token, isAdmin };
   }
 
   // 카카오 Oauth 로그인
-  async getUserTokenWithKakao(email: string): Promise<{ token: string }> {
+  async getUserTokenWithKakao(email: string): Promise<LoginResult> {
     if (!email) {
       throw new Error('로그인을 위해서는 이메일 필요합니다');
     }
@@ -252,7 +259,9 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    return { token };
+    const isAdmin = user.role === 'admin';
+
+    return { token, isAdmin };
   }
 
   async getUsers(): Promise<UserData[]> {
