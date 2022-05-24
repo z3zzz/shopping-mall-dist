@@ -9,7 +9,7 @@
     "globalTeardown": "./tests/__config__/teardown.ts"
   },
   "scripts": {
-    "start-dev": "nodemon index.ts --exec ts-node",
+    "start": "nodemon index.ts --exec ts-node",
     "start-prod": "node dist/index.js",
     "test": "jest",
     "build": "tsc"
