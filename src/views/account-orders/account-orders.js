@@ -15,7 +15,7 @@ addAllEvents();
 
 // 요소 삽입 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
-  createNavbar('account logout');
+  createNavbar();
   insertOrders();
 }
 
