@@ -30,8 +30,8 @@ export const createNavbar = () => {
     case '/cart/':
       addNavElements('admin register login account logout');
       break;
-    case '/category/add':
-      addNavElements('admin productAdd account logout');
+    case '/category/add/':
+      addNavElements('admin account productAdd logout');
       break;
     case '/login/':
       addNavElements('register');
