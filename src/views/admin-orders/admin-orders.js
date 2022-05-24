@@ -2,6 +2,10 @@ import { addCommas, checkAdmin, createNavbar } from '/useful-functions.js';
 import * as Api from '/api.js';
 
 // 요소(element), input 혹은 상수
+const ordersCount = document.querySelector('#ordersCount');
+const prepareCount = document.querySelector('#prepareCount');
+const deliveryCount = document.querySelector('#deliveryCount');
+const completeCount = document.querySelector('#completeCount');
 const ordersContainer = document.querySelector('#ordersContainer');
 const modal = document.querySelector('#modal');
 const modalBackground = document.querySelector('#modalBackground');
@@ -33,9 +37,26 @@ let orderIdToDelete;
 async function insertOrders() {
   const orders = await Api.get('/api/orderlist/all');
 
+  const summary = {
+    ordersCount: 0,
+    prepareCount: 0,
+    deliveryCount: 0,
+    completeCount: 0,
+  };
+
   for (const order of orders) {
     const { _id, totalPrice, createdAt, summaryTitle, status } = order;
     const date = createdAt.split('T')[0];
+
+    summary.ordersCount += 1;
+
+    if (status === '상품 준비중') {
+      summary.prepareCount += 1;
+    } else if (status === '상품 배송중') {
+      summary.deliveryCount += 1;
+    } else if (status === '배송완료') {
+      summary.completeCount += 1;
+    }
 
     ordersContainer.insertAdjacentHTML(
       'beforeend',
@@ -102,6 +123,12 @@ async function insertOrders() {
       openModal();
     });
   }
+
+  // 총 요약 값 삽입
+  ordersCount.innerText = addCommas(summary.ordersCount);
+  prepareCount.innerText = addCommas(summary.prepareCount);
+  deliveryCount.innerText = addCommas(summary.deliveryCount);
+  completeCount.innerText = addCommas(summary.completeCount);
 }
 
 // db에서 주문정보 삭제

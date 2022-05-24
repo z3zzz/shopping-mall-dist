@@ -46,8 +46,8 @@ export const checkLogin = () => {
 
 // 관리자 여부 확인
 export const checkAdmin = async () => {
-  // 우선 화면을 가리고 시작함
-  window.document.body.style.display = 'none';
+  // 우선 화면을 가리고 시작함 -> 화면 번쩍거림으로 인해 일단 미적용
+  //window.document.body.style.display = 'none';
 
   const token = localStorage.getItem('token');
 
