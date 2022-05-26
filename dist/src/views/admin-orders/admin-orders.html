@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="main.css" />
-    <script src="bundle.js" defer></script>
+    <link rel="stylesheet" href="admin-orders.css" />
+    <script src="admin-orders.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -67,9 +67,39 @@
     <!-- 주문관리 -->
     <section class="section">
       <div class="container">
+        <!-- 제목 -->
         <div class="block account-header">
           <h1 class="subtitle is-4">주문관리</h1>
         </div>
+
+        <!-- 총 요약 -->
+        <nav class="level">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">총주문수</p>
+              <p class="title" id="ordersCount">-</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">상품준비중</p>
+              <p class="title" id="prepareCount">-</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">상품배송중</p>
+              <p class="title" id="deliveryCount">-</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">배송완료</p>
+              <p class="title" id="completeCount">-</p>
+            </div>
+          </div>
+        </nav>
+
         <div class="container orders-container" id="ordersContainer">
           <div
             class="columns notification is-info is-light is-mobile orders-top"

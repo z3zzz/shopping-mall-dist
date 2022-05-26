@@ -12,7 +12,7 @@
     "start": "nodemon index.ts --exec ts-node",
     "start-prod": "node dist/index.js",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc && webpack"
   },
   "homepage": "",
   "repository": {
@@ -49,11 +49,14 @@
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "google-auth-library": "^8.0.2",
+    "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
     "mini-css-extract-plugin": "^2.6.0",
     "nodemon": "^2.0.15",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "style-loader": "^3.3.1",
     "supertest": "^6.2.2",
+    "terser-webpack-plugin": "^5.3.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
     "webpack": "^5.72.1",
