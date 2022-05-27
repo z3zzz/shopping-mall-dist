@@ -1,36 +1,4 @@
-import { model } from 'mongoose';
-import { UserSchema } from '../schemas/user-schema';
-
-const User = model('users', UserSchema);
-
-export type Role = 'basic-user' | 'admin';
-
-export interface UserAddress {
-  postalCode: string;
-  address1: string;
-  address2: string;
-}
-
-export interface UserInfo {
-  email: string;
-  fullName: string;
-  password: string;
-  profileImage?: string;
-  phoneNumber?: string;
-  address?: UserAddress;
-  role?: Role;
-}
-
-export interface UserData {
-  _id: string;
-  email: string;
-  fullName: string;
-  password: string;
-  role: Role;
-  profileImage?: string;
-  phoneNumber?: string;
-  address?: UserAddress;
-}
+import { User } from '../schemas/user-schema';
 
 interface ToUpdate {
   userId: string;
@@ -40,8 +8,8 @@ interface ToUpdate {
 }
 
 export class UserModel {
-  async findByEmail(email: string): Promise<UserData> {
-    const user = await User.findOne({ email });
+  async findByEmail(email: string): Promise<UserData | null> {
+    const user = await User.findOne({ where: { email } });
     return user;
   }
 
