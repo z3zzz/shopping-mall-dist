@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
-import jwt, { JwtPayload, Algorithm } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import {
   userModel,
   UserModel,
@@ -9,6 +9,7 @@ import {
   UserData,
   Role,
 } from '../db';
+import { userMysqlModel } from '../db-mysql';
 
 interface LoginInfo {
   email: string;
@@ -360,6 +361,14 @@ class UserService {
   }
 }
 
-const userService = new UserService(userModel);
+const usedDb = process.env.USED_DB;
+
+let userService: UserService;
+if (usedDb === 'mongodb') {
+  userService = new UserService(userModel);
+} else {
+  //@ts-ignore
+  userService = new UserService(userMysqlModel);
+}
 
 export { userService };
