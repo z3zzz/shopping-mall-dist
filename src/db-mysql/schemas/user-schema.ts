@@ -13,7 +13,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare email: string;
   declare fullName: string;
   declare password: string;
-  declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare role: CreationOptional<Role>;
   declare isOAuth: CreationOptional<boolean>;
@@ -28,14 +27,10 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
 User.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     email: {
       type: DataTypes.STRING,

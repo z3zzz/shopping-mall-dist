@@ -15,7 +15,6 @@ class Category extends Model<
   declare description: string;
   declare themeClass: string;
   declare imageKey: string;
-  declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare createdAt?: Date;
   declare updatedAt?: Date;
@@ -23,14 +22,10 @@ class Category extends Model<
 
 Category.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     title: {
       type: DataTypes.STRING,

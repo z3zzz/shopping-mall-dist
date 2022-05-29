@@ -22,7 +22,6 @@ class Order extends Model<
   declare receiverPhoneNumber: string;
   declare request: string;
   declare status: CreationOptional<string>;
-  declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare createdAt?: Date;
   declare updatedAt?: Date;
@@ -30,14 +29,10 @@ class Order extends Model<
 
 Order.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     userId: {
       type: DataTypes.STRING,
@@ -89,8 +84,11 @@ Order.init(
   }
 );
 
-Order.hasOne(User, {
-  foreignKey: '_id',
-});
+//Order.belongsTo(User, {
+//foreignKey: {
+//name: 'userId',
+//allowNull: false,
+//},
+//});
 
 export { Order };

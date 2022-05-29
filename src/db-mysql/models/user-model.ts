@@ -17,7 +17,6 @@ interface UserInfo {
 }
 
 interface UserData {
-  id: number;
   _id: string;
   email: string;
   fullName: string;

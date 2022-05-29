@@ -14,7 +14,6 @@ interface ProductInfo {
 }
 
 interface ProductData {
-  id: number;
   _id: string;
   title: string;
   sellerId: string;

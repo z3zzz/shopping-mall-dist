@@ -18,7 +18,6 @@ class OrderItem extends Model<
   declare quantity: number;
   declare totalPrice: number;
   declare status: CreationOptional<string>;
-  declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare createdAt?: Date;
   declare updatedAt?: Date;
@@ -26,14 +25,10 @@ class OrderItem extends Model<
 
 OrderItem.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     orderId: {
       type: DataTypes.STRING,
@@ -65,12 +60,18 @@ OrderItem.init(
   }
 );
 
-OrderItem.hasOne(Order, {
-  foreignKey: '_id',
-});
+//OrderItem.belongsTo(Order, {
+//foreignKey: {
+//name: 'orderId',
+//allowNull: false,
+//},
+//});
 
-OrderItem.hasOne(Product, {
-  foreignKey: '_id',
-});
+//OrderItem.belongsTo(Product, {
+//foreignKey: {
+//name: 'productId',
+//allowNull: false,
+//},
+//});
 
 export { OrderItem };

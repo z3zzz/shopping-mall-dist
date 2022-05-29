@@ -7,7 +7,7 @@ import {
   CategoryModel,
 } from '../db';
 
-import { productMysqlModel } from '../db-mysql';
+import { categoryMysqlModel, productMysqlModel } from '../db-mysql';
 
 export interface ProductUpdateInfo {
   title?: string;
@@ -103,7 +103,7 @@ if (usedDb === 'mongodb') {
   productService = new ProductService(productModel, categoryModel);
 } else {
   //@ts-ignore
-  productService = new ProductService(productMysqlModel, categoryModel);
+  productService = new ProductService(productMysqlModel, categoryMysqlModel);
 }
 
 export { productService };

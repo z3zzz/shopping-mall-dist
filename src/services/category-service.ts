@@ -7,7 +7,7 @@ import {
   ProductModel,
 } from '../db';
 
-import { categoryMysqlModel } from '../db-mysql';
+import { categoryMysqlModel, productMysqlModel } from '../db-mysql';
 
 class CategoryService {
   constructor(
@@ -105,7 +105,7 @@ if (usedDb === 'mongodb') {
   categoryService = new CategoryService(categoryModel, productModel);
 } else {
   //@ts-ignore
-  categoryService = new CategoryService(categoryMysqlModel, productModel);
+  categoryService = new CategoryService(categoryMysqlModel, productMysqlModel);
 }
 
 export { categoryService };

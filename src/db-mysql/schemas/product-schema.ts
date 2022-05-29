@@ -26,7 +26,6 @@ class Product extends Model<
   declare isRecommended: CreationOptional<boolean>;
   declare discountPercent: CreationOptional<number>;
   declare sku: CreationOptional<string>;
-  declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare createdAt?: Date;
   declare updatedAt?: Date;
@@ -34,14 +33,10 @@ class Product extends Model<
 
 Product.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     title: {
       type: DataTypes.STRING,
@@ -107,12 +102,18 @@ Product.init(
   }
 );
 
-Product.hasOne(User, {
-  foreignKey: '_id',
-});
+//Product.belongsTo(User, {
+//foreignKey: {
+//name: 'userId',
+//allowNull: false,
+//},
+//});
 
-Product.hasOne(Category, {
-  foreignKey: '_id',
-});
+//Product.belongsTo(Category, {
+//foreignKey: {
+//name: 'productId',
+//allowNull: false,
+//},
+//});
 
 export { Product };
