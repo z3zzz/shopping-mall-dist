@@ -7,6 +7,8 @@ import {
   ProductModel,
 } from '../db';
 
+import { categoryMysqlModel, productMysqlModel } from '../db-mysql';
+
 class CategoryService {
   constructor(
     private categoryModel: CategoryModel,
@@ -96,6 +98,14 @@ class CategoryService {
   }
 }
 
-const categoryService = new CategoryService(categoryModel, productModel);
+const usedDb = process.env.USED_DB;
+let categoryService: CategoryService;
+
+if (usedDb === 'mongodb') {
+  categoryService = new CategoryService(categoryModel, productModel);
+} else {
+  //@ts-ignore
+  categoryService = new CategoryService(categoryMysqlModel, productMysqlModel);
+}
 
 export { categoryService };

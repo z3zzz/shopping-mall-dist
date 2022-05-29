@@ -3,13 +3,13 @@ POST http://localhost:5000/api/login
 content-type: application/json
 
 {
-    "email": "ktkim@elicer.com",
+    "email": "ktkim444@elicer.com",
     "password": "1234"
 }
 
 ###
 POST http://localhost:5000/api/category
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A
 content-type: application/json
 
 {
@@ -21,15 +21,15 @@ content-type: application/json
 
 ###
 GET http://localhost:5000/api/categorylist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MDYzNjd9.dQGENo0fpylLvY3TS7indj-7-2dRpwl8eoFBWPQZLuM
 
 ###
-GET http://localhost:5000/api/categorys/6280edc1123b7b07efffec84
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+GET http://localhost:5000/api/categorys/4521e8ab-2b97-4840-99e7-1ba0b65e0425
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MDYzNjd9.dQGENo0fpylLvY3TS7indj-7-2dRpwl8eoFBWPQZLuM
 
 ###
-PATCH http://localhost:5000/api/categorys/6273fd87a9a8230c847d4ce9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+PATCH http://localhost:5000/api/categorys/4521e8ab-2b97-4840-99e7-1ba0b65e0425
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MDYzNjd9.dQGENo0fpylLvY3TS7indj-7-2dRpwl8eoFBWPQZLuM
 content-type: application/json
 
 {
@@ -40,5 +40,5 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:5000/api/categorys/6280edc1123b7b07efffec84
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+DELETE http://localhost:5000/api/categorys/4521e8ab-2b97-4840-99e7-1ba0b65e0425
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MDYzNjd9.dQGENo0fpylLvY3TS7indj-7-2dRpwl8eoFBWPQZLuM

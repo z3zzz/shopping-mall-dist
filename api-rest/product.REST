@@ -9,31 +9,35 @@ content-type: application/json
 
 ###
 POST http://localhost:5000/api/product
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A 
 content-type: application/json
 
 {
     "title": "테스트-제품A",
-    "categoryId": "6280edc1123b7b07efffec84",
+    "categoryId": "6c91ecdb-7ed7-49ae-af9e-2032df8f7b49",
     "manufacturer": "삼성전자짱",
     "shortDescription": "테스트용 제품입니다.",
     "detailDescription": "테스트용 제품의 자세한 설명입니다.",
     "imageKey": "test-product/test.png",
     "inventory": 100,
-    "price": 50000
+    "price": 50000,
+    "price": 50000,
+    "searchKeywords": [
+        "남자", "남자옷"
+    ] 
 }
 
 ###
 GET http://localhost:5000/api/productlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4ODY2NTF9.gLbkuSxDbIhs71wsmqdGeUk4bei5xwFCOPZdraCtnO4 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A 
 
 ###
-GET http://localhost:5000/api/products/6275d376ff7879103040519f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+GET http://localhost:5000/api/products/1acafccb-9a6f-44a6-9221-29e1cf81e9c3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A 
 
 ###
-PATCH http://localhost:5000/api/products/6275d376ff7879103040519f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjczYThlY2M2MTYzMzU1NWQzM2MzN2UiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE3NTQyNzR9.WkSmzeYM3G8CapgZA7KHiKBN72o2fSTBXzUYq2A_Djg
+PATCH http://localhost:5000/api/products/1acafccb-9a6f-44a6-9221-29e1cf81e9c3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A 
 content-type: application/json
 
 {
@@ -45,5 +49,5 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:5000/api/products/6280e62739e9a56a46476ba1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc3NGExZWQ1MjA0NTM3OGE1NWNlZGYiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTI2MTQxOTh9.CulE-ADJwzsuDILoLkwSL3HLosv8oCL2GcrKQW_uIQM 
+DELETE http://localhost:5000/api/products/1acafccb-9a6f-44a6-9221-29e1cf81e9c3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A 

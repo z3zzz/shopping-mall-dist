@@ -22,24 +22,25 @@ content-type: application/json
 
 ###
 GET http://localhost:5000/api/userlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4OTg1MzV9.S5zC0LoGD3cBsfkE8YoLTRbpud4hbjmUtkYKNy7TvHA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgwNjE2OX0.QblS3Q-ReI1UyvpbwrbDSlq6BK7-qEdE2gH5r07stqc
 
 ###
 GET http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc3NGExZWQ1MjA0NTM3OGE1NWNlZGYiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTI1OTQ1NTF9.LTF2zzN0WymFUrCtCvvoL6TE6HXPb77K75FXM05iAmk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgwNjE2OX0.QblS3Q-ReI1UyvpbwrbDSlq6BK7-qEdE2gH5r07stqc
 
 
 ###
-PATCH http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc3NGExZWQ1MjA0NTM3OGE1NWNlZGYiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTI2MTQxOTh9.CulE-ADJwzsuDILoLkwSL3HLosv8oCL2GcrKQW_uIQM 
+PATCH http://localhost:5000/api/users/8699367c-0e40-429c-adad-80ddb48dc941
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4Njk5MzY3Yy0wZTQwLTQyOWMtYWRhZC04MGRkYjQ4ZGM5NDEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgyNTY2Mn0.JoZKWoPrmPgkjXNXXnBxmGKMBn8P9IyJVrWw8YZZ6eY
 content-type: application/json
 
 {
-    "fullName": "KwangTae",
+    "fullName": "KwangTae2",
     "email": "ktkim@elicer.com",
-    "currentPassword": "1234"
+    "currentPassword": "1234",
+    "role": "admin"
 }
 
 ###
-DELETE http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjgwZTQ2MzNlYmM5Njg1YTYyNjUyZDMiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MjYxNDI1MH0.uEgyGxAPX6pzXZzIcroDwYZcJSgQabsZRUqcXarYKS8
+DELETE http://localhost:5000/api/users/5a0a23ad-ddee-41c7-b778-b333a82dbece
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YTBhMjNhZC1kZGVlLTQxYzctYjc3OC1iMzMzYTgyZGJlY2UiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1Mzc4Njc2NX0.pXReQDiMF-6Y9mwwKH9clFBQMPzPRBxG38D3zojYUzg
