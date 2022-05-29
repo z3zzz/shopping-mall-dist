@@ -1,7 +1,7 @@
 import { User, Role } from '../schemas/user-schema';
 
 interface UserAddress {
-  poastalCode: string;
+  postalCode: string;
   address1: string;
   address2: string;
 }
@@ -45,7 +45,7 @@ class UserMysqlModel {
     const userData = user.get();
 
     const address: UserAddress = {
-      poastalCode: userData.postalCode,
+      postalCode: userData.postalCode,
       address1: userData.address1,
       address2: userData.address2,
     };

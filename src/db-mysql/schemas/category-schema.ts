@@ -1,28 +1,60 @@
-import { Schema } from 'mongoose';
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
+import { sequelize } from '../connect';
 
-const CategorySchema = new Schema(
+class Category extends Model<
+  InferAttributes<Category>,
+  InferCreationAttributes<Category>
+> {
+  declare title: string;
+  declare description: string;
+  declare themeClass: string;
+  declare imageKey: string;
+  declare id: CreationOptional<number>;
+  declare _id: CreationOptional<string>;
+  declare createdAt?: Date;
+  declare updatedAt?: Date;
+}
+
+Category.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     title: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     description: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     themeClass: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     imageKey: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
-    collection: 'categorys',
-    timestamps: true,
+    sequelize,
+    tableName: 'categorys',
   }
 );
 
-export { CategorySchema };
+export { Category };

@@ -22,22 +22,23 @@ content-type: application/json
 
 ###
 GET http://localhost:5000/api/userlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjc1YzhiNWZlOGU4ZDI4ODNlMWM5M2IiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTE4OTg1MzV9.S5zC0LoGD3cBsfkE8YoLTRbpud4hbjmUtkYKNy7TvHA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgwNjE2OX0.QblS3Q-ReI1UyvpbwrbDSlq6BK7-qEdE2gH5r07stqc
 
 ###
 GET http://localhost:5000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1Mzc5MTE0NX0.cYRim631UwU-eQWs1M_yKiHithoDBs6ovZR8m7WYBTI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgwNjE2OX0.QblS3Q-ReI1UyvpbwrbDSlq6BK7-qEdE2gH5r07stqc
 
 
 ###
-PATCH http://localhost:5000/api/users/5a0a23ad-ddee-41c7-b778-b333a82dbece
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3YmQ3MDY1ZC1jZWQzLTRmZTQtODY4Zi0wNjM5MmJhOWFiMmUiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1Mzc1MzExNX0.B3yno3gJaLlNPsVAdedGhavAOgIq9dvyaQ-xIIivfOo 
+PATCH http://localhost:5000/api/users/826c4d12-8c36-488f-a08d-4c2b51b45081
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYmFzaWMtdXNlciIsImlhdCI6MTY1MzgwNjE2OX0.QblS3Q-ReI1UyvpbwrbDSlq6BK7-qEdE2gH5r07stqc
 content-type: application/json
 
 {
     "fullName": "KwangTae2",
     "email": "ktkim@elicer.com",
-    "currentPassword": "1234"
+    "currentPassword": "1234",
+    "role": "admin"
 }
 
 ###
