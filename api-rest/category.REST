@@ -9,7 +9,7 @@ content-type: application/json
 
 ###
 POST http://localhost:5000/api/category
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MDYzNjd9.dQGENo0fpylLvY3TS7indj-7-2dRpwl8eoFBWPQZLuM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MjZjNGQxMi04YzM2LTQ4OGYtYTA4ZC00YzJiNTFiNDUwODEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTM4MTE3ODR9.zkeo-kAkW8A0qEsV6Xrh86_iL68xr3Y2p4SswWT6H0A
 content-type: application/json
 
 {

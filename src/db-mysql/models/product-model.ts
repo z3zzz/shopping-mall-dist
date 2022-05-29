@@ -1,9 +1,6 @@
-import { model } from 'mongoose';
-import { ProductSchema } from '../schemas/product-schema';
+import { Product } from '../schemas/product-schema';
 
-const Product = model('products', ProductSchema);
-
-export interface ProductInfo {
+interface ProductInfo {
   title: string;
   sellerId: string;
   categoryId: string;
@@ -13,10 +10,11 @@ export interface ProductInfo {
   imageKey: string;
   inventory: number;
   price: number;
-  searchKeywords: string[];
+  searchKeywords: string;
 }
 
-export interface ProductData {
+interface ProductData {
+  id: number;
   _id: string;
   title: string;
   sellerId: string;
@@ -27,7 +25,7 @@ export interface ProductData {
   imageKey: string;
   inventory: number;
   price: number;
-  searchKeywords: string[];
+  searchKeywords: string;
   isRecommended?: boolean;
   discountPercent?: number;
   sku?: string;
@@ -36,59 +34,66 @@ export interface ProductData {
 interface ToUpdate {
   productId: string;
   update: {
-    [key: string]: string | number | boolean | string[];
+    [key: string]: string | number | boolean;
   };
 }
 
-export class ProductModel {
-  async findByTitle(title: string): Promise<ProductData> {
-    const product = await Product.findOne({ title });
+class ProductMysqlModel {
+  async findByTitle(title: string): Promise<ProductData | null> {
+    const product = await Product.findOne({ where: { title } });
+
     return product;
   }
 
-  async findById(productId: string): Promise<ProductData> {
-    const product = await Product.findOne({ _id: productId });
+  async findById(productId: string): Promise<ProductData | null> {
+    const product = await Product.findOne({ where: { _id: productId } });
+
     return product;
   }
 
-  async findOneByCategoryId(categoryId: string): Promise<ProductData[]> {
-    const product = await Product.findOne({ categoryId });
+  async findOneByCategoryId(categoryId: string): Promise<ProductData | null> {
+    const product = await Product.findOne({ where: { categoryId } });
+
     return product;
   }
 
   async findAllByCategoryId(categoryId: string): Promise<ProductData[]> {
-    const products = await Product.find({ categoryId });
+    const products = await Product.findAll({ where: { categoryId } });
+
     return products;
   }
 
   async create(productInfo: ProductInfo): Promise<ProductData> {
+    productInfo.searchKeywords = JSON.stringify(productInfo.searchKeywords);
+
     const createdNewProduct = await Product.create(productInfo);
+
     return createdNewProduct;
   }
 
   async findAll(): Promise<ProductData[]> {
-    const products = await Product.find({});
+    const products = await Product.findAll();
+
     return products;
   }
 
-  async update({ productId, update }: ToUpdate): Promise<ProductData> {
-    const filter = { _id: productId };
-    const option = { returnOriginal: false };
+  async update({ productId, update }: ToUpdate): Promise<ProductData | null> {
+    const where = { _id: productId };
 
-    const updatedProduct = await Product.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    await Product.update(update, { where });
+
+    const updatedProduct = await Product.findOne({ where });
+
     return updatedProduct;
   }
 
   async deleteById(productId: string): Promise<{ deletedCount: number }> {
-    const result = await Product.deleteOne({ _id: productId });
-    return result;
+    const deletedCount = await Product.destroy({ where: { _id: productId } });
+
+    return { deletedCount };
   }
 }
 
-const productModel = new ProductModel();
+const productMysqlModel = new ProductMysqlModel();
 
-export { productModel };
+export { productMysqlModel };

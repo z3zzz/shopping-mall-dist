@@ -7,6 +7,8 @@ import {
   CategoryModel,
 } from '../db';
 
+import { productMysqlModel } from '../db-mysql';
+
 export interface ProductUpdateInfo {
   title?: string;
   categoryId?: string;
@@ -94,6 +96,14 @@ class ProductService {
   }
 }
 
-const productService = new ProductService(productModel, categoryModel);
+const usedDb = process.env.USED_DB;
+
+let productService: ProductService;
+if (usedDb === 'mongodb') {
+  productService = new ProductService(productModel, categoryModel);
+} else {
+  //@ts-ignore
+  productService = new ProductService(productMysqlModel, categoryModel);
+}
 
 export { productService };

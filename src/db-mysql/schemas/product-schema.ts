@@ -1,72 +1,118 @@
-import { Schema } from 'mongoose';
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
+import { sequelize } from '../connect';
+import { User } from './user-schema';
+import { Category } from './category-schema';
 
-const ProductSchema = new Schema(
+class Product extends Model<
+  InferAttributes<Product>,
+  InferCreationAttributes<Product>
+> {
+  declare title: string;
+  declare sellerId: string;
+  declare categoryId: string;
+  declare manufacturer: string;
+  declare shortDescription: string;
+  declare detailDescription: string;
+  declare imageKey: string;
+  declare inventory: number;
+  declare price: number;
+  declare searchKeywords: string;
+  declare isRecommended: CreationOptional<boolean>;
+  declare discountPercent: CreationOptional<number>;
+  declare sku: CreationOptional<string>;
+  declare id: CreationOptional<number>;
+  declare _id: CreationOptional<string>;
+  declare createdAt?: Date;
+  declare updatedAt?: Date;
+}
+
+Product.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     title: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     sellerId: {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     categoryId: {
-      type: Schema.Types.ObjectId,
-      ref: 'categorys',
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     manufacturer: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     shortDescription: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     detailDescription: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     imageKey: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     inventory: {
-      type: Number,
-      min: 0,
-      default: 10,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     price: {
-      type: Number,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     searchKeywords: {
-      type: [String],
-      required: true,
+      type: DataTypes.JSON,
+      allowNull: false,
     },
     isRecommended: {
-      type: Boolean,
-      default: false,
-      required: false,
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
     },
     discountPercent: {
-      type: Number,
-      min: 0,
-      max: 95,
-      default: 0,
-      required: false,
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
     sku: {
-      type: String,
-      required: false,
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: '',
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
-    collection: 'products',
-    timestamps: true,
+    sequelize,
+    tableName: 'products',
   }
 );
 
-export { ProductSchema };
+Product.hasOne(User, {
+  foreignKey: '_id',
+});
+
+Product.hasOne(Category, {
+  foreignKey: '_id',
+});
+
+export { Product };
