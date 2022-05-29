@@ -1,35 +1,76 @@
-import { Schema } from 'mongoose';
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
+import { sequelize } from '../connect';
+import { Order } from './order-schema';
+import { Product } from './product-schema';
 
-const OrderItemSchema = new Schema(
+class OrderItem extends Model<
+  InferAttributes<OrderItem>,
+  InferCreationAttributes<OrderItem>
+> {
+  declare orderId: string;
+  declare productId: string;
+  declare quantity: number;
+  declare totalPrice: number;
+  declare status: CreationOptional<string>;
+  declare id: CreationOptional<number>;
+  declare _id: CreationOptional<string>;
+  declare createdAt?: Date;
+  declare updatedAt?: Date;
+}
+
+OrderItem.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     orderId: {
-      type: Schema.Types.ObjectId,
-      ref: 'orders',
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     productId: {
-      type: Schema.Types.ObjectId,
-      ref: 'proucts',
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     quantity: {
-      type: Number,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     totalPrice: {
-      type: Number,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     status: {
-      type: String,
-      required: false,
-      default: '상품 준비중',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: '상품 준비중',
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
-    collection: 'order-items',
-    timestamps: true,
+    sequelize,
+    tableName: 'order_items',
   }
 );
 
-export { OrderItemSchema };
+OrderItem.hasOne(Order, {
+  foreignKey: '_id',
+});
+
+OrderItem.hasOne(Product, {
+  foreignKey: '_id',
+});
+
+export { OrderItem };

@@ -4,6 +4,7 @@ import {
   OrderItemInfo,
   OrderItemData,
 } from '../db';
+import { orderItemMysqlModel } from '../db-mysql';
 
 export interface OrderItemUpdateInfo {
   quantity?: number;
@@ -76,6 +77,14 @@ class OrderItemService {
   }
 }
 
-const orderItemService = new OrderItemService(orderItemModel);
+const usedDb = process.env.USED_DB;
+
+let orderItemService: OrderItemService;
+if (usedDb === 'mongodb') {
+  orderItemService = new OrderItemService(orderItemModel);
+} else {
+  //@ts-ignore
+  orderItemService = new OrderItemService(orderItemMysqlModel);
+}
 
 export { orderItemService };

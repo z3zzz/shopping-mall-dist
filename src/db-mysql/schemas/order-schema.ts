@@ -21,7 +21,7 @@ class Order extends Model<
   declare receiverName: string;
   declare receiverPhoneNumber: string;
   declare request: string;
-  declare status: string;
+  declare status: CreationOptional<string>;
   declare id: CreationOptional<number>;
   declare _id: CreationOptional<string>;
   declare createdAt?: Date;
@@ -85,7 +85,7 @@ Order.init(
   },
   {
     sequelize,
-    tableName: 'products',
+    tableName: 'orders',
   }
 );
 

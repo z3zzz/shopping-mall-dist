@@ -1,9 +1,6 @@
-import { model } from 'mongoose';
-import { OrderItemSchema } from '../schemas/order-item-schema';
+import { OrderItem } from '../schemas/order-item-schema';
 
-const OrderItem = model('order-items', OrderItemSchema);
-
-export interface OrderItemInfo {
+interface OrderItemInfo {
   orderId: string;
   productId: string;
   quantity: number;
@@ -11,7 +8,7 @@ export interface OrderItemInfo {
   status?: string;
 }
 
-export interface OrderItemData {
+interface OrderItemData {
   _id: string;
   orderId: string;
   productId: string;
@@ -27,50 +24,59 @@ interface ToUpdate {
   };
 }
 
-export class OrderItemModel {
-  async findById(orderItemId: string): Promise<OrderItemData> {
-    const orderItem = await OrderItem.findOne({ _id: orderItemId });
+class OrderItemMysqlModel {
+  async findById(orderItemId: string): Promise<OrderItemData | null> {
+    const orderItem = await OrderItem.findOne({ where: { _id: orderItemId } });
+
     return orderItem;
   }
 
   async findAllByOrderId(orderId: string): Promise<OrderItemData[]> {
-    const orderItems = await OrderItem.find({ orderId });
+    const orderItems = await OrderItem.findAll({ where: { orderId } });
+
     return orderItems;
   }
 
   async findAllByProductId(productId: string): Promise<OrderItemData[]> {
-    const orderItems = await OrderItem.find({ productId });
+    const orderItems = await OrderItem.findAll({ where: { productId } });
+
     return orderItems;
   }
 
   async create(orderItemInfo: OrderItemInfo): Promise<OrderItemData> {
     const createdNewOrderItem = await OrderItem.create(orderItemInfo);
+
     return createdNewOrderItem;
   }
 
   async findAll(): Promise<OrderItemData[]> {
-    const orderItems = await OrderItem.find({});
+    const orderItems = await OrderItem.findAll();
+
     return orderItems;
   }
 
-  async update({ orderItemId, update }: ToUpdate): Promise<OrderItemData> {
-    const filter = { _id: orderItemId };
-    const option = { returnOriginal: false };
+  async update({
+    orderItemId,
+    update,
+  }: ToUpdate): Promise<OrderItemData | null> {
+    const where = { _id: orderItemId };
 
-    const updatedOrderItem = await OrderItem.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
+    await OrderItem.update(update, { where });
+
+    const updatedOrderItem = await OrderItem.findOne({ where });
+
     return updatedOrderItem;
   }
 
   async deleteById(orderItemId: string): Promise<{ deletedCount: number }> {
-    const result = await OrderItem.deleteOne({ _id: orderItemId });
-    return result;
+    const deletedCount = await OrderItem.destroy({
+      where: { _id: orderItemId },
+    });
+
+    return { deletedCount };
   }
 }
 
-const orderItemModel = new OrderItemModel();
+const orderItemMysqlModel = new OrderItemMysqlModel();
 
-export { orderItemModel };
+export { orderItemMysqlModel };
