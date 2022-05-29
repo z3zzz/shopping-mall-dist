@@ -1,17 +1,14 @@
-import { model } from 'mongoose';
-import { OrderSchema } from '../schemas/order-schema';
+import { Order } from '../schemas/order-schema';
 
-const Order = model('orders', OrderSchema);
-
-export interface OrderAddress {
+interface OrderAddress {
   postalCode: string;
   address1: string;
   address2: string;
   receiverName: string;
-  receiverPhoneNumber: String;
+  receiverPhoneNumber: string;
 }
 
-export interface OrderInfo {
+interface OrderInfo {
   userId: string;
   summaryTitle: string;
   totalPrice: number;
@@ -20,58 +17,133 @@ export interface OrderInfo {
   status?: string;
 }
 
-export interface OrderData {
+interface OrderData {
   _id: string;
   userId: string;
   summaryTitle: string;
-  totalPrice: string;
+  totalPrice: number;
   address: OrderAddress;
   request: string;
   status?: string;
 }
 
-interface ToUpdate {
-  orderId: string;
-  update: {
-    [key: string]: string | OrderAddress;
-  };
+interface Update {
+  [key: string]: string | OrderAddress;
 }
 
-export class OrderModel {
-  async findById(orderId: string): Promise<OrderData> {
-    const order = await Order.findOne({ _id: orderId });
-    return order;
+interface ToUpdate {
+  orderId: string;
+  update: Update;
+}
+
+class OrderMysqlModel {
+  private _excludeAddressAttribute(update: Update) {
+    if (!update.address) {
+      return update;
+    }
+
+    const address = update.address as OrderAddress;
+
+    const postalCode = address.postalCode;
+    const address1 = address.address1;
+    const address2 = address.address2;
+    const receiverName = address.receiverName;
+    const receiverPhoneNumber = address.receiverPhoneNumber;
+
+    delete update.address;
+
+    return {
+      ...update,
+      postalCode,
+      address1,
+      address2,
+      receiverName,
+      receiverPhoneNumber,
+    };
+  }
+
+  private _includeAddressAttribute(order: Order | null): OrderData | null {
+    if (!order) {
+      return null;
+    }
+
+    const orderData = order.get();
+
+    const address: OrderAddress = {
+      postalCode: orderData.postalCode,
+      address1: orderData.address1,
+      address2: orderData.address2,
+      receiverName: orderData.receiverName,
+      receiverPhoneNumber: orderData.receiverPhoneNumber,
+    };
+
+    return { ...orderData, address };
+  }
+
+  async findById(orderId: string): Promise<OrderData | null> {
+    const order = await Order.findOne({ where: { _id: orderId } });
+
+    return this._includeAddressAttribute(order);
   }
 
   async findAllByUserId(userId: string): Promise<OrderData[]> {
-    const orders = await Order.find({ userId });
-    return orders;
+    const orders = await Order.findAll({ where: { userId } });
+
+    const ordersWithAddressAttribute = [];
+    for (const order of orders) {
+      ordersWithAddressAttribute.push(this._includeAddressAttribute(order)!);
+    }
+
+    return ordersWithAddressAttribute;
   }
 
-  async create(orderInfo: OrderInfo): Promise<OrderData> {
-    const createdNewOrder = await Order.create(orderInfo);
-    return createdNewOrder;
+  async create(orderInfo: OrderInfo): Promise<OrderData | null> {
+    const orderInfoWithoutAddressAttribute: any = {
+      ...orderInfo,
+      postalCode: orderInfo.address.postalCode,
+      address1: orderInfo.address.address1,
+      address2: orderInfo.address.address2,
+      receiverName: orderInfo.address.receiverName,
+      receiverPhoneNumber: orderInfo.address.receiverPhoneNumber,
+    };
+
+    delete orderInfoWithoutAddressAttribute.address;
+
+    const createdNewOrder = await Order.create(
+      orderInfoWithoutAddressAttribute
+    );
+
+    return this._includeAddressAttribute(createdNewOrder);
   }
 
   async findAll(): Promise<OrderData[]> {
-    const orders = await Order.find({});
-    return orders;
+    const orders = await Order.findAll();
+
+    const ordersWithAddressAttribute = [];
+    for (const order of orders) {
+      ordersWithAddressAttribute.push(this._includeAddressAttribute(order)!);
+    }
+
+    return ordersWithAddressAttribute;
   }
 
-  async update({ orderId, update }: ToUpdate): Promise<OrderData> {
-    const filter = { _id: orderId };
-    const option = { returnOriginal: false };
+  async update({ orderId, update }: ToUpdate): Promise<OrderData | null> {
+    const where = { _id: orderId };
 
-    const updatedOrder = await Order.findOneAndUpdate(filter, update, option);
-    return updatedOrder;
+    await Order.update(this._excludeAddressAttribute(update), { where });
+
+    const updatedOrder = await Order.findOne({ where });
+
+    return this._includeAddressAttribute(updatedOrder);
   }
 
   async deleteById(orderId: string): Promise<{ deletedCount: number }> {
-    const result = await Order.deleteOne({ _id: orderId });
-    return result;
+    const deletedCount = await Order.destroy({ where: { _id: orderId } });
+
+    return { deletedCount };
   }
 }
 
-const orderModel = new OrderModel();
+const orderMysqlModel = new OrderMysqlModel();
 
-export { orderModel };
+export { orderMysqlModel };

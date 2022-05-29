@@ -5,6 +5,7 @@ import {
   OrderInfo,
   OrderData,
 } from '../db';
+import { orderMysqlModel } from '../db-mysql';
 
 export interface OrderUpdateInfo {
   address?: OrderAddress;
@@ -69,6 +70,14 @@ class OrderService {
   }
 }
 
-const orderService = new OrderService(orderModel);
+const usedDb = process.env.USED_DB;
+
+let orderService: OrderService;
+if (usedDb === 'mongodb') {
+  orderService = new OrderService(orderModel);
+} else {
+  //@ts-ignore
+  orderService = new OrderService(orderMysqlModel);
+}
 
 export { orderService };

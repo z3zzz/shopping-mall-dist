@@ -1,49 +1,96 @@
-import { Schema } from 'mongoose';
+import {
+  DataTypes,
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
+import { sequelize } from '../connect';
+import { User } from './user-schema';
 
-const OrderSchema = new Schema(
+class Order extends Model<
+  InferAttributes<Order>,
+  InferCreationAttributes<Order>
+> {
+  declare userId: string;
+  declare summaryTitle: string;
+  declare totalPrice: number;
+  declare postalCode: string;
+  declare address1: string;
+  declare address2: string;
+  declare receiverName: string;
+  declare receiverPhoneNumber: string;
+  declare request: string;
+  declare status: string;
+  declare id: CreationOptional<number>;
+  declare _id: CreationOptional<string>;
+  declare createdAt?: Date;
+  declare updatedAt?: Date;
+}
+
+Order.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     summaryTitle: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     totalPrice: {
-      type: Number,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    address: {
-      type: new Schema(
-        {
-          postalCode: String,
-          address1: String,
-          address2: String,
-          receiverName: String,
-          receiverPhoneNumber: String,
-        },
-        {
-          _id: false,
-        }
-      ),
-      required: true,
+    postalCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    address1: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    address2: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    receiverName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    receiverPhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     request: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     status: {
-      type: String,
-      required: false,
-      default: '상품 준비중',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: '상품 준비중',
     },
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
   },
   {
-    collection: 'orders',
-    timestamps: true,
+    sequelize,
+    tableName: 'products',
   }
 );
 
-export { OrderSchema };
+Order.hasOne(User, {
+  foreignKey: '_id',
+});
+
+export { Order };
