@@ -224,12 +224,12 @@ Client Secret: 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
 - 아래 설명에 따라 환경변수 설정
 
   ```
-  MONGODB_URL=[몽고DB URL]
-  MYSQL_URL=[MySQL URL]
+  MONGODB_URL=<몽고DB URL>
+  MYSQL_URL=<MySQL URL>
   USED_DB='mongodb' 혹은 'mysql'
   PORT=4000
-  JWT_SECERT_KEY=[개인이 설정할 JWT 시크릿키]
-  GOOGLE_CLIENT_ID=[GCP에서 발급받은 OAuth 2.0 CLIENT ID]*
+  JWT_SECERT_KEY=<랜덤 문자열>
+  GOOGLE_CLIENT_ID=<GCP에서 발급받은 OAuth 2.0 CLIENT ID>
   ```
 
 <br>
