@@ -52,22 +52,27 @@ User.init(
     profileImage: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '',
     },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '',
     },
     postalCode: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '',
     },
     address1: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '',
     },
     address2: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: '',
     },
     role: {
       type: DataTypes.STRING,

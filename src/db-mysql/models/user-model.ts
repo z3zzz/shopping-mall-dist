@@ -37,20 +37,38 @@ interface ToUpdate {
 }
 
 class UserMysqlModel {
+  private _includeAddressAttribute(user: User | null): UserData | null {
+    if (!user) {
+      return null;
+    }
+
+    const userData = user.get();
+
+    const address: UserAddress = {
+      poastalCode: userData.postalCode,
+      address1: userData.address1,
+      address2: userData.address2,
+    };
+
+    return { ...userData, address };
+  }
+
   async findByEmail(email: string): Promise<UserData | null> {
     const user = await User.findOne({ where: { email } });
 
-    return user;
+    return this._includeAddressAttribute(user);
   }
 
   async findById(userId: string): Promise<UserData | null> {
     const user = await User.findOne({ where: { _id: userId } });
-    return user;
+
+    return this._includeAddressAttribute(user);
   }
 
   async create(userInfo: UserInfo): Promise<UserData | null> {
     const createdNewUser = await User.create(userInfo);
-    return createdNewUser;
+
+    return this._includeAddressAttribute(createdNewUser);
   }
 
   async findAll(): Promise<UserData[]> {
@@ -65,7 +83,7 @@ class UserMysqlModel {
 
     const updatedUser = await User.findOne({ where });
 
-    return updatedUser;
+    return this._includeAddressAttribute(updatedUser);
   }
 
   async deleteById(userId: string): Promise<{ deletedCount: number }> {

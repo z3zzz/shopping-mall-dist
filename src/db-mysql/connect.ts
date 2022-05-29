@@ -6,7 +6,10 @@ const DB_URL =
 const sequelize = new Sequelize(DB_URL);
 
 sequelize
+  // MySQL 서버 연결 상태를 확인함
   .authenticate()
+  // CREATE TABLE IF NOT EXISTS 쿼리를 실행시킴
+  .then(() => sequelize.sync())
   .then(() => {
     console.log('\nMysql 서버가 정상적으로 시작되었습니다.');
     console.log(DB_URL);
