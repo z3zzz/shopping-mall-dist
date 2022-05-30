@@ -17,6 +17,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("../db");
+const db_mysql_1 = require("../db-mysql");
 class UserService {
     constructor(userModel) {
         this.userModel = userModel;
@@ -270,5 +271,13 @@ class UserService {
         });
     }
 }
-const userService = new UserService(db_1.userModel);
+const usedDb = process.env.USED_DB;
+let userService;
 exports.userService = userService;
+if (usedDb === 'mongodb') {
+    exports.userService = userService = new UserService(db_1.userModel);
+}
+else {
+    //@ts-ignore
+    exports.userService = userService = new UserService(db_mysql_1.userMysqlModel);
+}

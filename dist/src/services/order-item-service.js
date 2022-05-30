@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderItemService = void 0;
 const db_1 = require("../db");
+const db_mysql_1 = require("../db-mysql");
 class OrderItemService {
     constructor(orderItemModel) {
         this.orderItemModel = orderItemModel;
@@ -70,5 +71,13 @@ class OrderItemService {
         });
     }
 }
-const orderItemService = new OrderItemService(db_1.orderItemModel);
+const usedDb = process.env.USED_DB;
+let orderItemService;
 exports.orderItemService = orderItemService;
+if (usedDb === 'mongodb') {
+    exports.orderItemService = orderItemService = new OrderItemService(db_1.orderItemModel);
+}
+else {
+    //@ts-ignore
+    exports.orderItemService = orderItemService = new OrderItemService(db_mysql_1.orderItemMysqlModel);
+}

@@ -4,13 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
+const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const routers_1 = require("./routers");
 const middlewares_1 = require("./middlewares");
 const app = (0, express_1.default)();
 exports.app = app;
 // CORS 에러 방지
-//app.use(cors());
+app.use((0, cors_1.default)());
 // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express_1.default.json());
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.

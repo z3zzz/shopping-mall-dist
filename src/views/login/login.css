@@ -19,8 +19,8 @@
 
 .oauth-container {
   display: flex;
-  /*justify-content: space-around;*/
-  justify-content: center;
+  justify-content: space-around;
+  /*justify-content: center;*/
   align-items: center;
   margin-top: 1rem;
 }
