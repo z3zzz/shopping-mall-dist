@@ -53,6 +53,7 @@
     "@types/supertest": "^2.0.12",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
     "google-auth-library": "^8.0.2",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
