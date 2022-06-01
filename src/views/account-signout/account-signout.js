@@ -1,5 +1,5 @@
-import * as Api from '/api.js';
-import { createNavbar } from '/useful-functions.js';
+import * as Api from '../api.js';
+import { createNavbar } from '../useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const passwordInput = document.querySelector('#passwordInput');

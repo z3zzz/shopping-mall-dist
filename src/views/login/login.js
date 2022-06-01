@@ -1,10 +1,10 @@
-import * as Api from '/api.js';
+import * as Api from '../api.js';
 import {
   blockIfLogin,
   getUrlParams,
   validateEmail,
   createNavbar,
-} from '/useful-functions.js';
+} from '../useful-functions.js';
 
 // 요소(element), input 혹은 상수
 const emailInput = document.querySelector('#emailInput');

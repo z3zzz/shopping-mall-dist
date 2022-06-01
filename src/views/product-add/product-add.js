@@ -1,6 +1,6 @@
-import { addImageToS3 } from '/aws-s3.js';
-import * as Api from '/api.js';
-import { checkLogin, randomId, createNavbar } from '/useful-functions.js';
+import { addImageToS3 } from '../aws-s3.js';
+import * as Api from '../api.js';
+import { checkLogin, randomId, createNavbar } from '../useful-functions.js';
 
 // 요소(element)들과 상수들
 const titleInput = document.querySelector('#titleInput');

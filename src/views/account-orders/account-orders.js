@@ -1,5 +1,5 @@
-import { checkLogin, createNavbar } from '/useful-functions.js';
-import * as Api from '/api.js';
+import { checkLogin, createNavbar } from '../useful-functions.js';
+import * as Api from '../api.js';
 
 // 요소(element), input 혹은 상수
 const ordersContainer = document.querySelector('#ordersContainer');
