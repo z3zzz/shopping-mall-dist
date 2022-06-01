@@ -22,6 +22,7 @@ viewsRouter.use('/admin', serveStatic('admin'));
 viewsRouter.use('/admin/orders', serveStatic('admin-orders'));
 viewsRouter.use('/admin/users', serveStatic('admin-users'));
 viewsRouter.use('/page-not-found', serveStatic('page-not-found'));
+viewsRouter.use('/privacy-policy', serveStatic('privacy-policy'));
 
 // views 폴더의 최상단 파일인 rabbit.png, indexed-db.js 등 라우팅
 viewsRouter.use('/', serveStatic(''));
