@@ -33,7 +33,7 @@ export const addCommas = (n) => {
 
 // 로그인 여부(토큰 존재 여부) 확인
 export const checkLogin = () => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (!token) {
     // 현재 페이지의 url 주소 추출하기
     const pathname = window.location.pathname;
@@ -49,7 +49,7 @@ export const checkAdmin = async () => {
   // 우선 화면을 가리고 시작함 -> 화면 번쩍거림으로 인해 일단 미적용
   //window.document.body.style.display = 'none';
 
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   // 우선 토큰 존재 여부 확인
   if (!token) {
@@ -83,7 +83,7 @@ export const checkAdmin = async () => {
 
 // 로그인 상태일 때에는 접근 불가한 페이지로 만듦. (회원가입 페이지 등)
 export const blockIfLogin = () => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
   if (token) {
     alert('로그인 상태에서는 접근할 수 없는 페이지입니다.');
@@ -147,4 +147,4 @@ export const randomPick = (items) => {
 };
 
 // 주변 다른 파일 것도 여기서 일괄 export 함
-export { createNavbar } from '/navbar.js';
+export { createNavbar } from './navbar.js';

@@ -17,7 +17,6 @@ const entryObject = {
   login: './src/views/login/login.js',
   order: './src/views/order/order.js',
   'order-complete': './src/views/order-complete/order-complete.js',
-  //page_not_found: '',
   'product-add': './src/views/product-add/product-add.js',
   'product-detail': './src/views/product-detail/product-detail.js',
   'product-list': './src/views/product-list/product-list.js',
@@ -30,7 +29,7 @@ for (const key of Object.keys(entryObject)) {
     new HtmlWebpackPlugin({
       template: entryObject[key].replace('js', 'html'),
       inject: false,
-      minify: false,
+      minify: true,
       chunks: [key],
       filename: entryObject[key].replace('js', 'html'),
     })

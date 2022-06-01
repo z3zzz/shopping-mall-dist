@@ -7,11 +7,14 @@ node_modules
 # Environment variables
 .env
 
-#cache
+# Cache
 .cache
 
-#execution script
+# Execution script
 run.sh
 run-dev.sh
 run-prod.sh
 test.sh
+
+# Distribution files
+dist

@@ -9,11 +9,11 @@
     "globalTeardown": "./tests/__config__/teardown.ts"
   },
   "scripts": {
-    "start": "nodemon index.ts --exec ts-node",
-    "start-prod": "node dist/index.js",
+    "start": "node dist/index.js",
+    "start-dev": "nodemon index.ts --exec ts-node",
     "test": "jest",
     "build": "tsc && webpack",
-    "heroku-postbuild": "npm install"
+    "heroku-postbuild": "npm install && tsc && webpack"
   },
   "engines": {
     "node": "16.14.0"
