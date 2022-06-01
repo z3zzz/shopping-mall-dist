@@ -1,6 +1,5 @@
 export const createNavbar = () => {
   const pathname = window.location.pathname;
-  console.log({ pathname });
 
   switch (pathname) {
     case '/':

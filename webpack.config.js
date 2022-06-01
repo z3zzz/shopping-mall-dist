@@ -21,6 +21,8 @@ const entryObject = {
   'product-detail': './src/views/product-detail/product-detail.js',
   'product-list': './src/views/product-list/product-list.js',
   register: './src/views/register/register.js',
+  'page-not-found': './src/views/page-not-found/page-not-found.js',
+  'privacy-policy': './src/views/privacy-policy/privacy-policy.js',
 };
 
 const htmls = [];

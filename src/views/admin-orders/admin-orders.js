@@ -1,5 +1,6 @@
 import { addCommas, checkAdmin, createNavbar } from '../useful-functions.js';
 import * as Api from '../api.js';
+import './admin-orders.css';
 
 // 요소(element), input 혹은 상수
 const ordersCount = document.querySelector('#ordersCount');

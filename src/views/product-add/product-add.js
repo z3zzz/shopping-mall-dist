@@ -1,4 +1,5 @@
 import { addImageToS3 } from '../aws-s3.js';
+import './product-add.css';
 import * as Api from '../api.js';
 import { checkLogin, randomId, createNavbar } from '../useful-functions.js';
 

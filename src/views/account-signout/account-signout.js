@@ -1,4 +1,5 @@
 import * as Api from '../api.js';
+import './account-signout.css';
 import { createNavbar } from '../useful-functions.js';
 
 // 요소(element), input 혹은 상수

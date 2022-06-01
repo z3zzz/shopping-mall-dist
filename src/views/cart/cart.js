@@ -1,4 +1,5 @@
 import { getImageUrl } from '../aws-s3.js';
+import './cart.css';
 import {
   addCommas,
   convertToNumber,

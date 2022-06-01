@@ -1,4 +1,5 @@
 import * as Api from '../api.js';
+import './register.css';
 import { validateEmail, createNavbar } from '../useful-functions.js';
 
 // 요소(element), input 혹은 상수

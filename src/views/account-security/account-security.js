@@ -1,4 +1,5 @@
 import { checkLogin, createNavbar } from '../useful-functions.js';
+import './account-security.css';
 import * as Api from '../api.js';
 
 // 요소(element), input 혹은 상수

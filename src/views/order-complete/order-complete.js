@@ -1,4 +1,5 @@
 import { checkLogin, navigate, createNavbar } from '../useful-functions.js';
+import './order-complete.css';
 
 // 요소(element), input 혹은 상수
 const orderDetailButton = document.querySelector('#orderDetailButton');

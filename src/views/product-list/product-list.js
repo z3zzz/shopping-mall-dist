@@ -1,4 +1,5 @@
 import { getImageUrl } from '../aws-s3.js';
+import './product-list.css';
 import * as Api from '../api.js';
 import {
   randomId,

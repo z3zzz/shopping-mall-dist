@@ -1,4 +1,5 @@
 import { getImageUrl } from '../aws-s3.js';
+import './product-detail.css';
 import * as Api from '../api.js';
 import {
   getUrlParams,

@@ -1,4 +1,5 @@
 import * as Api from '../api.js';
+import './home.css';
 import { getImageUrl } from '../aws-s3.js';
 import { navigate, createNavbar } from '../useful-functions.js';
 
