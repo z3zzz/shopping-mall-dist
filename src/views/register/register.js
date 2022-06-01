@@ -74,7 +74,7 @@ function displayGoogleButton() {
   window.onload = function () {
     google.accounts.id.initialize({
       client_id:
-        '781560730462-8jb80an9eu02nalbk5a2u27p7tvfvl94.apps.googleusercontent.com',
+        '218765734427-6p3rnnm65g4mubbg7626b50vpcrnde80.apps.googleusercontent.com',
       callback: handleGoogleResponse,
     });
 

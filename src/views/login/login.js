@@ -55,7 +55,7 @@ async function handleSubmit(e) {
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
 
     alert(`정상적으로 로그인되었습니다.`);
 
@@ -63,7 +63,7 @@ async function handleSubmit(e) {
 
     // admin(관리자) 일 경우, localStorage에 기록함
     if (isAdmin) {
-      localStorage.setItem('admin', 'admin');
+      sessionStorage.setItem('admin', 'admin');
     }
 
     // 기존 다른 페이지에서 이 로그인 페이지로 온 경우, 다시 돌아가도록 해 줌.
@@ -89,7 +89,7 @@ function displayGoogleButton() {
   window.onload = function () {
     google.accounts.id.initialize({
       client_id:
-        '781560730462-8jb80an9eu02nalbk5a2u27p7tvfvl94.apps.googleusercontent.com',
+        '218765734427-6p3rnnm65g4mubbg7626b50vpcrnde80.apps.googleusercontent.com',
       callback: handleGoogleResponse,
     });
 
@@ -116,7 +116,7 @@ async function handleGoogleResponse(response) {
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
 
     alert(`정상적으로 로그인되었습니다.`);
 
@@ -182,7 +182,7 @@ async function handleKakaoData(data) {
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
 
     alert(`정상적으로 로그인되었습니다.`);
 
