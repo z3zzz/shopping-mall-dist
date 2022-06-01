@@ -18,13 +18,13 @@
   "engines": {
     "node": "16.14.0"
   },
-  "homepage": "",
+  "homepage": "https://shopping-mall-kwang.herokuapp.com",
   "repository": {
     "type": "git",
-    "url": "git@kdt-gitlab.elice.io:KwangTaeKim/shopping-mall.git"
+    "url": "git@github.com:z3zzz/shopping-mall-kwang.git"
   },
   "bugs": {
-    "url": "https://kdt-gitlab.elice.io/KwangTaeKim/shopping-mall/-/issues"
+    "url": "https://github.com/z3zzz/shopping-mall-kwang/issues"
   },
   "dependencies": {
     "@sindresorhus/is": "^4.6.0",
