@@ -63,8 +63,8 @@ const addNavElements = (keyString) => {
   const keys = keyString.split(' ');
 
   const container = document.querySelector('#navbar');
-  const isLogin = localStorage.getItem('token') ? true : false;
-  const isAdmin = localStorage.getItem('admin') ? true : false;
+  const isLogin = sessionStorage.getItem('token') ? true : false;
+  const isAdmin = sessionStorage.getItem('admin') ? true : false;
 
   // 로그인 안 된 상태에서만 보이게 될 navbar 요소들
   const itemsBeforeLogin = {
@@ -91,8 +91,8 @@ const addNavElements = (keyString) => {
       
       if (logoutElem) {
         logoutElem.addEventListener('click', () => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('admin');
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('admin');
 
           window.location.href = '/';
         });
