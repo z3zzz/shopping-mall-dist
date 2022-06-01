@@ -58,8 +58,11 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.(svg|gif|png|eot|woff|ttf)$/,
-        use: ['url-loader'],
+        test: /\.(svg|gif|png|jpe?g|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'src/views/[name].[ext]',
+        },
       },
     ],
   },
