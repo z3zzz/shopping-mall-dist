@@ -1,9 +1,9 @@
-import { randomId } from './useful-functions.js';
+import { randomId } from "./useful-functions.js";
 
 // aws-s3 사이트에서의 설정값들
-const s3BucketName = 'kwang-shopping';
-const bucketRegion = 'ap-northeast-2'; // 한국은 항상 ap-northeast-2임.
-const IdentityPoolId = 'ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241';
+const s3BucketName = "kwang-shopping";
+const bucketRegion = "ap-northeast-2"; // 한국은 항상 ap-northeast-2임.
+const IdentityPoolId = "ap-northeast-2:b6a1fa02-993d-437d-9ed5-7134db218241";
 
 // aws 공식문서 그대로 가져옴
 AWS.config.update({
@@ -15,7 +15,7 @@ AWS.config.update({
 
 // aws 공식문서 그대로 가져옴
 const s3 = new AWS.S3({
-  apiVersion: '2006-03-01',
+  apiVersion: "2006-03-01",
   params: { Bucket: s3BucketName },
 });
 
@@ -26,14 +26,14 @@ async function addImageToS3(fileInputElement, album) {
   // 파일 input 요소에, 사용자가 올린 파일이 있는지 여부 확인
   const files = fileInputElement.files;
   if (!files.length) {
-    throw new Error('사진 파일을 업로드해 주세요.');
+    throw new Error("사진 파일을 업로드해 주세요.");
   }
 
   // 파일 input 요소에서 사진파일 추출 등 AWS S3로의 업로드 준비
   const file = files[0];
   // 유니크한 사진파일 주소를 만들 수 있게 함.
-  const fileName = randomId() + '_' + file.name;
-  const albumPhotosKey = encodeURIComponent(album) + '/';
+  const fileName = randomId() + "_" + file.name;
+  const albumPhotosKey = encodeURIComponent(album) + "/";
   const photoKey = albumPhotosKey + fileName;
 
   const upload = new AWS.S3.ManagedUpload({
@@ -50,10 +50,6 @@ async function addImageToS3(fileInputElement, album) {
     const uploadedFile = await upload.promise();
 
     const fileKey = uploadedFile.Key;
-    console.log(uploadedFile);
-    console.log(
-      `AWS S3에 정상적으로 사진이 업로드되었습니다.\n파일 위치: ${fileKey}`
-    );
 
     return fileKey;
   } catch (err) {
@@ -74,7 +70,7 @@ function getImageUrl(imageKey) {
       Expires: 60,
     };
 
-    s3.getSignedUrl('getObject', params, (_, url) => {
+    s3.getSignedUrl("getObject", params, (_, url) => {
       resolve(url);
     });
   });
