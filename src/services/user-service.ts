@@ -175,8 +175,6 @@ class UserService {
 
     const isAdmin = user.role === "admin";
 
-    console.log({ role: user.role, isAdmin });
-
     return { token, isAdmin };
   }
 
@@ -240,6 +238,8 @@ class UserService {
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
     const isAdmin = user.role === "admin";
+
+    console.log({ role: user.role, isAdmin });
 
     return { token, isAdmin };
   }
