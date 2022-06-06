@@ -8,22 +8,22 @@
 
 <br />
 
-## :rabbit: Service Link
+## 1. Service Link
 
 ### http://shopping-mall-kwang.herokuapp.com/
 
 <br />
 
-## :apple: Project Info
+## 2. Project Info
 
-#### Shopping mall service
+#### 2-1. Shopping mall service
 1. User, Category, Product, Order Data CRUD
 2. Cart service
 3. Admin service
 
 <br />
 
-### :movie_camera: Demo
+### 2-2. Demo
 
 <details><summary>User Data CRUD</summary>
 <p>
@@ -63,7 +63,7 @@
 
 <br />
 
-### :page_facing_up: Pages Example
+### 2-2. Pages Example
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
@@ -87,25 +87,27 @@
 <br />
 
 
-## :hammer_and_wrench: Tech Stack
+## 3. Tech Stack
 
 ![image](https://i.ibb.co/TBSZZMj/image.png)
 
 <br />
 
-## :green_book: Tech Architecture
+## 4. Tech Architecture
 
 ![image](https://i.ibb.co/NF7wnPR/image.png)<br />
 
 <br />
 
-## Developer
+## 5. Developer
 
-![image](https://i.ibb.co/tqhC3zg/image.png)<br />
+| Name | Position |
+| ------ | ------ |
+| KwangTaeKim | Front & Back |
 
 <br />
 
-## :runner: How to Run this service
+## 6. How to Run this service
 
 1. Clone the code base
 
@@ -146,7 +148,7 @@
 
 <br>
 
-## API Tests
+## 7. How to run API tests
 
 > Test files are in Tests directory
 
