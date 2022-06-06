@@ -16,14 +16,20 @@
 
 ## 2. Project Info
 
-#### 2-1. Shopping mall service
+### 2-1. Shopping mall service
 1. User, Category, Product, Order Data CRUD
 2. Cart service
 3. Admin service
 
 <br />
 
-### 2-2. Demo
+### 2-2. API Document
+
+#### https://documenter.getpostman.com/view/19463141/Uz5JGurX
+
+<br>
+
+### 2-3. Demo
 
 <details><summary>User Data CRUD</summary>
 <p>
@@ -63,7 +69,7 @@
 
 <br />
 
-### 2-2. Pages Example
+### 2-4. Pages Example
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
