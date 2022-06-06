@@ -239,8 +239,6 @@ class UserService {
 
     const isAdmin = user.role === "admin";
 
-    console.log({ role: user.role, isAdmin });
-
     return { token, isAdmin };
   }
 
