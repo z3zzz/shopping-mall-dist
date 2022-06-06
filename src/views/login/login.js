@@ -113,7 +113,7 @@ async function handleGoogleResponse(response) {
   try {
     const result = await Api.post("/api/login/google", data);
 
-    const token = result.token;
+    const { token, isAdmin } = result;
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
@@ -184,7 +184,7 @@ async function handleKakaoData(data) {
 
     const result = await Api.post("/api/login/kakao", data);
 
-    const token = result.token;
+    const { token, isAdmin } = result;
 
     // 로그인 성공, 토큰을 세션 스토리지에 저장
     // 단, 개발 중에는 편의상 localStorage에 저장
