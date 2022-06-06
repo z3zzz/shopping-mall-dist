@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import { OAuth2Client } from 'google-auth-library';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import { OAuth2Client } from "google-auth-library";
+import jwt from "jsonwebtoken";
 import {
   userModel,
   UserModel,
@@ -8,8 +8,8 @@ import {
   UserAddress,
   UserData,
   Role,
-} from '../db';
-import { userMysqlModel } from '../db-mysql';
+} from "../db";
+import { userMysqlModel } from "../db-mysql";
 
 interface LoginInfo {
   email: string;
@@ -43,7 +43,7 @@ class UserService {
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw new Error(
-        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
     }
 
@@ -76,7 +76,7 @@ class UserService {
 
     if (!payload) {
       throw new Error(
-        '구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다.'
+        "구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다."
       );
     }
 
@@ -84,19 +84,19 @@ class UserService {
     const { email, name } = payload;
 
     if (!email || !name) {
-      throw new Error('회원가입을 위해서는 이메일과 이름이 필요합니다');
+      throw new Error("회원가입을 위해서는 이메일과 이름이 필요합니다");
     }
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw new Error(
-        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
     }
 
     // 비밀번호는 임시로 설정
-    const password = 'google';
+    const password = "google";
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUserInfo = {
@@ -115,19 +115,19 @@ class UserService {
   // 카카오 Oauth 회원가입
   async addUserWithKakao(email: string, nickname: string): Promise<UserData> {
     if (!email || !nickname) {
-      throw new Error('회원가입을 위해서는 이메일과 이름이 필요합니다');
+      throw new Error("회원가입을 위해서는 이메일과 이름이 필요합니다");
     }
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
     if (user) {
       throw new Error(
-        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
+        "이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요."
       );
     }
 
     // 비밀번호는 임시로 설정
-    const password = 'kakao';
+    const password = "kakao";
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUserInfo = {
@@ -152,7 +152,7 @@ class UserService {
     const user = await this.userModel.findByEmail(email);
     if (!user) {
       throw new Error(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
     }
 
@@ -165,15 +165,17 @@ class UserService {
 
     if (!isPasswordCorrect) {
       throw new Error(
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    const isAdmin = user.role === 'admin';
+    const isAdmin = user.role === "admin";
+
+    console.log({ role: user.role, isAdmin });
 
     return { token, isAdmin };
   }
@@ -192,7 +194,7 @@ class UserService {
 
     if (!isPasswordCorrect) {
       throw new Error(
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+        "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
     }
 
@@ -215,29 +217,29 @@ class UserService {
 
     if (!payload) {
       throw new Error(
-        '구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다.'
+        "구글 OAuth 도중 오류가 발생하였습니다. 구글 계정을 확인할 수 없습니다."
       );
     }
 
     const { email } = payload;
 
     if (!email) {
-      throw new Error('로그인을 위해서는 이메일이 필요합니다');
+      throw new Error("로그인을 위해서는 이메일이 필요합니다");
     }
 
     // 이메일 db에 존재 여부 확인
     const user = await this.userModel.findByEmail(email);
     if (!user) {
       throw new Error(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    const isAdmin = user.role === 'admin';
+    const isAdmin = user.role === "admin";
 
     return { token, isAdmin };
   }
@@ -245,22 +247,22 @@ class UserService {
   // 카카오 Oauth 로그인
   async getUserTokenWithKakao(email: string): Promise<LoginResult> {
     if (!email) {
-      throw new Error('로그인을 위해서는 이메일 필요합니다');
+      throw new Error("로그인을 위해서는 이메일 필요합니다");
     }
 
     // 이메일 db에 존재 여부 확인
     const user = await this.userModel.findByEmail(email);
     if (!user) {
       throw new Error(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+        "해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요."
       );
     }
 
     // 로그인 성공 -> JWT 웹 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+    const secretKey = process.env.JWT_SECRET_KEY || "secret-key";
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
-    const isAdmin = user.role === 'admin';
+    const isAdmin = user.role === "admin";
 
     return { token, isAdmin };
   }
@@ -283,7 +285,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
 
     // 비밀번호 일치 여부 확인
@@ -295,7 +297,7 @@ class UserService {
 
     if (!isPasswordCorrect) {
       throw new Error(
-        '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+        "현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
       );
     }
 
@@ -343,7 +345,7 @@ class UserService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
+      throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
     }
 
     return user;
@@ -357,14 +359,14 @@ class UserService {
       throw new Error(`${userId} 사용자 데이터의 삭제에 실패하였습니다.`);
     }
 
-    return { result: 'success' };
+    return { result: "success" };
   }
 }
 
 const usedDb = process.env.USED_DB;
 
 let userService: UserService;
-if (usedDb === 'mongodb') {
+if (usedDb === "mongodb") {
   userService = new UserService(userModel);
 } else {
   //@ts-ignore
