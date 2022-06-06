@@ -1,8 +1,8 @@
 # Shopping Mall
 
-<div align='center'>
+<div>
 
-<img alt="kwang's mall logo" src="https://i.ibb.co/xSZHxmy/image.png">
+<img alt="kwang's mall logo" src="https://i.ibb.co/6Pmfr1r/image.png">
 
 </div>
 
