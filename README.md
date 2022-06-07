@@ -117,17 +117,17 @@
 
 1. Clone the code base
 
-   ```
-   git clone git@github.com:z3zzz/shopping-mall-kwang.git
-   ```
+```bash
+git clone git@github.com:z3zzz/shopping-mall-kwang.git
+```
 
 <br>
 
 2. Install packages
 
-   ```
-   npm install
-   ```
+```bash
+npm install
+```
 
 <br>
 
@@ -135,22 +135,22 @@
 
 - Set Enviroment Variables
 
-  ```
-  MONGODB_URL=<MongoDB URL>
-  MYSQL_URL=<MySQL URL>
-  USED_DB='mongodb' or 'mysql'
-  PORT=4000
-  JWT_SECERT_KEY=<Random String>
-  GOOGLE_CLIENT_ID=<GCP OAuth 2.0 CLIENT ID>
-  ```
+```bash
+MONGODB_URL=<MongoDB URL>
+MYSQL_URL=<MySQL URL>
+USED_DB='mongodb' or 'mysql'
+PORT=4000
+JWT_SECERT_KEY=<Random String>
+GOOGLE_CLIENT_ID=<GCP OAuth 2.0 CLIENT ID>
+```
 
 <br>
 
 4. Run Express App
 
-   ```
-   npm run start
-   ```
+```bash
+npm run start
+```
 
 <br>
 
@@ -158,7 +158,7 @@
 
 > Test files are in Tests directory
 
-   ```
-   npm run test
-   ```
+ ```
+ npm run test
+ ```
 
