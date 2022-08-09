@@ -1,11 +1,5 @@
 # Shopping Mall
 
-<div>
-
-<img alt="kwang's mall logo" src="https://i.ibb.co/6Pmfr1r/image.png">
-
-</div>
-
 <br />
 
 ## 1. Service Link
