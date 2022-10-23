@@ -1,69 +1,30 @@
-# Shopping Mall
+## 데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
+- 3계층 구조, OOP 기반 Back-End 설계, TDD 개발, RDBMS 설계, Restful API 개발
 
 <br />
 
-## 1. Service Link
+## 1. 프로젝트 정보
 
-### http://shopping-mall-kwang.herokuapp.com/
+### 데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
 
 <br />
 
-## 2. Project Info
+## 2. 프로젝트 구성
 
-### 2-1. Shopping mall service
+### 2-1. 사용자 참여형 중고거래 플랫폼
 1. User, Category, Product, Order Data CRUD
 2. Cart service
 3. Admin service
 
 <br />
 
-### 2-2. API Document
+### 2-2. API 문서
 
 #### https://documenter.getpostman.com/view/19463141/Uz5JGurX
 
-<br>
-
-### 2-3. Demo
-
-<details><summary>User Data CRUD</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
-<details><summary>Category Data CRUD</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
-<details><summary>Product Data CRUD</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
-<details><summary>Cart Service</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
-<details><summary>Order Service</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
-<details><summary>Admin Service</summary>
-<p>
-관련 영상 삽입해야 함 
-</p>
-</details>
-
 <br />
 
-### 2-4. Pages Example
+### 2-3. 페이지 예시
 
 |  |  |
 | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------|
@@ -87,29 +48,29 @@
 <br />
 
 
-## 3. Tech Stack
+## 3. 테크 스택
 
 ![image](https://i.ibb.co/TBSZZMj/image.png)
 
 <br />
 
-## 4. Tech Architecture
+## 4. 아키텍쳐
 
 ![image](https://i.ibb.co/NF7wnPR/image.png)<br />
 
 <br />
 
-## 5. Developer
+## 5. 개발자
 
 | Name | Position |
 | ------ | ------ |
-| KwangTaeKim | Front & Back |
+| KwangTaeKim | Front-End & Back-End |
 
 <br />
 
-## 6. How to Run this service
+## 6. 실행 방법
 
-1. Clone the code base
+1. git clone
 
 ```terminal
 git clone git@github.com:z3zzz/shopping-mall-kwang.git
@@ -117,7 +78,7 @@ git clone git@github.com:z3zzz/shopping-mall-kwang.git
 
 <br>
 
-2. Install packages
+2. 패키지 설치
 
 ```terminal
 npm install
@@ -125,7 +86,7 @@ npm install
 
 <br>
 
-3. Create `.env` file
+3. .env 파일 생성
 
 - Set Enviroment Variables
 
@@ -140,7 +101,7 @@ GOOGLE_CLIENT_ID=<GCP OAuth 2.0 CLIENT ID>
 
 <br>
 
-4. Run Express App
+4. 프로그램 실행
 
 ```terminal
 npm run start
@@ -148,9 +109,9 @@ npm run start
 
 <br>
 
-## 7. How to run API tests
+## 7. 테스트 실행
 
-> Test files are in Tests directory
+> tests 폴더 파일 
 
  ```terminal
  npm run test
