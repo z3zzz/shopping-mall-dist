@@ -1,8 +1,3 @@
-## 데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
-- 3계층 구조, OOP 기반 Back-End 설계, TDD 개발, RDBMS 설계, Restful API 개발
-
-<br />
-
 ## 1. 프로젝트 정보
 
 ### 데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
