@@ -1,6 +1,6 @@
 ## 1. 프로젝트 정보
 
-### 데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
+데이터베이스 설계 및 Restful API 개발 - 사용자 참여 기반 중고거래 E-Commerce 플랫폼
 
 <br />
 
@@ -43,7 +43,7 @@
 <br />
 
 
-## 3. 테크 스택
+## 3. 기술 스택
 
 ![image](https://i.ibb.co/TBSZZMj/image.png)
 
@@ -59,7 +59,7 @@
 
 | Name | Position |
 | ------ | ------ |
-| KwangTaeKim | Front-End & Back-End |
+| 김광태 | Front-End & Back-End |
 
 <br />
 
